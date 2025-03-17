@@ -45,5 +45,18 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- Apple 로그인 -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>lugeasy</string> <!-- TODO: 번들 ID 변경 -->
+			</array>
+		</dict>
+	</array>
+	<!-- Face ID를 사용할 때 시스템 팝업에 표시되는 안내 문구 -->
+	<key>NSFaceIDUsageDescription</key>
+	<string>Apple 로그인 시 Face ID를 사용하여 안전하게 인증합니다.</string>
 </dict>
 </plist>
