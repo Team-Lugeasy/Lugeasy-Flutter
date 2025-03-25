@@ -103,6 +103,11 @@ class LoginPage extends ConsumerWidget {
         credential,
       );
       debugPrint(token.toString());
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MainContainer()),
+      );
     } catch (error) {
       ScaffoldMessenger.of(
         context,
