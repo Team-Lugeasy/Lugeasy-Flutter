@@ -1,14 +1,20 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/view/main/main_container.dart';
-import '../../services/intro_services.dart';
 
-class LoginPage extends StatelessWidget {
+import '../../provider/apple_auth_provider.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appleLoginState = ref.watch(appleAuthNotifierProvider);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -24,19 +30,23 @@ class LoginPage extends StatelessWidget {
               if (Platform.isIOS) ...[
                 // iOS
                 ElevatedButton(
-                  onPressed: () => _handleLogin(context, "Apple Login"),
-                  child: Text("apple login"),
+                  onPressed: appleLoginState is AsyncLoading
+                      ? null
+                      : () => _appleLogin(context, ref),
+                  child: appleLoginState is AsyncLoading
+                      ? CircularProgressIndicator()
+                      : Text("Apple Login"),
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
-                  onPressed: () => _handleLogin(context, "Google Login"),
-                  child: Text("google login"),
+                  onPressed: () => _googleLogin(context, ref),
+                  child: Text("Google Login"),
                 ),
               ] else if (Platform.isAndroid) ...[
                 // Android
                 ElevatedButton(
-                  onPressed: () => _handleLogin(context, "Google Login"),
-                  child: Text("google login"),
+                  onPressed: () => _googleLogin(context, ref),
+                  child: Text("Google Login"),
                 ),
               ],
             ],
@@ -46,20 +56,58 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Future<void> _handleLogin(BuildContext context, String loginType) async {
+  Future<void> _appleLogin(BuildContext context, WidgetRef ref) async {
     try {
-      final introServices = IntroServices();
-      final response = await introServices.mockLoginApi(loginType);
-      if (response == "success") {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MainContainer()),
-        );
-      } else {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text("Login Failed: $response")));
-      }
+      final appleNotifier = ref.read(appleAuthNotifierProvider.notifier);
+      await appleNotifier.signInWithApple();
+
+      final appleLoginState = ref.read(appleAuthNotifierProvider);
+      appleLoginState.when(
+        data: (token) {
+          if (token != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MainContainer()),
+            );
+          }
+        },
+        error: (error, _) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text("Apple 로그인 실패: $error")));
+        },
+        loading: () {}, // 로딩 중 UI 처리는 UI에서 진행
+      );
+    } catch (error) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error: ${error.toString()}")));
+    }
+  }
+
+  Future<void> _googleLogin(BuildContext context, WidgetRef ref) async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      final token = await FirebaseAuth.instance.signInWithCredential(
+        credential,
+      );
+      debugPrint(token.toString());
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MainContainer()),
+      );
     } catch (error) {
       ScaffoldMessenger.of(
         context,
