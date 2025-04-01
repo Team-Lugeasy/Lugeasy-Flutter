@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "542604644530",
+    "project_id": "lugeasy-49de6",
+    "storage_bucket": "lugeasy-49de6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542604644530:android:549abacca531fde3b079ab",
+        "android_client_info": {
+          "package_name": "com.jimjim.lugeasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542604644530-q1o28bfb1irdipce647vdnm4iijhr5mj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jimjim.lugeasy",
+            "certificate_hash": "7734f2caf22480e230ca97facd3aedaf620984d3"
+          }
+        },
+        {
+          "client_id": "542604644530-o5skeafu7uu64uerchsihakmqrlbn1nq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxKLPINvyS6plEwVzgSkuorr5W0OgO02A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542604644530-o5skeafu7uu64uerchsihakmqrlbn1nq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "542604644530-5kjjjsjf3g8j6frqm1a489ngeh60v5ij.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jimjim.lugeasy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
