@@ -59,7 +59,7 @@
 	<key>NSFaceIDUsageDescription</key>
 	<string>Apple 로그인 시 Face ID를 사용하여 안전하게 인증합니다.</string>
 	<key>GIDClientID</key>
-	<string>1021311218872-gtklldn197o3c7e8f4k28r051j23qek2.apps.googleusercontent.com</string>
+	<string>542604644530-5kjjjsjf3g8j6frqm1a489ngeh60v5ij.apps.googleusercontent.com</string>
 
 	<key>CFBundleURLTypes</key>
 	<array>
@@ -68,7 +68,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.1021311218872-gtklldn197o3c7e8f4k28r051j23qek2</string>
+				<string>com.googleusercontent.apps.542604644530-5kjjjsjf3g8j6frqm1a489ngeh60v5ij</string>
 			</array>
 		</dict>
 	</array>
