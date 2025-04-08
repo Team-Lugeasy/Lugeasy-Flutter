@@ -49,3 +49,7 @@ app.*.map.json
 
 # Environment file
 env/.env
+
+# FVM Version Cache
+.fvm/
+.vscode/
