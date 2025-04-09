@@ -42,11 +42,35 @@ class LoginPage extends ConsumerWidget {
                   onPressed: () => _googleLogin(context, ref),
                   child: Text("Google Login"),
                 ),
+                SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MainContainer(),
+                      ),
+                    );
+                  },
+                  child: Text("Guest Login"),
+                ),
               ] else if (Platform.isAndroid) ...[
                 // Android
                 ElevatedButton(
                   onPressed: () => _googleLogin(context, ref),
                   child: Text("Google Login"),
+                ),
+                SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MainContainer(),
+                      ),
+                    );
+                  },
+                  child: Text("Guest Login"),
                 ),
               ],
             ],
