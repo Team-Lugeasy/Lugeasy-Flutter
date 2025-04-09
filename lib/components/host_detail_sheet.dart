@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lugeasy/components/host_review_list.dart';
 import 'host_user_info.dart';
 
 class HostDetailSheet extends StatefulWidget {
@@ -146,6 +147,29 @@ class _HostDetailSheetState extends State<HostDetailSheet> {
                   );
                 },
               ),
+              const SizedBox(height: 24),
+              if (_tabIndex == 0) ...[
+                const Text("TO DO: Reservation")
+              ] else ...[
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Review",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const HostReviewList(),
+                const SizedBox(height: 16),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "See more",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ]
             ],
           ),
         ],

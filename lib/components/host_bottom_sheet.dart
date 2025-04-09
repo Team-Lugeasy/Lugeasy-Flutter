@@ -16,10 +16,12 @@ class HostBottomSheetState extends State<HostBottomSheet> {
   bool showDetail = false;
   Map<String, dynamic>? selectedHost;
 
+  // 외부에서 현재 높이 비율을 조회 가능하게 함
+  double get sheetHeightRatio => _sheetHeightRatio;
+
   // 외부에서 호출 가능: 바텀 시트를 비활성화 (축소)
   void deactivateSheet() {
     setState(() {
-      _sheetHeightRatio = showDetail ? 0.5 : 0.4; // 다시 활성화 기준 높이로 설정
       _sheetHeightRatio = 0.1; // 비활성화 상태로 축소
     });
   }
@@ -47,7 +49,6 @@ class HostBottomSheetState extends State<HostBottomSheet> {
     setState(() {
       _sheetHeightRatio -=
           details.primaryDelta! / MediaQuery.of(context).size.height;
-
       _sheetHeightRatio = _sheetHeightRatio.clamp(0.1, 0.9);
     });
   }

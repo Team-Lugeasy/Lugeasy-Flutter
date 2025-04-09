@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
-const kDefaultProfileIcon = CircleAvatar(
-  backgroundColor: Color(0xFFDBDBDB),
-  radius: 52,
-  child: Icon(Icons.person, size: 52, color: Color(0xFFC5C5C5)),
-);
+CircleAvatar defaultProfileIcon({double iconSize = 52}) {
+  return CircleAvatar(
+    backgroundColor: const Color(0xFFDBDBDB),
+    radius: iconSize,
+    child: Icon(
+      Icons.person,
+      size: iconSize,
+      color: const Color(0xFFC5C5C5),
+    ),
+  );
+}

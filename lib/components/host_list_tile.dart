@@ -29,7 +29,7 @@ class HostListTile extends StatelessWidget {
                     backgroundImage: NetworkImage(host['profile_image']),
                     radius: 52,
                   )
-                : kDefaultProfileIcon,
+                : defaultProfileIcon(iconSize: 52),
             const SizedBox(width: 20), // 텍스트 왼쪽 마진
             Expanded(
               child: Padding(
