@@ -1,0 +1,84 @@
+import 'package:flutter/material.dart';
+import 'package:lugeasy/common/constants.dart';
+
+class HostListTile extends StatelessWidget {
+  final Map<String, dynamic> host;
+  final VoidCallback onTap;
+
+  const HostListTile({
+    super.key,
+    required this.host,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final hasImage = host['profile_image'] != null &&
+        host['profile_image'].toString().isNotEmpty;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 30), // 위/아래 30px
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(width: 30), // 왼쪽 여백 15 + 15
+            hasImage
+                ? CircleAvatar(
+                    backgroundImage: NetworkImage(host['profile_image']),
+                    radius: 52,
+                  )
+                : kDefaultProfileIcon,
+            const SizedBox(width: 20), // 텍스트 왼쪽 마진
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15), // 오른쪽 여백
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      host['name'],
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          '${host['review_rate']} ★',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(width: 8),
+                        Container(
+                          width: 1,
+                          height: 16,
+                          color: const Color(0x4D000000), // 블랙 30%
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Review ${host['review_count']}',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      host['address'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
