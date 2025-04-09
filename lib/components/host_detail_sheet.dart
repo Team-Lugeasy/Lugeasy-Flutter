@@ -38,7 +38,6 @@ class _HostDetailSheetState extends State<HostDetailSheet> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const SizedBox(height: 4),
           // 상단 닫기 버튼 (리스트 화면으로 돌아감)
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

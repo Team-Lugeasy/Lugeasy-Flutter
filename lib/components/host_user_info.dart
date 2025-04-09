@@ -32,7 +32,7 @@ class HostUserInfo extends StatelessWidget {
                   backgroundImage: NetworkImage(profileImage),
                 ),
         ),
-        SizedBox(height: 50),
+        SizedBox(height: 30),
         Text(name, style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
         SizedBox(height: 4),
         Text(description, style: TextStyle(color: Colors.black)),

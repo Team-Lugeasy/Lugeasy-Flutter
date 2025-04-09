@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'host_list_sheet.dart';
 import 'host_detail_sheet.dart';
+import 'package:lugeasy/common/constants.dart';
+
 
 class HostBottomSheet extends StatefulWidget {
   final VoidCallback onClose;
@@ -12,7 +14,7 @@ class HostBottomSheet extends StatefulWidget {
 }
 
 class HostBottomSheetState extends State<HostBottomSheet> {
-  double _sheetHeightRatio = 0.4; // 초기 상태
+  double _sheetHeightRatio = kBottomSheetListRatio; // 초기 상태
   bool showDetail = false;
   Map<String, dynamic>? selectedHost;
 
@@ -22,7 +24,7 @@ class HostBottomSheetState extends State<HostBottomSheet> {
   // 외부에서 호출 가능: 바텀 시트를 비활성화 (축소)
   void deactivateSheet() {
     setState(() {
-      _sheetHeightRatio = 0.1; // 비활성화 상태로 축소
+      _sheetHeightRatio = kBottomSheetMinRatio; // 비활성화 상태로 축소
     });
   }
 
@@ -31,7 +33,7 @@ class HostBottomSheetState extends State<HostBottomSheet> {
     setState(() {
       showDetail = true;
       selectedHost = host;
-      _sheetHeightRatio = 0.5;
+      _sheetHeightRatio = kBottomSheetDetailRatio;
     });
   }
 
@@ -40,7 +42,7 @@ class HostBottomSheetState extends State<HostBottomSheet> {
     setState(() {
       showDetail = false;
       selectedHost = null;
-      _sheetHeightRatio = 0.4;
+      _sheetHeightRatio = kBottomSheetListRatio;
     });
   }
 
@@ -49,13 +51,16 @@ class HostBottomSheetState extends State<HostBottomSheet> {
     setState(() {
       _sheetHeightRatio -=
           details.primaryDelta! / MediaQuery.of(context).size.height;
-      _sheetHeightRatio = _sheetHeightRatio.clamp(0.1, 0.9);
+      _sheetHeightRatio =
+          _sheetHeightRatio.clamp(kBottomSheetMinRatio, kBottomSheetMaxRatio);
     });
   }
 
   // 드래그 끝났을 때 가까운 높이로 스냅
   void _onVerticalDragEnd(DragEndDetails details) {
-    final breakpoints = showDetail ? [0.1, 0.5, 0.9] : [0.1, 0.4, 0.9];
+    final breakpoints = showDetail
+        ? [kBottomSheetMinRatio, kBottomSheetDetailRatio, kBottomSheetMaxRatio]
+        : [kBottomSheetMinRatio, kBottomSheetListRatio, kBottomSheetMaxRatio];
 
     double closest = breakpoints.first;
     double minDistance = double.infinity;

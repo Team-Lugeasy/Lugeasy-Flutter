@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// 기본 이미지 생성 전 임시 사용할 아이콘 추가
 CircleAvatar defaultProfileIcon({double iconSize = 52}) {
   return CircleAvatar(
     backgroundColor: const Color(0xFFDBDBDB),
@@ -11,3 +12,9 @@ CircleAvatar defaultProfileIcon({double iconSize = 52}) {
     ),
   );
 }
+
+// Map - 바텀 시트 비율 설정
+const double kBottomSheetMinRatio = 0.05; // 최소
+const double kBottomSheetMaxRatio = 0.8; // 최대
+const double kBottomSheetListRatio = 0.3; // 리스트 보기
+const double kBottomSheetDetailRatio = 0.45; // 상세 보기
