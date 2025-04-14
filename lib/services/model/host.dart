@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'host.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Host {
   Host({
     required this.name,

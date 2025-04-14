@@ -1,45 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:lugeasy/services/model/review.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/listitem/host_review_tile.dart';
 
 class HostReviewList extends StatelessWidget {
-  const HostReviewList({super.key});
+  HostReviewList({super.key});
 
-  final List<Map<String, String>> reviews = const [
-    {
+  final List<Review> reviews = [
+    Review.fromJson({
       'profile_image': '',
       'reviewer_name': 'River',
       'created_at': '2days ago',
       'contents':
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, s...'
-    },
-    {
+    }),
+    Review.fromJson({
       'profile_image': '',
       'reviewer_name': 'Liver',
       'created_at': '2days ago',
       'contents':
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, s...'
-    },
-    {
+    }),
+    Review.fromJson({
       'profile_image': '',
       'reviewer_name': 'River',
       'created_at': '2days ago',
       'contents':
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, s...'
-    },
-    {
+    }),
+    Review.fromJson({
       'profile_image': '',
       'reviewer_name': 'River',
       'created_at': '2days ago',
       'contents':
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, s...'
-    },
-    {
+    }),
+    Review.fromJson({
       'profile_image': '',
       'reviewer_name': 'River',
       'created_at': '2days ago',
       'contents':
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, s...'
-    },
+    }),
   ];
 
   @override

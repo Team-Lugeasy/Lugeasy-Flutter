@@ -159,7 +159,7 @@ class _HostDetailSheetState extends State<HostDetailSheet> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const HostReviewList(),
+                HostReviewList(),
                 const SizedBox(height: 16),
                 Align(
                   alignment: Alignment.centerRight,

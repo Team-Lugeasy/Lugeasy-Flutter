@@ -12,25 +12,25 @@ class HostListSheet extends StatelessWidget {
   final List<Host> hosts = [
     Host.fromJson({
       'name': 'Taerin Kim',
-      'profileImage': '',
-      'reviewRate': 4.9,
-      'reviewCount': 119,
+      'profile_image': '',
+      'review_rate': 4.9,
+      'review_count': 119,
       'address': '24 Saleh Al-Mahmoud Street, Yanbu',
       'description': 'Reliable host near the station'
     }),
     Host.fromJson({
       'name': 'Liver Lee',
-      'profileImage': '',
-      'reviewRate': 4.8,
-      'reviewCount': 82,
+      'profile_image': '',
+      'review_rate': 4.8,
+      'review_count': 82,
       'address': '50 Namsan-gil, Seoul',
       'description': 'Clean and safe luggage service'
     }),
     Host.fromJson({
       'name': 'Jisu Yoo',
-      'profileImage': '',
-      'reviewRate': 5.0,
-      'reviewCount': 65,
+      'profile_image': '',
+      'review_rate': 5.0,
+      'review_count': 65,
       'address': '12-3 Gangnam-daero, Seoul',
       'description': 'Kind host in center of Seoul'
     })

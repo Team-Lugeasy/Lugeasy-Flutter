@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lugeasy/common/constants.dart';
+import 'package:lugeasy/services/model/review.dart';
 
 class HostReviewTile extends StatelessWidget {
-  final Map<String, String> review;
+  final Review review;
 
   const HostReviewTile({super.key, required this.review});
 
   @override
   Widget build(BuildContext context) {
-    final hasImage =
-        review['profile_image'] != null && review['profile_image']!.isNotEmpty;
+    final hasImage = review.profileImage.isNotEmpty;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -19,7 +19,7 @@ class HostReviewTile extends StatelessWidget {
           // 프로필 이미지
           hasImage
               ? CircleAvatar(
-                  backgroundImage: NetworkImage(review['profile_image']!),
+                  backgroundImage: NetworkImage(review.profileImage),
                   radius: 24,
                 )
               : defaultProfileIcon(iconSize: 24),
@@ -31,17 +31,17 @@ class HostReviewTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  review['reviewer_name'] ?? '',
+                  review.reviewerName,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  review['created_at'] ?? '',
+                  review.createdAt,
                   style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  review['contents'] ?? '',
+                  review.contents,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
