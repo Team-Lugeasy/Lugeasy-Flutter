@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lugeasy/components/host_bottom_sheet.dart';
+import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
 import 'package:lugeasy/common/constants.dart';
 
 class MapPage extends StatefulWidget {

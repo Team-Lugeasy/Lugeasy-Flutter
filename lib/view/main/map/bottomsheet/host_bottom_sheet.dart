@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'host_list_sheet.dart';
-import 'host_detail_sheet.dart';
+import 'package:lugeasy/services/model/host.dart';
+import 'hostlistsheet/host_list_sheet.dart';
+import 'hostdetailsheet/host_detail_sheet.dart';
 import 'package:lugeasy/common/constants.dart';
-
 
 class HostBottomSheet extends StatefulWidget {
   final VoidCallback onClose;
@@ -16,7 +16,7 @@ class HostBottomSheet extends StatefulWidget {
 class HostBottomSheetState extends State<HostBottomSheet> {
   double _sheetHeightRatio = kBottomSheetListRatio; // 초기 상태
   bool showDetail = false;
-  Map<String, dynamic>? selectedHost;
+  Host? selectedHost;
 
   // 외부에서 현재 높이 비율을 조회 가능하게 함
   double get sheetHeightRatio => _sheetHeightRatio;
@@ -29,7 +29,7 @@ class HostBottomSheetState extends State<HostBottomSheet> {
   }
 
   // 호스트 선택 → 상세 화면 전환
-  void _openDetail(Map<String, dynamic> host) {
+  void _openDetail(Host host) {
     setState(() {
       showDetail = true;
       selectedHost = host;

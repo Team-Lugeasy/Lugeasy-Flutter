@@ -1,38 +1,39 @@
 import 'package:flutter/material.dart';
-import 'host_list_tile.dart';
+import 'package:lugeasy/services/model/host.dart';
+import 'listitem/host_list_tile.dart';
 
 class HostListSheet extends StatelessWidget {
   // 호스트 클릭 시 호출되는 콜백
-  final void Function(Map<String, dynamic>) onHostTap;
+  final void Function(Host) onHostTap;
 
-  const HostListSheet({super.key, required this.onHostTap});
+  HostListSheet({super.key, required this.onHostTap});
 
   // 임시로 하드코딩된 호스트 목록 (향후 API로 대체 예정)
-  final List<Map<String, dynamic>> hosts = const [
-    {
+  final List<Host> hosts = [
+    Host.fromJson({
       'name': 'Taerin Kim',
-      'profile_image': '',
-      'review_rate': 4.9,
-      'review_count': 119,
+      'profileImage': '',
+      'reviewRate': 4.9,
+      'reviewCount': 119,
       'address': '24 Saleh Al-Mahmoud Street, Yanbu',
       'description': 'Reliable host near the station'
-    },
-    {
+    }),
+    Host.fromJson({
       'name': 'Liver Lee',
-      'profile_image': '',
-      'review_rate': 4.8,
-      'review_count': 82,
+      'profileImage': '',
+      'reviewRate': 4.8,
+      'reviewCount': 82,
       'address': '50 Namsan-gil, Seoul',
       'description': 'Clean and safe luggage service'
-    },
-    {
+    }),
+    Host.fromJson({
       'name': 'Jisu Yoo',
-      'profile_image': '',
-      'review_rate': 5.0,
-      'review_count': 65,
+      'profileImage': '',
+      'reviewRate': 5.0,
+      'reviewCount': 65,
       'address': '12-3 Gangnam-daero, Seoul',
       'description': 'Kind host in center of Seoul'
-    },
+    })
   ];
 
   @override

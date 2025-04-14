@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lugeasy/components/host_review_list.dart';
+import 'package:lugeasy/services/model/host.dart';
+import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/host_review_list.dart';
 import 'host_user_info.dart';
 
 class HostDetailSheet extends StatefulWidget {
@@ -10,7 +11,7 @@ class HostDetailSheet extends StatefulWidget {
   final VoidCallback onBack;
 
   // 선택된 호스트 정보
-  final Map<String, dynamic> host;
+  final Host host;
 
   const HostDetailSheet({
     super.key,
@@ -54,12 +55,12 @@ class _HostDetailSheetState extends State<HostDetailSheet> {
 
           // 호스트 기본 정보 (이름, 평점, 주소 등)
           HostUserInfo(
-            name: widget.host['name'],
-            description: widget.host['description'],
-            reviewRate: widget.host['review_rate'],
-            reviewCount: widget.host['review_count'],
-            address: widget.host['address'],
-            profileImage: widget.host['profile_image'],
+            name: widget.host.name,
+            description: widget.host.description,
+            reviewRate: widget.host.reviewRate,
+            reviewCount: widget.host.reviewCount,
+            address: widget.host.address,
+            profileImage: widget.host.profileImage,
           ),
           const SizedBox(height: 24),
 

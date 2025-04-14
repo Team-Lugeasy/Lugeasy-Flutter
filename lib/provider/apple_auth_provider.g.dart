@@ -10,16 +10,13 @@ String _$appleAuthNotifierHash() => r'bcb3fe0cba61bcba486eb4ae97a7437360e0dd4a';
 
 /// See also [AppleAuthNotifier].
 @ProviderFor(AppleAuthNotifier)
-final appleAuthNotifierProvider = AutoDisposeNotifierProvider<
-  AppleAuthNotifier,
-  AsyncValue<String?>
->.internal(
+final appleAuthNotifierProvider = AutoDisposeNotifierProvider<AppleAuthNotifier,
+    AsyncValue<String?>>.internal(
   AppleAuthNotifier.new,
   name: r'appleAuthNotifierProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$appleAuthNotifierHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$appleAuthNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

@@ -12,15 +12,13 @@ String _$testProviderHash() => r'3a807cae404da1659246038ffe70a59d3f80ad3f';
 @ProviderFor(TestProvider)
 final testProviderProvider =
     AutoDisposeNotifierProvider<TestProvider, String>.internal(
-      TestProvider.new,
-      name: r'testProviderProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$testProviderHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  TestProvider.new,
+  name: r'testProviderProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$testProviderHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$TestProvider = AutoDisposeNotifier<String>;
 // ignore_for_file: type=lint

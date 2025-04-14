@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lugeasy/common/constants.dart';
+import 'package:lugeasy/services/model/host.dart';
 
 class HostListTile extends StatelessWidget {
-  final Map<String, dynamic> host;
+  final Host host;
   final VoidCallback onTap;
 
   const HostListTile({
@@ -13,8 +14,7 @@ class HostListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasImage = host['profile_image'] != null &&
-        host['profile_image'].toString().isNotEmpty;
+    final hasImage = host.profileImage.toString().isNotEmpty;
 
     return GestureDetector(
       onTap: onTap,
@@ -26,7 +26,7 @@ class HostListTile extends StatelessWidget {
             const SizedBox(width: 30), // 왼쪽 여백 15 + 15
             hasImage
                 ? CircleAvatar(
-                    backgroundImage: NetworkImage(host['profile_image']),
+                    backgroundImage: NetworkImage(host.profileImage),
                     radius: 52,
                   )
                 : defaultProfileIcon(iconSize: 52),
@@ -38,7 +38,7 @@ class HostListTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      host['name'],
+                      host.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -48,7 +48,7 @@ class HostListTile extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '${host['review_rate']} ★',
+                          '${host.reviewRate} ★',
                           style: const TextStyle(fontSize: 16),
                         ),
                         const SizedBox(width: 8),
@@ -59,14 +59,14 @@ class HostListTile extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'Review ${host['review_count']}',
+                          'Review ${host.reviewCount}',
                           style: const TextStyle(fontSize: 16),
                         ),
                       ],
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      host['address'],
+                      host.address,
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.black,

@@ -40,7 +40,8 @@ class HostUserInfo extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("$reviewRate", style: TextStyle(fontWeight: FontWeight.normal)),
+            Text("$reviewRate",
+                style: TextStyle(fontWeight: FontWeight.normal)),
             SizedBox(width: 4),
             Icon(Icons.star, size: 16, color: Colors.black),
             SizedBox(width: 8),
