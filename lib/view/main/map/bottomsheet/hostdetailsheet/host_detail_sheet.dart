@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lugeasy/services/model/host.dart';
-import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/host_review_list.dart';
+import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/reservation_section.dart';
+import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/review/host_review_list.dart';
 import 'host_user_info.dart';
 
 class HostDetailSheet extends StatefulWidget {
@@ -147,9 +148,11 @@ class _HostDetailSheetState extends State<HostDetailSheet> {
                   );
                 },
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 12),
               if (_tabIndex == 0) ...[
-                const Text("TO DO: Reservation")
+                const SizedBox(height: 12),
+                const ReservationSection(),
+                const SizedBox(height: 12),
               ] else ...[
                 const Align(
                   alignment: Alignment.centerLeft,

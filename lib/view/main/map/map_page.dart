@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
 import 'package:lugeasy/common/constants.dart';
+import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
+import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/reservation_button.dart';
+import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/bottom_action_bar.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  final ValueNotifier<bool> isDetailVisible;
+
+  const MapPage({super.key, required this.isDetailVisible});
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -11,6 +15,14 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   final GlobalKey<HostBottomSheetState> _bottomSheetKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    HostBottomSheetState.isDetailVisible.addListener(() {
+      widget.isDetailVisible.value = HostBottomSheetState.isDetailVisible.value;
+    });
+  }
 
   void _deactivateSheet() {
     _bottomSheetKey.currentState?.deactivateSheet();
@@ -23,21 +35,17 @@ class _MapPageState extends State<MapPage> {
       onTapDown: (details) {
         final renderBox = context.findRenderObject() as RenderBox;
         final localPosition = renderBox.globalToLocal(details.globalPosition);
-
         final screenHeight = MediaQuery.of(context).size.height;
-        final sheetHeight = screenHeight *
-            (_bottomSheetKey.currentState?.sheetHeightRatio ??
-                kBottomSheetMinRatio);
+        final sheetHeight =
+            screenHeight * HostBottomSheetState.sheetHeightRatio.value;
 
-        // 바텀 시트 영역 바깥을 눌렀을 때만 비활성화
         if (localPosition.dy < screenHeight - sheetHeight) {
           _deactivateSheet();
         }
       },
       child: Stack(
         children: [
-          // 지도 또는 메인 콘텐츠
-          const Center(child: Text('Map Content')), // TODO: 지도 위젯으로 교체
+          const Center(child: Text('Map Content')),
 
           // 바텀 시트
           Positioned.fill(
