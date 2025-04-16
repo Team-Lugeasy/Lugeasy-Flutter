@@ -14,17 +14,24 @@ class HostBottomSheet extends StatefulWidget {
 }
 
 class HostBottomSheetState extends State<HostBottomSheet> {
+  static final ValueNotifier<bool> isDetailVisible = ValueNotifier(false);
+  static final ValueNotifier<double> sheetHeightRatio =
+      ValueNotifier(kBottomSheetListRatio);
+
   double _sheetHeightRatio = kBottomSheetListRatio; // 초기 상태
   bool showDetail = false;
   Host? selectedHost;
 
-  // 외부에서 현재 높이 비율을 조회 가능하게 함
-  double get sheetHeightRatio => _sheetHeightRatio;
+  void _updateSheetRatio(double newRatio) {
+    _sheetHeightRatio =
+        newRatio.clamp(kBottomSheetMinRatio, kBottomSheetMaxRatio);
+    sheetHeightRatio.value = _sheetHeightRatio;
+  }
 
   // 외부에서 호출 가능: 바텀 시트를 비활성화 (축소)
   void deactivateSheet() {
     setState(() {
-      _sheetHeightRatio = kBottomSheetMinRatio; // 비활성화 상태로 축소
+      _updateSheetRatio(kBottomSheetMinRatio);
     });
   }
 
@@ -33,7 +40,12 @@ class HostBottomSheetState extends State<HostBottomSheet> {
     setState(() {
       showDetail = true;
       selectedHost = host;
-      _sheetHeightRatio = kBottomSheetDetailRatio;
+      // 현재 높이가 최대면 유지, 아니면 디테일 뷰 높이로
+      final targetRatio = _sheetHeightRatio == kBottomSheetMaxRatio
+          ? kBottomSheetMaxRatio
+          : kBottomSheetDetailRatio;
+      _updateSheetRatio(targetRatio);
+      isDetailVisible.value = true;
     });
   }
 
@@ -42,17 +54,20 @@ class HostBottomSheetState extends State<HostBottomSheet> {
     setState(() {
       showDetail = false;
       selectedHost = null;
-      _sheetHeightRatio = kBottomSheetListRatio;
+      // 현재 높이가 최대면 유지, 아니면 기본 리스트 높이로
+      final targetRatio = _sheetHeightRatio == kBottomSheetMaxRatio
+          ? kBottomSheetMaxRatio
+          : kBottomSheetListRatio;
+      _updateSheetRatio(targetRatio);
+      isDetailVisible.value = false;
     });
   }
 
   // 드래그 중 바텀 시트 높이 변경
   void _onVerticalDragUpdate(DragUpdateDetails details) {
     setState(() {
-      _sheetHeightRatio -=
-          details.primaryDelta! / MediaQuery.of(context).size.height;
-      _sheetHeightRatio =
-          _sheetHeightRatio.clamp(kBottomSheetMinRatio, kBottomSheetMaxRatio);
+      final delta = details.primaryDelta! / MediaQuery.of(context).size.height;
+      _updateSheetRatio(_sheetHeightRatio - delta);
     });
   }
 
@@ -62,19 +77,11 @@ class HostBottomSheetState extends State<HostBottomSheet> {
         ? [kBottomSheetMinRatio, kBottomSheetDetailRatio, kBottomSheetMaxRatio]
         : [kBottomSheetMinRatio, kBottomSheetListRatio, kBottomSheetMaxRatio];
 
-    double closest = breakpoints.first;
-    double minDistance = double.infinity;
-
-    for (final point in breakpoints) {
-      final distance = (_sheetHeightRatio - point).abs();
-      if (distance < minDistance) {
-        minDistance = distance;
-        closest = point;
-      }
-    }
+    double closest = breakpoints.reduce((a, b) =>
+        (_sheetHeightRatio - a).abs() < (_sheetHeightRatio - b).abs() ? a : b);
 
     setState(() {
-      _sheetHeightRatio = closest;
+      _updateSheetRatio(closest);
     });
   }
 
