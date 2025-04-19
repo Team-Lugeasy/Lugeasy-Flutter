@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lugeasy/common/constants.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/reservation_button.dart';
@@ -15,6 +16,11 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   final GlobalKey<HostBottomSheetState> _bottomSheetKey = GlobalKey();
+  late GoogleMapController mapController;
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
 
   @override
   void initState() {
@@ -45,7 +51,11 @@ class _MapPageState extends State<MapPage> {
       },
       child: Stack(
         children: [
-          const Center(child: Text('Map Content')),
+          GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition: CameraPosition(
+                  target: LatLng(37.521563, 126.677433), zoom: 11.0),
+              onMapCreated: _onMapCreated),
 
           // 바텀 시트
           Positioned.fill(
