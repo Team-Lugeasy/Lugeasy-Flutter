@@ -24,6 +24,7 @@ dependencies:
   table_calendar: ^3.2.0
   google_maps_flutter: ^2.12.1
   flutter_dotenv: ^5.2.1
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +38,12 @@ dev_dependencies:
 flutter:
   assets:
   - ./env/.env
+  - assets/icon_luggage_off.svg
+  - assets/icon_luggage_on.svg
+  - assets/icon_map_on.svg
+  - assets/icon_map_off.svg
+  - assets/icon_profile_on.svg
+  - assets/icon_profile_off.svg
   uses-material-design: true
 
 
