@@ -11,7 +11,7 @@ void main() async {
   await Firebase.initializeApp(
     options: FirebaseOptions(
         apiKey: dotenv.env['FIREBASE_API_KEY']!,
-        appId: "1:542604644530:android:549abacca531fde3b079ab",
+        appId: dotenv.env['FIREBASE_APP_ID']!,
         messagingSenderId: "123456",
         projectId: "lugeasy-49de6"),
   );
