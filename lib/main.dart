@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/view/login/login.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:lugeasy/view/main/main_container.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await dotenv.load(fileName: "env/.env");
+
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_API_KEY']!,
+        appId: "1:542604644530:android:549abacca531fde3b079ab",
+        messagingSenderId: "123456",
+        projectId: "lugeasy-49de6"),
+  );
   runApp(ProviderScope(child: const MyApp()));
 }
 

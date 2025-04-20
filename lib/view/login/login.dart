@@ -133,6 +133,7 @@ class LoginPage extends ConsumerWidget {
         MaterialPageRoute(builder: (context) => MainContainer()),
       );
     } catch (error) {
+      print(error.toString());
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("Error: ${error.toString()}")));
