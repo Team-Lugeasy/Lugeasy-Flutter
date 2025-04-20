@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/view/main/main_container.dart';
 
@@ -111,7 +112,17 @@ class LoginPage extends ConsumerWidget {
 
   Future<void> _googleLogin(BuildContext context, WidgetRef ref) async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAccount? googleUser = await GoogleSignIn(
+        scopes: [
+          'email',
+          'https://www.googleapis.com/auth/userinfo.profile',
+        ],
+        // 이 옵션이 serverAuthCode를 활성화함
+        serverClientId: dotenv.env['GOOGLE_SERVER_CLIENT_ID']!,
+      ).signIn();
+
+      print("server auth code");
+      print(googleUser?.serverAuthCode);
 
       // Obtain the auth details from the request
       final GoogleSignInAuthentication? googleAuth =
