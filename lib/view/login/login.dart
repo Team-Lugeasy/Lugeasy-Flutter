@@ -129,15 +129,17 @@ class LoginPage extends ConsumerWidget {
           await googleUser?.authentication;
 
       // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-
-      final token = await FirebaseAuth.instance.signInWithCredential(
-        credential,
-      );
-      debugPrint(token.toString());
+      // final credential = GoogleAuthProvider.credential(
+      //   accessToken: googleAuth?.accessToken,
+      //   idToken: googleAuth?.idToken,
+      // );
+      print("idToken");
+      print(googleAuth?.idToken);
+      print(googleAuth?.accessToken);
+      // final token = await FirebaseAuth.instance.signInWithCredential(
+      //   credential,
+      // );
+      // debugPrint(token.toString());
 
       Navigator.push(
         context,

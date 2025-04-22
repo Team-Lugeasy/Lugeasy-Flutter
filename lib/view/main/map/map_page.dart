@@ -54,8 +54,9 @@ class _MapPageState extends State<MapPage> {
           GoogleMap(
               mapType: MapType.normal,
               initialCameraPosition: CameraPosition(
-                  target: LatLng(37.521563, 126.677433), zoom: 11.0),
-              onMapCreated: _onMapCreated),
+                  target: LatLng(37.4988064, 127.0274241), zoom: 15),
+              onMapCreated: _onMapCreated,
+              myLocationEnabled: false),
 
           // 바텀 시트
           Positioned.fill(

@@ -25,6 +25,7 @@ dependencies:
   google_maps_flutter: ^2.12.1
   flutter_dotenv: ^5.2.1
   flutter_svg: ^2.0.9
+  permission_handler: ^11.0.0
 
 dev_dependencies:
   flutter_test:
