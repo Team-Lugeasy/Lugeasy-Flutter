@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/view/main/main_container.dart';
-
-import '../../provider/apple_auth_provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends ConsumerWidget {
@@ -14,8 +13,6 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appleLoginState = ref.watch(appleAuthNotifierProvider);
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -31,12 +28,8 @@ class LoginPage extends ConsumerWidget {
               if (Platform.isIOS) ...[
                 // iOS
                 ElevatedButton(
-                  onPressed: appleLoginState is AsyncLoading
-                      ? null
-                      : () => _appleLogin(context, ref),
-                  child: appleLoginState is AsyncLoading
-                      ? CircularProgressIndicator()
-                      : Text("Apple Login"),
+                  onPressed: () => _appleLogin(context, ref),
+                  child: Text("Apple Login"),
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
@@ -83,30 +76,38 @@ class LoginPage extends ConsumerWidget {
 
   Future<void> _appleLogin(BuildContext context, WidgetRef ref) async {
     try {
-      final appleNotifier = ref.read(appleAuthNotifierProvider.notifier);
-      await appleNotifier.signInWithApple();
-
-      final appleLoginState = ref.read(appleAuthNotifierProvider);
-      appleLoginState.when(
-        data: (token) {
-          if (token != null) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MainContainer()),
-            );
-          }
-        },
-        error: (error, _) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text("Apple 로그인 실패: $error")));
-        },
-        loading: () {}, // 로딩 중 UI 처리는 UI에서 진행
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
       );
+
+      final authorizationCode = credential.authorizationCode;
+
+      // 서버 API 연동 전 authorizationCode 확인용 팝업
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Apple Auth Code"),
+          content: SingleChildScrollView(
+            child: SelectableText(authorizationCode),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("확인"),
+            ),
+          ],
+        ),
+      );
+
+      // TODO: 이후 실제 서버 요청
+      // await ref.read(authProvider.notifier).loginWithApple(authorizationCode);
     } catch (error) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Error: ${error.toString()}")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Apple 로그인 실패: ${error.toString()}")),
+      );
     }
   }
 

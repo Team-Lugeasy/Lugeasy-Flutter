@@ -45,34 +45,35 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<!-- Apple 로그인 -->
+	<!-- Apple 로그인 + Google 로그인용 URL Schemes -->
 	<key>CFBundleURLTypes</key>
 	<array>
+		<!-- Apple 로그인 -->
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>lugeasy</string> <!-- TODO: 번들 ID 변경 -->
+			<string>com.jimjim.lugeasy</string>
 			</array>
 		</dict>
-	</array>
-	<!-- Face ID를 사용할 때 시스템 팝업에 표시되는 안내 문구 -->
-	<key>NSFaceIDUsageDescription</key>
-	<string>Apple 로그인 시 Face ID를 사용하여 안전하게 인증합니다.</string>
-	<key>GIDClientID</key>
-	<string>542604644530-5kjjjsjf3g8j6frqm1a489ngeh60v5ij.apps.googleusercontent.com</string>
-
-	<key>CFBundleURLTypes</key>
-	<array>
+		<!-- Google 로그인 -->
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.542604644530-5kjjjsjf3g8j6frqm1a489ngeh60v5ij</string>
+			<string>com.googleusercontent.apps.542604644530-5kjjjsjf3g8j6frqm1a489ngeh60v5ij</string>
 			</array>
 		</dict>
 	</array>
     <key>GOOGLE_MAP_API_URL</key>
     <string>${GOOGLE_MAP_API_URL}</string>
+	<!-- Apple 로그인 시 Face ID를 위한 안내 -->
+	<key>NSFaceIDUsageDescription</key>
+	<string>Apple 로그인 시 Face ID를 사용하여 안전하게 인증합니다.</string>
+	<!-- Google 로그인용 클라이언트 ID -->
+	<key>GIDClientID</key>
+	<string>542604644530-5kjjjsjf3g8j6frqm1a489ngeh60v5ij.apps.googleusercontent.com</string>
 </dict>
 </plist>

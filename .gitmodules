@@ -1,3 +1,4 @@
 [submodule "env"]
 	path = env
 	url = https://github.com/Team-Lugeasy/Lugeasy-Flutter-Config.git
+	branch = main
