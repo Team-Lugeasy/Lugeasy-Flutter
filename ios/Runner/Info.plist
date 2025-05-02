@@ -54,7 +54,7 @@
 			<string>None</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-			<string>com.jimjim.lugeasy</string>
+			<string>com.lugeasy.jimjim</string>
 			</array>
 		</dict>
 		<!-- Google 로그인 -->
@@ -63,7 +63,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-			<string>com.googleusercontent.apps.542604644530-5kjjjsjf3g8j6frqm1a489ngeh60v5ij</string>
+			<string>com.googleusercontent.apps.378524376717-dnrbpvluv5svj1t56kkt3knm4kqvhfpn</string>
 			</array>
 		</dict>
 	</array>
@@ -74,6 +74,6 @@
 	<string>Apple 로그인 시 Face ID를 사용하여 안전하게 인증합니다.</string>
 	<!-- Google 로그인용 클라이언트 ID -->
 	<key>GIDClientID</key>
-	<string>542604644530-5kjjjsjf3g8j6frqm1a489ngeh60v5ij.apps.googleusercontent.com</string>
+	<string>378524376717-dnrbpvluv5svj1t56kkt3knm4kqvhfpn.apps.googleusercontent.com</string>
 </dict>
 </plist>

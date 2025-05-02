@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.jimjim.lugeasy"
+    namespace = "com.lugeasy.jimjim"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.jimjim.lugeasy"
+        applicationId = "com.lugeasy.jimjim"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 23
@@ -41,7 +41,7 @@ android {
         if (envFile.exists()) {
             properties.load(envFile.inputStream())
         }
-        resValue("string", "googleMapsApiKey", properties.getProperty("GOOGLE_MAP_API_URL", ""))
+        resValue("string", "googleMapsApiKey", properties.getProperty("FIREBASE_API_KEY", ""))
 
     }
 
