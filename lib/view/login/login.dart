@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lugeasy/services/base_response.dart';
+import 'package:lugeasy/services/intro_services.dart';
+import 'package:lugeasy/services/model/login_response.dart';
 import 'package:lugeasy/view/main/main_container.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -122,30 +125,37 @@ class LoginPage extends ConsumerWidget {
         serverClientId: dotenv.env['GOOGLE_SERVER_CLIENT_ID']!,
       ).signIn();
 
-      print("server auth code");
-      print(googleUser?.serverAuthCode);
-
       // Obtain the auth details from the request
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
 
       // Create a new credential
-      // final credential = GoogleAuthProvider.credential(
-      //   accessToken: googleAuth?.accessToken,
-      //   idToken: googleAuth?.idToken,
-      // );
-      print("idToken");
-      print(googleAuth?.idToken);
-      print(googleAuth?.accessToken);
-      // final token = await FirebaseAuth.instance.signInWithCredential(
-      //   credential,
-      // );
-      // debugPrint(token.toString());
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MainContainer()),
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
       );
+
+      final token = await FirebaseAuth.instance.signInWithCredential(
+        credential,
+      );
+
+      final idToken = googleAuth?.idToken;
+      if (idToken == null) {
+        print("ID 토큰이 null입니다.");
+        return;
+      }
+      final result = await IntroServices().login(idToken, 'google');
+
+      if (result is Success<LoginResponse>) {
+        // 로그인 성공 시, 메인 화면으로 이동
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MainContainer()),
+        );
+      } else if (result is Error<LoginResponse>) {
+        // 로그인 실패 시 메시지 출력
+        print("로그인 실패: ${result.message}");
+      }
     } catch (error) {
       print(error.toString());
       ScaffoldMessenger.of(
