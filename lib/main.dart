@@ -14,7 +14,7 @@ void main() async {
         apiKey: dotenv.env['FIREBASE_API_KEY']!,
         appId: dotenv.env['FIREBASE_APP_ID']!,
         messagingSenderId: "123456",
-        projectId: "lugeasy-49de6"),
+        projectId: "pc-api-9088886599585804524-472"),
   );
   runApp(ProviderScope(child: const MyApp()));
 }
