@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/services/base_response.dart';
 import 'package:lugeasy/services/intro_services.dart';
 import 'package:lugeasy/services/model/login_response.dart';
+import 'package:lugeasy/util/log_util.dart';
 import 'package:lugeasy/view/main/main_container.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -141,7 +142,7 @@ class LoginPage extends ConsumerWidget {
 
       final idToken = googleAuth?.idToken;
       if (idToken == null) {
-        print("ID 토큰이 null입니다.");
+        logger.d("ID 토큰이 null입니다.");
         return;
       }
       final result = await IntroServices().login(idToken, 'google');
@@ -154,10 +155,10 @@ class LoginPage extends ConsumerWidget {
         );
       } else if (result is Error<LoginResponse>) {
         // 로그인 실패 시 메시지 출력
-        print("로그인 실패: ${result.message}");
+        logger.d("로그인 실패: ${result.message}");
       }
     } catch (error) {
-      print(error.toString());
+      logger.d(error.toString());
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("Error: ${error.toString()}")));

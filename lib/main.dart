@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lugeasy/util/log_util.dart';
 import 'package:lugeasy/view/login/login.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,8 +38,8 @@ class MyApp extends StatelessWidget {
 Future<void> requestLocationPermission() async {
   var status = await Permission.location.request();
   if (status.isGranted) {
-    print('위치 권한 허용됨');
+    logger.d('위치 권한 허용됨');
   } else {
-    print('위치 권한 거부됨');
+    logger.d('위치 권한 거부됨');
   }
 }
