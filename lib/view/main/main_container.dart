@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lugeasy/common/value_listenable_builder2.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/bottom_action_bar.dart';
@@ -50,15 +51,38 @@ class _MainContainerState extends State<MainContainer> {
         Scaffold(
           body: _pages[_selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
-            items: const [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.search), label: 'Matching'),
-              BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person), label: 'Mypage'),
-            ],
             currentIndex: _selectedIndex,
             onTap: _onItemTapped,
+            selectedItemColor: Colors.red, // 선택된 아이템 색상
+            unselectedItemColor: Colors.black, // 선택 안 된 아이템 색상
+            selectedLabelStyle: TextStyle(color: Colors.red),
+            unselectedLabelStyle: TextStyle(color: Colors.black),
+            items: [
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  _selectedIndex == 0
+                      ? 'assets/icon_luggage_on.svg'
+                      : 'assets/icon_luggage_off.svg',
+                ),
+                label: 'Matching',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  _selectedIndex == 1
+                      ? 'assets/icon_map_on.svg'
+                      : 'assets/icon_map_off.svg',
+                ),
+                label: 'Map',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  _selectedIndex == 2
+                      ? 'assets/icon_profile_on.svg'
+                      : 'assets/icon_profile_off.svg',
+                ),
+                label: 'Mypage',
+              ),
+            ],
           ),
         ),
         ValueListenableBuilder2<bool, double>(

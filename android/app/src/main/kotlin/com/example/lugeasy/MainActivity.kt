@@ -1,4 +1,4 @@
-package com.jimjim.lugeasy
+package com.lugeasy.jimjim
 
 import io.flutter.embedding.android.FlutterActivity
 

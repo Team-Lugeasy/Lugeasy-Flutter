@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.File
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -6,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.jimjim.lugeasy"
+    namespace = "com.lugeasy.jimjim"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -25,13 +28,21 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.jimjim.lugeasy"
+        applicationId = "com.lugeasy.jimjim"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        minSdk = 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        val properties = Properties()
+        val envFile = File(rootProject.projectDir, "env/.env")
+        if (envFile.exists()) {
+            properties.load(envFile.inputStream())
+        }
+        resValue("string", "googleMapsApiKey", properties.getProperty("FIREBASE_API_KEY", ""))
+
     }
 
     buildTypes {
