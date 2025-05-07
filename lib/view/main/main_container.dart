@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lugeasy/common/constants.dart';
 import 'package:lugeasy/common/value_listenable_builder2.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/bottom_action_bar.dart';
-import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/reservation_button.dart';
 import 'package:lugeasy/view/main/map/map_page.dart';
 import 'package:lugeasy/view/main/matching/matching_page.dart';
 import 'package:lugeasy/view/main/mypage/my_page.dart';
@@ -32,7 +30,7 @@ class _MainContainerState extends State<MainContainer> {
     super.initState();
     _pages.addAll([
       MatchingPage(),
-      MapPage(isDetailVisible: _mapDetailVisible), // 전달!
+      MapPage(isDetailVisible: _mapDetailVisible),
       MyPage(),
     ]);
   }
@@ -60,30 +58,21 @@ class _MainContainerState extends State<MainContainer> {
                   icon: Icon(Icons.person), label: 'Mypage'),
             ],
             currentIndex: _selectedIndex,
-            onTap: (index) {
-              setState(() => _selectedIndex = index);
-            },
+            onTap: _onItemTapped,
           ),
         ),
-
-        // Map - 호스트 디테일 시트에서 바텀 네비게이션 바를 덮어야함
         ValueListenableBuilder2<bool, double>(
           first: _mapDetailVisible,
           second: HostBottomSheetState.sheetHeightRatio,
           builder: (context, isDetail, ratio, _) {
-            final isMap = _selectedIndex == 1;
             final shouldShow = isMap && isDetail && ratio > 0.1;
 
             return shouldShow
-                ? Positioned(
+                ? const Positioned(
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    child: BottomActionBar(
-                      children: [
-                        ReservationButton(onPressed: () {}),
-                      ],
-                    ),
+                    child: BottomActionBar(),
                   )
                 : const SizedBox.shrink();
           },

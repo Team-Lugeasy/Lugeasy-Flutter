@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/host_time_slot.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/host_time_slot_button.dart';
+import 'package:lugeasy/provider/reservation_state_provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class ReservationSection extends StatefulWidget {
+class ReservationSection extends ConsumerStatefulWidget {
   const ReservationSection({super.key});
 
   @override
-  State<ReservationSection> createState() => _ReservationSectionState();
+  ConsumerState<ReservationSection> createState() => _ReservationSectionState();
 }
 
-class _ReservationSectionState extends State<ReservationSection> {
+class _ReservationSectionState extends ConsumerState<ReservationSection> {
   DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay = DateTime.now();
+
   final Set<TimeSlot> _availableTimeSlots = {
     TimeSlot.t0001,
     TimeSlot.t0102,
@@ -33,50 +35,12 @@ class _ReservationSectionState extends State<ReservationSection> {
     TimeSlot.t1617,
   };
 
-  TimeSlot? _dropOffSlot;
-  TimeSlot? _findingSlot;
-
   void _handleTimeSlotTap(TimeSlot slot) {
-    setState(() {
-      // 두 개 다 선택된 상태에서 두 번째 슬롯을 다시 누르면 두 번째만 해제
-      if (_dropOffSlot != null && _findingSlot == slot) {
-        _findingSlot = null;
-        return;
-      }
-
-      // 두 개 다 선택된 상태에서 다른 슬롯 누르면 초기화 후 새 슬롯을 dropOff로 지정
-      if (_dropOffSlot != null && _findingSlot != null) {
-        _dropOffSlot = slot;
-        _findingSlot = null;
-        return;
-      }
-
-      // 같은 슬롯 누르면 초기화
-      if (_dropOffSlot == slot) {
-        _dropOffSlot = null;
-        return;
-      }
-
-      // 첫 번째 슬롯만 선택된 상태
-      if (_dropOffSlot != null && _findingSlot == null) {
-        // dropOff 이후 시간만 선택 가능
-        if (_availableTimeSlots.contains(slot) &&
-            slot.index > _dropOffSlot!.index) {
-          _findingSlot = slot;
-        } else {
-          // invalid second slot tap → 전체 초기화 후 해당 슬롯을 dropOff로
-          _dropOffSlot = slot;
-          _findingSlot = null;
-        }
-        return;
-      }
-
-      // 아무것도 선택되지 않은 상태
-      _dropOffSlot = slot;
-    });
+    ref.read(reservationNotifierProvider.notifier).selectSlot(slot);
   }
 
-  Widget buildSlotGrid(List<TimeSlot> slots) {
+  Widget buildSlotGrid(
+      List<TimeSlot> slots, TimeSlot? dropOff, TimeSlot? finding) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final itemWidth = (constraints.maxWidth - 16) / 2;
@@ -85,12 +49,13 @@ class _ReservationSectionState extends State<ReservationSection> {
           runSpacing: 8,
           children: slots.map((slot) {
             final bool isDisabled = !_availableTimeSlots.contains(slot) ||
-                (_dropOffSlot != null &&
-                    _findingSlot == null &&
-                    slot.index <= _dropOffSlot!.index);
+                (dropOff != null &&
+                    finding == null &&
+                    slot.index <= dropOff.index &&
+                    slot != dropOff);
 
             final TimeSlotState state;
-            if (_dropOffSlot == slot || _findingSlot == slot) {
+            if (dropOff == slot || finding == slot) {
               state = TimeSlotState.selected;
             } else if (isDisabled) {
               state = TimeSlotState.disabled;
@@ -114,6 +79,7 @@ class _ReservationSectionState extends State<ReservationSection> {
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(reservationNotifierProvider);
     final amSlots = TimeSlot.values.where((slot) => slot.isAm).toList();
     final pmSlots = TimeSlot.values.where((slot) => !slot.isAm).toList();
 
@@ -129,7 +95,7 @@ class _ReservationSectionState extends State<ReservationSection> {
               const SizedBox(width: 8),
               Flexible(
                 child: Text(
-                  "${_selectedDay?.year}.${_selectedDay?.month.toString().padLeft(2, '0')}.${_selectedDay?.day.toString().padLeft(2, '0')}",
+                  "${state.selectedDate?.year}.${state.selectedDate?.month.toString().padLeft(2, '0')}.${state.selectedDate?.day.toString().padLeft(2, '0')}",
                   style: const TextStyle(fontWeight: FontWeight.bold),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -141,13 +107,13 @@ class _ReservationSectionState extends State<ReservationSection> {
             firstDay: DateTime.now(),
             lastDay: DateTime.now().add(const Duration(days: 365)),
             focusedDay: _focusedDay,
-            selectedDayPredicate: (day) => isSameDay(day, _selectedDay),
+            selectedDayPredicate: (day) => isSameDay(day, state.selectedDate),
             onDaySelected: (selectedDay, focusedDay) {
+              ref
+                  .read(reservationNotifierProvider.notifier)
+                  .selectDate(selectedDay);
               setState(() {
-                _selectedDay = selectedDay;
                 _focusedDay = focusedDay;
-                _dropOffSlot = null;
-                _findingSlot = null;
               });
             },
             headerStyle: const HeaderStyle(
@@ -165,11 +131,11 @@ class _ReservationSectionState extends State<ReservationSection> {
           const SizedBox(height: 36),
           const Text("AM"),
           const SizedBox(height: 12),
-          buildSlotGrid(amSlots),
+          buildSlotGrid(amSlots, state.dropOffSlot, state.findingSlot),
           const SizedBox(height: 24),
           const Text("PM"),
           const SizedBox(height: 12),
-          buildSlotGrid(pmSlots),
+          buildSlotGrid(pmSlots, state.dropOffSlot, state.findingSlot),
           const SizedBox(height: 48),
         ],
       ),
