@@ -36,13 +36,6 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 
-        val properties = Properties()
-        val envFile = File(rootProject.projectDir, "env/.env")
-        if (envFile.exists()) {
-            properties.load(envFile.inputStream())
-        }
-        resValue("string", "googleMapsApiKey", properties.getProperty("FIREBASE_API_KEY", ""))
-
     }
 
     buildTypes {
