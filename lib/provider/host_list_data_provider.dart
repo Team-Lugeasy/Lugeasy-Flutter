@@ -19,7 +19,9 @@ class HostListNotifier extends _$HostListNotifier {
         "review_rate": 4.8,
         "review_count": 120,
         "address": "123 Main Street",
-        "description": "Experienced host"
+        "description": "Experienced host",
+        "latitude": 37.5642135,
+        "longitude": 127.0016985
       },
       {
         "name": "Bob",
@@ -27,7 +29,9 @@ class HostListNotifier extends _$HostListNotifier {
         "review_rate": 4.6,
         "review_count": 90,
         "address": "456 Oak Avenue",
-        "description": "Friendly and professional"
+        "description": "Friendly and professional",
+        "latitude": 37.565,
+        "longitude": 127.002
       }
     ]
     ''';
