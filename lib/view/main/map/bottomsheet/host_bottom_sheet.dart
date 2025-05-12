@@ -36,7 +36,7 @@ class HostBottomSheetState extends State<HostBottomSheet> {
   }
 
   // 호스트 선택 → 상세 화면 전환
-  void _openDetail(Host host) {
+  void openDetail(Host host) {
     setState(() {
       showDetail = true;
       selectedHost = host;
@@ -127,7 +127,7 @@ class HostBottomSheetState extends State<HostBottomSheet> {
                       onBack: _backToList,
                     )
                   : HostListSheet(
-                      onHostTap: _openDetail,
+                      onHostTap: openDetail,
                     ),
             ),
           ],
