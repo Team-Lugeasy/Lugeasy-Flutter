@@ -49,6 +49,15 @@ class _MapPageState extends ConsumerState<MapPage> {
 
   Future<void> _onMarkerTap(Host host) async {
     debugPrint("Clicked host: ${host.name}");
+
+    final double latitudeOffset = 0.003;
+
+    _mapController.updateCamera(
+      NCameraUpdate.scrollAndZoomTo(
+          target: NLatLng(host.latitude - latitudeOffset, host.longitude),
+          zoom: 15),
+    );
+
     _bottomSheetKey.currentState?.openDetail(host);
   }
 
