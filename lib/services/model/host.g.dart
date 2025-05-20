@@ -13,6 +13,8 @@ Host _$HostFromJson(Map<String, dynamic> json) => Host(
       reviewCount: (json['review_count'] as num).toInt(),
       address: json['address'] as String,
       description: json['description'] as String,
+      latitude: (json['latitude'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$HostToJson(Host instance) => <String, dynamic>{
@@ -22,4 +24,6 @@ Map<String, dynamic> _$HostToJson(Host instance) => <String, dynamic>{
       'review_count': instance.reviewCount,
       'address': instance.address,
       'description': instance.description,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
     };

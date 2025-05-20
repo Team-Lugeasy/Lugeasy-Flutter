@@ -4,6 +4,7 @@ import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:lugeasy/services/base_response.dart';
 import 'package:lugeasy/services/logging_interceptor.dart';
 import 'package:lugeasy/services/model/login_response.dart';
+import 'package:lugeasy/util/log_util.dart';
 
 class IntroServices {
   final String baseDomain = dotenv.env['BASE_URL'] ?? '';
@@ -13,10 +14,10 @@ class IntroServices {
   Future<BaseResponse<LoginResponse>> login(String token, String type) async {
     // type을 쿼리로 추가
     final url = Uri.https(baseDomain, basePath, {
-      'social_type': type,
+      'social': type,
     });
 
-    print("google_id_token $token");
+    logger.d("google_id_token $token");
 
     try {
       final response = await client.post(
@@ -24,7 +25,7 @@ class IntroServices {
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
         },
-        body: json.encode({'id_token': token}),
+        body: json.encode({'token': token}),
       );
 
       if (response.statusCode >= 200 && response.statusCode < 300) {

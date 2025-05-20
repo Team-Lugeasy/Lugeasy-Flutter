@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/util/log_util.dart';
 import 'package:lugeasy/view/login/login.dart';
@@ -10,6 +11,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "env/.env");
   requestLocationPermission();
+  await FlutterNaverMap().init(
+      clientId: dotenv.env['NAVER_CLIENT_ID']!,
+      onAuthFailed: (ex) => switch (ex) {
+            NQuotaExceededException(:final message) =>
+              logger.d("사용량 초과 (message: $message)"),
+            NUnauthorizedClientException() ||
+            NClientUnspecifiedException() ||
+            NAnotherAuthFailedException() =>
+              logger.d("인증 실패: $ex"),
+          });
+
   await Firebase.initializeApp(
     options: FirebaseOptions(
         apiKey: dotenv.env['FIREBASE_API_KEY']!,

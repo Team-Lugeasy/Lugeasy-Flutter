@@ -11,6 +11,8 @@ class Host {
     required this.reviewCount,
     required this.address,
     required this.description,
+    required this.latitude,
+    required this.longitude,
   });
   String name;
   String profileImage;
@@ -18,6 +20,8 @@ class Host {
   int reviewCount;
   String address;
   String description;
+  double latitude;
+  double longitude;
 
   factory Host.fromJson(Map<String, dynamic> json) => _$HostFromJson(json);
   Map<String, dynamic> toJson() => _$HostToJson(this);
