@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lugeasy/provider/host_list_data_provider.dart';
 import 'package:lugeasy/services/model/host.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
@@ -50,7 +51,7 @@ class _MapPageState extends ConsumerState<MapPage> {
   Future<void> _onMarkerTap(Host host) async {
     debugPrint("Clicked host: ${host.name}");
 
-    final double latitudeOffset = 0.003;
+    final double latitudeOffset = 0.0015;
 
     _mapController.updateCamera(
       NCameraUpdate.scrollAndZoomTo(
@@ -121,6 +122,78 @@ class _MapPageState extends ConsumerState<MapPage> {
             onClose: _deactivateSheet,
           ),
         ),
+
+        Positioned(
+            top: 50,
+            left: 16,
+            right: 16,
+            child: Row(
+              children: [
+                // 검색바
+                Expanded(
+                  child: Material(
+                    elevation: 3,
+                    borderRadius: BorderRadius.circular(100),
+                    child: Container(
+                      height: 50,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icon_search.svg',
+                            width: 20,
+                            height: 20,
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Search for host',
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(width: 12),
+
+                /// 알람 버튼
+                Material(
+                  elevation: 3,
+                  shape: CircleBorder(),
+                  child: InkWell(
+                    customBorder: CircleBorder(),
+                    onTap: () {
+                      // 아이콘 클릭 처리
+                    },
+                    child: Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: SizedBox(
+                        width: 12,
+                        height: 12,
+                        child: SvgPicture.asset(
+                          'assets/icon_notification_unread.svg',
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ))
       ],
     );
 

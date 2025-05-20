@@ -49,6 +49,8 @@ flutter:
   - assets/icon_profile_on.svg
   - assets/icon_profile_off.svg
   - assets/icon_marker.png
+  - assets/icon_search.svg
+  - assets/icon_notification_unread.svg
   uses-material-design: true
 
 
