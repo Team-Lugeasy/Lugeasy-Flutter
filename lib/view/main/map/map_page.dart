@@ -31,13 +31,13 @@ class _MapPageState extends ConsumerState<MapPage> {
     _bottomSheetKey.currentState?.deactivateSheet();
   }
 
-  /// 지도에 마커를 추가하는 함수
+  /// 마커찍기
   Future<void> _addHostMarkers(List<Host> hosts) async {
     for (final host in hosts) {
       final marker = NMarker(
-        id: host.name, // 고유 ID
-        position: NLatLng(host.latitude, host.longitude),
-      );
+          id: host.name, // 고유 ID
+          position: NLatLng(host.latitude, host.longitude),
+          caption: NOverlayCaption(text: host.name));
 
       marker.setOnTapListener((NMarker clickedMarker) {
         _onMarkerTap(host);

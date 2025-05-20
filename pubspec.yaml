@@ -48,6 +48,7 @@ flutter:
   - assets/icon_map_off.svg
   - assets/icon_profile_on.svg
   - assets/icon_profile_off.svg
+  - assets/icon_marker.png
   uses-material-design: true
 
 
