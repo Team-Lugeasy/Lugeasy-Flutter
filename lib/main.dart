@@ -22,13 +22,26 @@ void main() async {
               logger.d("인증 실패: $ex"),
           });
 
-  await Firebase.initializeApp(
-    options: FirebaseOptions(
-        apiKey: dotenv.env['FIREBASE_API_KEY']!,
-        appId: dotenv.env['FIREBASE_APP_ID']!,
-        messagingSenderId: "123456",
-        projectId: "pc-api-9088886599585804524-472"),
-  );
+  try {
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(
+        options: FirebaseOptions(
+          apiKey: dotenv.env['FIREBASE_API_KEY']!,
+          appId: dotenv.env['FIREBASE_APP_ID']!,
+          messagingSenderId: "123456",
+          projectId: "pc-api-9088886599585804524-472",
+        ),
+      );
+      logger.d('Firebase 초기화 완료');
+    }
+  } catch (e) {
+    if (e.toString().contains("already exists")) {
+      logger.d('Firebase 초기화 시도');
+    } else {
+      rethrow;
+    }
+  }
+
   runApp(ProviderScope(child: const MyApp()));
 }
 
