@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReservationButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -29,8 +30,8 @@ class ReservationButton extends StatelessWidget {
             ),
             padding: EdgeInsets.zero,
           ),
-          child: const Text(
-            'Make a reservation',
+          child: Text(
+            AppLocalizations.of(context)!.reservation,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,

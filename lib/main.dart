@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lugeasy/l10n/%08l10n.dart';
+import 'package:lugeasy/provider/locale_provider.dart';
 import 'package:lugeasy/util/log_util.dart';
 import 'package:lugeasy/view/login/login.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "env/.env");
-  requestLocationPermission();
+
+  await requestLocationPermission();
+
   await FlutterNaverMap().init(
-      clientId: dotenv.env['NAVER_CLIENT_ID']!,
-      onAuthFailed: (ex) => switch (ex) {
-            NQuotaExceededException(:final message) =>
-              logger.d("사용량 초과 (message: $message)"),
-            NUnauthorizedClientException() ||
-            NClientUnspecifiedException() ||
-            NAnotherAuthFailedException() =>
-              logger.d("인증 실패: $ex"),
-          });
+    clientId: dotenv.env['NAVER_CLIENT_ID']!,
+    onAuthFailed: (ex) => switch (ex) {
+      NQuotaExceededException(:final message) =>
+        logger.d("사용량 초과 (message: $message)"),
+      NUnauthorizedClientException() ||
+      NClientUnspecifiedException() ||
+      NAnotherAuthFailedException() =>
+        logger.d("인증 실패: $ex"),
+    },
+  );
 
   try {
     if (Firebase.apps.isEmpty) {
@@ -36,27 +43,51 @@ void main() async {
     }
   } catch (e) {
     if (e.toString().contains("already exists")) {
-      logger.d('Firebase 초기화 시도');
+      logger.d('Firebase 이미 초기화됨');
     } else {
       rethrow;
     }
   }
 
-  runApp(ProviderScope(child: const MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        fontFamily: 'Pretendard',
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localeAsync = ref.watch(localeNotifierProvider);
+
+    return localeAsync.when(
+      data: (locale) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          locale: locale ?? const Locale('ko'),
+          supportedLocales: L10n.all,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          theme: ThemeData(
+            fontFamily: 'Pretendard',
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          ),
+          home: const LoginPage(),
+        );
+      },
+      loading: () => const MaterialApp(
+        home: Scaffold(
+          body: Center(child: CircularProgressIndicator()),
+        ),
       ),
-      home: LoginPage(),
+      error: (error, _) => MaterialApp(
+        home: Scaffold(
+          body: Center(child: Text('로케일 로딩 실패: $error')),
+        ),
+      ),
     );
   }
 }

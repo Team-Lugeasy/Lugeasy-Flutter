@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lugeasy/provider/locale_provider.dart';
 import 'package:lugeasy/services/base_response.dart';
 import 'package:lugeasy/services/intro_services.dart';
 import 'package:lugeasy/services/model/login_response.dart';
@@ -11,13 +12,31 @@ import 'package:lugeasy/util/log_util.dart';
 import 'package:lugeasy/view/main/main_container.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeNotifierProvider);
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.login), // 예: 다국어 "로그인"
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.language),
+            onPressed: () {
+              // 현재 로케일이 한국어면 영어로, 영어면 한국어로 변경
+              final newLocale = locale.value?.languageCode == 'ko'
+                  ? const Locale('en')
+                  : const Locale('ko');
+              ref.read(localeNotifierProvider.notifier).updateLocale(newLocale);
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -25,7 +44,7 @@ class LoginPage extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Please Login",
+                AppLocalizations.of(context)!.welcome,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 50),
@@ -33,12 +52,12 @@ class LoginPage extends ConsumerWidget {
                 // iOS
                 ElevatedButton(
                   onPressed: () => _appleLogin(context, ref),
-                  child: Text("Apple Login"),
+                  child: Text(AppLocalizations.of(context)!.apple_login),
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () => _googleLogin(context, ref),
-                  child: Text("Google Login"),
+                  child: Text(AppLocalizations.of(context)!.google_login),
                 ),
                 SizedBox(height: 30),
                 ElevatedButton(
@@ -50,13 +69,13 @@ class LoginPage extends ConsumerWidget {
                       ),
                     );
                   },
-                  child: Text("Guest Login"),
+                  child: Text(AppLocalizations.of(context)!.guest_login),
                 ),
               ] else if (Platform.isAndroid) ...[
                 // Android
                 ElevatedButton(
                   onPressed: () => _googleLogin(context, ref),
-                  child: Text("Google Login"),
+                  child: Text(AppLocalizations.of(context)!.google_login),
                 ),
                 SizedBox(height: 30),
                 ElevatedButton(
@@ -68,7 +87,7 @@ class LoginPage extends ConsumerWidget {
                       ),
                     );
                   },
-                  child: Text("Guest Login"),
+                  child: Text(AppLocalizations.of(context)!.guest_login),
                 ),
               ],
             ],

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:lugeasy/provider/reservation_state_provider.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/reservation_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReservationBottomUI extends ConsumerWidget {
   const ReservationBottomUI({super.key});
@@ -24,14 +25,14 @@ class ReservationBottomUI extends ConsumerWidget {
 
     if (selectedDate != null && dropOffSlot != null) {
       texts.add(_ReservationInfoItem(
-        label: "Drop-Off",
+        label: AppLocalizations.of(context)!.drop_off,
         text: _format(selectedDate, dropOffSlot.isAm, dropOffSlot.label),
       ));
     }
 
     if (selectedDate != null && findingSlot != null) {
       texts.add(_ReservationInfoItem(
-        label: "Finding",
+        label: AppLocalizations.of(context)!.finding,
         text: _format(selectedDate, findingSlot.isAm, findingSlot.label),
       ));
     }

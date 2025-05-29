@@ -4,6 +4,7 @@ import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/ho
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/host_time_slot_button.dart';
 import 'package:lugeasy/provider/reservation_state_provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReservationSection extends ConsumerStatefulWidget {
   const ReservationSection({super.key});
@@ -33,6 +34,13 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
     TimeSlot.t1415,
     TimeSlot.t1516,
     TimeSlot.t1617,
+    TimeSlot.t1718,
+    TimeSlot.t1819,
+    TimeSlot.t1920,
+    TimeSlot.t2021,
+    TimeSlot.t2122,
+    TimeSlot.t2223,
+    TimeSlot.t2324,
   };
 
   void _handleTimeSlotTap(TimeSlot slot) {
@@ -129,11 +137,11 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
             ),
           ),
           const SizedBox(height: 36),
-          const Text("AM"),
+          Text(AppLocalizations.of(context)!.am),
           const SizedBox(height: 12),
           buildSlotGrid(amSlots, state.dropOffSlot, state.findingSlot),
           const SizedBox(height: 24),
-          const Text("PM"),
+          Text(AppLocalizations.of(context)!.pm),
           const SizedBox(height: 12),
           buildSlotGrid(pmSlots, state.dropOffSlot, state.findingSlot),
           const SizedBox(height: 48),

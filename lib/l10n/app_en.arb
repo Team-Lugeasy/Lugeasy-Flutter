@@ -1,0 +1,26 @@
+{
+  "@@locale": "en",
+  "login": "Login",
+  "logout": "Logout",
+  "welcome": "Please Login",
+  "google_login": "Sign in with Google",
+  "apple_login": "Sign in with Apple",
+  "guest_login": "Do it later",
+
+  "matching": "Matching",
+  "map": "Map",
+  "mypage": "MyPage",
+
+  "search": "Search for host",
+
+  "reservation_button": "Make a reservation",
+  "drop_off": "Drop-off",
+  "finding": "Finding",
+  "drop_off_description": "Please select a date and time",
+
+  "reservation": "Reservation",
+  "review": "Review",
+
+  "am" : "AM",
+  "pm" : "PM"
+}
