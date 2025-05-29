@@ -116,14 +116,6 @@ class _MapPageState extends ConsumerState<MapPage> {
           },
         ),
 
-        // 바텀 시트
-        Positioned.fill(
-          child: HostBottomSheet(
-            key: _bottomSheetKey,
-            onClose: _deactivateSheet,
-          ),
-        ),
-
         Positioned(
             top: 50,
             left: 16,
@@ -194,7 +186,14 @@ class _MapPageState extends ConsumerState<MapPage> {
                   ),
                 ),
               ],
-            ))
+            )),
+        // 바텀 시트
+        Positioned.fill(
+          child: HostBottomSheet(
+            key: _bottomSheetKey,
+            onClose: _deactivateSheet,
+          ),
+        ),
       ],
     );
 
