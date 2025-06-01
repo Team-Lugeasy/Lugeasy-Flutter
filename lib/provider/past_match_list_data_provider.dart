@@ -55,6 +55,34 @@ class PastMatchList extends _$PastMatchList {
             "time_stamp": "",
             "message": "1페이지 - 예약 확정",
             "match_type": "past"
+          },
+                    {
+            "match_id": 3,
+            "profile_image": "",
+            "time_stamp": "",
+            "message": "1페이지 - 예약 확정",
+            "match_type": "past"
+          },
+          {
+            "match_id": 3,
+            "profile_image": "",
+            "time_stamp": "",
+            "message": "1페이지 - 예약 확정",
+            "match_type": "past"
+          },
+          {
+            "match_id": 3,
+            "profile_image": "",
+            "time_stamp": "",
+            "message": "1페이지 - 예약 확정",
+            "match_type": "past"
+          },
+          {
+            "match_id": 3,
+            "profile_image": "",
+            "time_stamp": "",
+            "message": "1페이지 - 예약 확정",
+            "match_type": "past"
           }
         ]
       '''
@@ -67,10 +95,50 @@ class PastMatchList extends _$PastMatchList {
             "time_stamp": "",
             "message": "2페이지 - 예약 확정",
             "match_type": "past"
+          },
+          {
+            "match_id": 4,
+            "profile_image": "",
+            "time_stamp": "",
+            "message": "2페이지 - 예약 확정",
+            "match_type": "past"
+          },
+          {
+            "match_id": 4,
+            "profile_image": "",
+            "time_stamp": "",
+            "message": "2페이지 - 예약 확정",
+            "match_type": "past"
           }
         ]
       '''
-            : '''
+            : page == 2
+                ? '''
+        [
+          {
+            "match_id": 4,
+            "profile_image": "",
+            "time_stamp": "",
+            "message": "3페이지 - 예약 확정",
+            "match_type": "past"
+          },
+          {
+            "match_id": 4,
+            "profile_image": "",
+            "time_stamp": "",
+            "message": 3페이지 - 예약 확정",
+            "match_type": "past"
+          },
+          {
+            "match_id": 4,
+            "profile_image": "",
+            "time_stamp": "",
+            "message": "3페이지 - 예약 확정",
+            "match_type": "past"
+          }
+        ]
+      '''
+                : '''
         [] 
       ''';
 

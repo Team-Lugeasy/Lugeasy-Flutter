@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/provider/match_list_data_provider.dart';
 import 'package:lugeasy/provider/past_match_list_data_provider.dart';
 import 'package:lugeasy/services/model/match.dart';
+import 'package:lugeasy/util/log_util.dart';
 
 class MatchingPage extends ConsumerStatefulWidget {
   const MatchingPage({super.key});
@@ -12,6 +13,30 @@ class MatchingPage extends ConsumerStatefulWidget {
 }
 
 class _MatchingPageState extends ConsumerState<MatchingPage> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 10) {
+      logger.d("nextpage");
+      ref.read(pastMatchListProvider.notifier).nextPage();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final asyncMatchs = ref.watch(matchListProvider);
@@ -24,6 +49,7 @@ class _MatchingPageState extends ConsumerState<MatchingPage> {
           return asyncPastMatchs.when(
             data: (pastList) {
               return SingleChildScrollView(
+                controller: _scrollController, // 컨트롤러 연결
                 padding: EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,13 +58,6 @@ class _MatchingPageState extends ConsumerState<MatchingPage> {
                     Section(title: "Confirmed", items: list.completeList),
                     Section(title: "Past matching", items: pastList),
                     SizedBox(height: 8),
-                    Text(
-                      "See more",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
                   ],
                 ),
               );
