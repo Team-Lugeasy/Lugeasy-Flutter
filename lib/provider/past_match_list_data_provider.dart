@@ -43,14 +43,14 @@ class PastMatchList extends _$PastMatchList {
         ? '''
         [
           {
-            "matchId": 2,
+            "match_id": 2,
             "profile_image": "",
             "time_stamp": "",
             "message": "1페이지 - 예약 완료",
             "match_type": "past"
           },
           {
-            "matchId": 3,
+            "match_id": 3,
             "profile_image": "",
             "time_stamp": "",
             "message": "1페이지 - 예약 확정",
@@ -62,7 +62,7 @@ class PastMatchList extends _$PastMatchList {
             ? '''
         [
           {
-            "matchId": 4,
+            "match_id": 4,
             "profile_image": "",
             "time_stamp": "",
             "message": "2페이지 - 예약 확정",

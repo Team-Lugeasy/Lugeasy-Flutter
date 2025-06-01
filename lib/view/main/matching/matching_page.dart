@@ -1,81 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lugeasy/provider/match_list_data_provider.dart';
+import 'package:lugeasy/provider/past_match_list_data_provider.dart';
+import 'package:lugeasy/services/model/match.dart';
 
-void main() {
-  runApp(MaterialApp(home: MatchingPage()));
-}
-
-class MatchingPage extends StatelessWidget {
-  final List<MatchingItemData> requests = [
-    MatchingItemData(
-      timestamp: "Today PM 03:16",
-      message: "Reservation request sent to OOO.",
-      imageUrl: "",
-    ),
-    MatchingItemData(
-      timestamp: "Today AM 10:16",
-      message: "Reservation request sent to OOO.",
-      imageUrl: "",
-    ),
-  ];
-
-  final List<MatchingItemData> confirmed = [
-    MatchingItemData(
-      timestamp: "3/14 AM 10:16",
-      message: "Reservation with OOO confirmed.",
-      imageUrl: "",
-    ),
-  ];
-
-  final List<MatchingItemData> pastMatching = [
-    MatchingItemData(
-      timestamp: "3/12 AM 10:16",
-      message: "Reservation with OOO confirmed.",
-      imageUrl: "",
-    ),
-    MatchingItemData(
-      timestamp: "2/28 AM 10:16",
-      message: "Reservation with OOO confirmed.",
-      imageUrl: "",
-    ),
-    MatchingItemData(
-      timestamp: "2/19 AM 10:16",
-      message: "Reservation with OOO confirmed.",
-      imageUrl: "",
-    ),
-    MatchingItemData(
-      timestamp: "1/8 AM 10:16",
-      message: "Reservation with OOO confirmed.",
-      imageUrl: "",
-    ),
-    MatchingItemData(
-      timestamp: "1/7 AM 10:16",
-      message: "Reservation with OOO confirmed.",
-      imageUrl: "",
-    ),
-  ];
+class MatchingPage extends ConsumerStatefulWidget {
+  const MatchingPage({super.key});
 
   @override
+  ConsumerState<MatchingPage> createState() => _MatchingPageState();
+}
+
+class _MatchingPageState extends ConsumerState<MatchingPage> {
+  @override
   Widget build(BuildContext context) {
+    final asyncMatchs = ref.watch(matchListProvider);
+    final asyncPastMatchs = ref.watch(pastMatchListProvider);
+
     return Scaffold(
       appBar: AppBar(title: Text("Matching")),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Section(title: "Requests", items: requests),
-            Section(title: "Confirmed", items: confirmed),
-            Section(title: "Past matching", items: pastMatching),
-            SizedBox(height: 8),
-            Text(
-              "See more",
-              style: TextStyle(
-                color: Colors.blue,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          ],
-        ),
+      body: asyncMatchs.when(
+        data: (list) {
+          return asyncPastMatchs.when(
+            data: (pastList) {
+              return SingleChildScrollView(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Section(title: "Requests", items: list.pendingList),
+                    Section(title: "Confirmed", items: list.completeList),
+                    Section(title: "Past matching", items: pastList),
+                    SizedBox(height: 8),
+                    Text(
+                      "See more",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            loading: () => Center(child: CircularProgressIndicator()),
+            error: (e, st) => Center(child: Text('오류 발생: $e')),
+          );
+        },
+        loading: () => Center(child: CircularProgressIndicator()),
+        error: (e, st) => Center(child: Text('오류 발생: $e')),
       ),
     );
   }
@@ -83,7 +56,7 @@ class MatchingPage extends StatelessWidget {
 
 class Section extends StatelessWidget {
   final String title;
-  final List<MatchingItemData> items;
+  final List<Match> items;
 
   Section({required this.title, required this.items});
 
@@ -106,21 +79,9 @@ class Section extends StatelessWidget {
   }
 }
 
-class MatchingItemData {
-  final String timestamp;
-  final String message;
-  final String imageUrl;
-
-  MatchingItemData({
-    required this.timestamp,
-    required this.message,
-    required this.imageUrl,
-  });
-}
-
 // 개별 아이템
 class MatchingItem extends StatelessWidget {
-  final MatchingItemData data;
+  final Match data;
 
   MatchingItem({required this.data});
 
@@ -136,7 +97,7 @@ class MatchingItem extends StatelessWidget {
           children: [
             ClipOval(
               child: Image.network(
-                data.imageUrl,
+                data.profileImage,
                 width: 48,
                 height: 48,
                 fit: BoxFit.cover,
@@ -159,7 +120,7 @@ class MatchingItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        data.timestamp,
+                        data.timeStamp,
                         style: TextStyle(fontSize: 12, color: Colors.grey),
                       ),
                     ],

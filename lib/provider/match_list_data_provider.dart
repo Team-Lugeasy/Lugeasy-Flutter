@@ -4,10 +4,20 @@ import 'package:lugeasy/services/model/match.dart';
 
 part 'match_list_data_provider.g.dart';
 
+class MatchListResult {
+  final List<Match> pendingList;
+  final List<Match> completeList;
+
+  MatchListResult({
+    required this.pendingList,
+    required this.completeList,
+  });
+}
+
 @riverpod
 class MatchList extends _$MatchList {
   @override
-  Future<List<Match>> build() async {
+  Future<MatchListResult> build() async {
     return await _fetchMatchList();
   }
 
@@ -16,14 +26,16 @@ class MatchList extends _$MatchList {
     state = await AsyncValue.guard(() => _fetchMatchList());
   }
 
-  Future<List<Match>> _fetchMatchList() async {
+  Future<MatchListResult> _fetchMatchList() async {
     final results = await Future.wait([
       _fetchCompleteReservation(),
       _fetchPendingReservation(),
     ]);
 
-    final combinedList = [...results[0], ...results[1]];
-    return combinedList;
+    return MatchListResult(
+      completeList: results[0],
+      pendingList: results[1],
+    );
   }
 
   /// 예약요청 list api 통신
@@ -31,14 +43,14 @@ class MatchList extends _$MatchList {
     const jsonData = '''
     [
       {
-        "matchId": 2,
+        "match_id": 2,
         "profile_image": "",
         "time_stamp": "",
         "message": "OOO님께 예약을 요청중이에요",
         "match_type": "pending"
       },
       {
-        "matchId": 3,
+        "match_id": 3,
         "profile_image": "",
         "time_stamp": "",
         "message": "OOO님께 예약을 요청중이에요",
@@ -56,14 +68,14 @@ class MatchList extends _$MatchList {
     const jsonData = '''
     [
       {
-        "matchId": 0,
+        "match_id": 0,
         "profile_image": "",
         "time_stamp": "",
         "message": "OOO님과의 예약이 완료되었어요",
         "match_type": "complete"
       },
       {
-        "matchId": 1,
+        "match_id": 1,
         "profile_image": "",
         "time_stamp": "",
         "message": "OOO님과의 예약이 완료되었어요",

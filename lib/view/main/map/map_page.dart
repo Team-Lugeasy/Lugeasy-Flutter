@@ -64,7 +64,7 @@ class _MapPageState extends ConsumerState<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    final asyncHosts = ref.watch(hostListNotifierProvider);
+    final asyncHosts = ref.watch(hostListProvider);
 
     return Stack(
       children: [
@@ -109,7 +109,7 @@ class _MapPageState extends ConsumerState<MapPage> {
 
               _lastCameraPosition = currentCenter;
 
-              await ref.read(hostListNotifierProvider.notifier).refreshHosts(
+              await ref.read(hostListProvider.notifier).refreshHosts(
                   currentCenter.latitude, currentCenter.longitude);
             }
           },
