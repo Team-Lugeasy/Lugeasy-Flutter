@@ -5,11 +5,13 @@ part 'review.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Review {
   Review({
+    required this.reviewId,
     required this.reviewerName,
     required this.profileImage,
     required this.createdAt,
     required this.contents,
   });
+  int reviewId;
   String reviewerName;
   String profileImage;
   String createdAt;

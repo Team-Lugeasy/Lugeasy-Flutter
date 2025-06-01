@@ -7,6 +7,7 @@ class HostReviewList extends StatelessWidget {
 
   final List<Review> reviews = [
     Review.fromJson({
+      'review_id': 1,
       'profile_image': '',
       'reviewer_name': 'River',
       'created_at': '2days ago',
@@ -14,6 +15,7 @@ class HostReviewList extends StatelessWidget {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, s...'
     }),
     Review.fromJson({
+      'review_id': 2,
       'profile_image': '',
       'reviewer_name': 'Liver',
       'created_at': '2days ago',
@@ -21,6 +23,7 @@ class HostReviewList extends StatelessWidget {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, s...'
     }),
     Review.fromJson({
+      'review_id': 3,
       'profile_image': '',
       'reviewer_name': 'River',
       'created_at': '2days ago',
@@ -28,6 +31,7 @@ class HostReviewList extends StatelessWidget {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, s...'
     }),
     Review.fromJson({
+      'review_id': 4,
       'profile_image': '',
       'reviewer_name': 'River',
       'created_at': '2days ago',
@@ -35,6 +39,7 @@ class HostReviewList extends StatelessWidget {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, s...'
     }),
     Review.fromJson({
+      'review_id': 5,
       'profile_image': '',
       'reviewer_name': 'River',
       'created_at': '2days ago',
