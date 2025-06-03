@@ -5,6 +5,7 @@ part 'host.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Host {
   Host({
+    required this.hostId,
     required this.name,
     required this.profileImage,
     required this.reviewRate,
@@ -14,6 +15,7 @@ class Host {
     required this.latitude,
     required this.longitude,
   });
+  int hostId;
   String name;
   String profileImage;
   double reviewRate;

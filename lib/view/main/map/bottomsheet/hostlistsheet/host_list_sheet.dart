@@ -46,7 +46,7 @@ class HostListSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncHosts = ref.watch(hostListNotifierProvider);
+    final asyncHosts = ref.watch(hostListProvider);
 
     return asyncHosts.when(
       loading: () => const Center(child: CircularProgressIndicator()),

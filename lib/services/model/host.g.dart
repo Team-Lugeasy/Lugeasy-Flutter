@@ -7,6 +7,7 @@ part of 'host.dart';
 // **************************************************************************
 
 Host _$HostFromJson(Map<String, dynamic> json) => Host(
+      hostId: (json['host_id'] as num).toInt(),
       name: json['name'] as String,
       profileImage: json['profile_image'] as String,
       reviewRate: (json['review_rate'] as num).toDouble(),
@@ -18,6 +19,7 @@ Host _$HostFromJson(Map<String, dynamic> json) => Host(
     );
 
 Map<String, dynamic> _$HostToJson(Host instance) => <String, dynamic>{
+      'host_id': instance.hostId,
       'name': instance.name,
       'profile_image': instance.profileImage,
       'review_rate': instance.reviewRate,
