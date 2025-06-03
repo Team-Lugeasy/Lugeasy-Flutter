@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lugeasy/common/value_listenable_builder2.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
-import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/bottom_action_bar.dart';
+import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/reservation_button.dart';
 import 'package:lugeasy/view/main/map/map_page.dart';
 import 'package:lugeasy/view/main/matching/matching_page.dart';
 import 'package:lugeasy/view/main/mypage/my_page.dart';
@@ -97,7 +97,7 @@ class _MainContainerState extends State<MainContainer> {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    child: BottomActionBar(),
+                    child: ReservationBottomBar(),
                   )
                 : const SizedBox.shrink();
           },

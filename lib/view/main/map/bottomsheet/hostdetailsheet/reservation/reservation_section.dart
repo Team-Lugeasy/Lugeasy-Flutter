@@ -14,68 +14,115 @@ class ReservationSection extends ConsumerStatefulWidget {
 }
 
 class _ReservationSectionState extends ConsumerState<ReservationSection> {
-  DateTime _focusedDay = DateTime.now();
+  late DateTime _focusedDay;
+  bool _isSelectingDropOff = true; // true: Drop-off 선택 중, false: Finding 선택 중
 
-  final Set<TimeSlot> _availableTimeSlots = {
-    TimeSlot.t0001,
-    TimeSlot.t0102,
-    TimeSlot.t0203,
-    TimeSlot.t0304,
-    TimeSlot.t0405,
-    TimeSlot.t0506,
-    TimeSlot.t0607,
-    TimeSlot.t0708,
-    TimeSlot.t0809,
-    TimeSlot.t0910,
-    TimeSlot.t1011,
-    TimeSlot.t1112,
-    TimeSlot.t1213,
-    TimeSlot.t1314,
-    TimeSlot.t1415,
-    TimeSlot.t1516,
-    TimeSlot.t1617,
-    TimeSlot.t1718,
-    TimeSlot.t1819,
-    TimeSlot.t1920,
-    TimeSlot.t2021,
-    TimeSlot.t2122,
-    TimeSlot.t2223,
-    TimeSlot.t2324,
-  };
-
-  void _handleTimeSlotTap(TimeSlot slot) {
-    ref.read(reservationNotifierProvider.notifier).selectSlot(slot);
+  @override
+  void initState() {
+    super.initState();
+    _focusedDay = DateTime.now();
+    // 초기 날짜 설정
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(reservationNotifierProvider.notifier)
+          .selectDropOffDate(_focusedDay);
+    });
   }
 
-  Widget buildSlotGrid(
+  final Set<TimeSlot> _availableTimeSlots = Set.from(TimeSlot.values);
+
+  void _handleTimeSlotTap(TimeSlot slot) {
+    final state = ref.read(reservationNotifierProvider);
+
+    // Drop-off 시간이 없는 경우
+    if (state.dropOffSlot == null) {
+      ref.read(reservationNotifierProvider.notifier).selectSlot(slot);
+      // Finding 날짜가 설정되어 있지 않으면 Drop-off 날짜로 설정
+      if (state.findingDate == null && state.dropOffDate != null) {
+        ref
+            .read(reservationNotifierProvider.notifier)
+            .selectFindingDate(state.dropOffDate!);
+      }
+      setState(() {
+        _isSelectingDropOff = false; // Finding 선택 모드로 전환
+      });
+      return;
+    }
+
+    // Finding 모드에서 새로운 슬롯 선택
+    if (!_isSelectingDropOff) {
+      // Finding 날짜 설정
+      if (state.dropOffDate != null) {
+        ref
+            .read(reservationNotifierProvider.notifier)
+            .selectFindingDate(state.dropOffDate!);
+      }
+      ref.read(reservationNotifierProvider.notifier).selectSlot(slot);
+      return;
+    }
+
+    // Drop-off 모드에서 새로운 슬롯 선택
+    ref.read(reservationNotifierProvider.notifier).selectSlot(slot);
+    setState(() {
+      _isSelectingDropOff = false; // Finding 선택 모드로 전환
+    });
+    // Finding 날짜가 설정되어 있지 않으면 Drop-off 날짜로 설정
+    if (state.dropOffDate != null) {
+      ref
+          .read(reservationNotifierProvider.notifier)
+          .selectFindingDate(state.dropOffDate!);
+    }
+  }
+
+  Widget _buildSlotGrid(
       List<TimeSlot> slots, TimeSlot? dropOff, TimeSlot? finding) {
+    final state = ref.watch(reservationNotifierProvider);
+    final currentDate =
+        _isSelectingDropOff ? state.dropOffDate : state.findingDate;
+    final otherDate =
+        _isSelectingDropOff ? state.findingDate : state.dropOffDate;
+
     return LayoutBuilder(
       builder: (context, constraints) {
-        final itemWidth = (constraints.maxWidth - 16) / 2;
-        return Wrap(
-          spacing: 16,
-          runSpacing: 8,
-          children: slots.map((slot) {
-            final bool isDisabled = !_availableTimeSlots.contains(slot) ||
-                (dropOff != null &&
-                    finding == null &&
-                    slot.index <= dropOff.index &&
-                    slot != dropOff);
+        final crossAxisCount = 2;
+        final spacing = 16.0;
+        final itemWidth =
+            (constraints.maxWidth - (crossAxisCount - 1) * spacing) /
+                crossAxisCount;
 
-            final TimeSlotState state;
-            if (dropOff == slot || finding == slot) {
-              state = TimeSlotState.selected;
+        return Wrap(
+          spacing: spacing,
+          runSpacing: 12,
+          children: slots.map((slot) {
+            final bool isDifferentDate = currentDate != null &&
+                otherDate != null &&
+                !isSameDay(currentDate, otherDate);
+
+            // Drop-off 모드일 때만 이전 시간 비활성화
+            final bool isBeforeDropOff = _isSelectingDropOff &&
+                state.dropOffSlot != null &&
+                slot.index <= state.dropOffSlot!.index &&
+                slot != state.dropOffSlot;
+
+            final bool isDisabled = !_availableTimeSlots.contains(slot) ||
+                (!isDifferentDate && isBeforeDropOff);
+
+            TimeSlotState slotState;
+            if (slot == state.dropOffSlot) {
+              slotState = TimeSlotState.selected;
+            } else if (slot == state.findingSlot && !_isSelectingDropOff) {
+              slotState = TimeSlotState.selected;
             } else if (isDisabled) {
-              state = TimeSlotState.disabled;
+              slotState = TimeSlotState.disabled;
             } else {
-              state = TimeSlotState.enabled;
+              slotState = TimeSlotState.enabled;
             }
 
             return SizedBox(
               width: itemWidth,
               child: TimeSlotButton(
                 label: slot.label,
-                state: state,
+                state: slotState,
                 onTap: () => _handleTimeSlotTap(slot),
               ),
             );
@@ -85,11 +132,70 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
     );
   }
 
+  Widget _buildSelectedSlotInfo(ReservationState state) {
+    final locale = AppLocalizations.of(context)!;
+
+    if (state.dropOffSlot == null) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 12.0),
+        child: Text(
+          AppLocalizations.of(context)!.drop_off_description,
+          style: const TextStyle(
+              fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '${AppLocalizations.of(context)!.drop_off}: ${state.dropOffSlot!.label}',
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        ),
+        if (state.findingSlot != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Text(
+              '${locale.finding}: ${state.findingSlot!.label}',
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+          ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(reservationNotifierProvider);
     final amSlots = TimeSlot.values.where((slot) => slot.isAm).toList();
     final pmSlots = TimeSlot.values.where((slot) => !slot.isAm).toList();
+
+    String _formatDate(DateTime date) {
+      return '${date.year}.${date.month.toString().padLeft(2, '0')}.${date.day.toString().padLeft(2, '0')}';
+    }
+
+    // Finding 모드로 전환할 때 Finding 날짜가 있다면 해당 날짜로 포커스 이동
+    if (!_isSelectingDropOff &&
+        state.findingDate != null &&
+        _focusedDay != state.findingDate) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          _focusedDay = state.findingDate!;
+        });
+      });
+    }
+
+    // Drop-off 모드로 전환할 때 Drop-off 날짜가 있다면 해당 날짜로 포커스 이동
+    if (_isSelectingDropOff &&
+        state.dropOffDate != null &&
+        _focusedDay != state.dropOffDate) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          _focusedDay = state.dropOffDate!;
+        });
+      });
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -101,11 +207,12 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
             children: [
               const Icon(Icons.calendar_month, size: 20),
               const SizedBox(width: 8),
-              Flexible(
-                child: Text(
-                  "${state.selectedDate?.year}.${state.selectedDate?.month.toString().padLeft(2, '0')}.${state.selectedDate?.day.toString().padLeft(2, '0')}",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                  overflow: TextOverflow.ellipsis,
+              Text(
+                _formatDate(_focusedDay),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF1A1A1A),
                 ),
               ),
             ],
@@ -115,14 +222,26 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
             firstDay: DateTime.now(),
             lastDay: DateTime.now().add(const Duration(days: 365)),
             focusedDay: _focusedDay,
-            selectedDayPredicate: (day) => isSameDay(day, state.selectedDate),
+            selectedDayPredicate: (day) {
+              // Drop-off와 Finding 날짜 모두 표시
+              return (state.dropOffDate != null &&
+                      isSameDay(day, state.dropOffDate)) ||
+                  (state.findingDate != null &&
+                      isSameDay(day, state.findingDate));
+            },
             onDaySelected: (selectedDay, focusedDay) {
-              ref
-                  .read(reservationNotifierProvider.notifier)
-                  .selectDate(selectedDay);
               setState(() {
                 _focusedDay = focusedDay;
               });
+              if (_isSelectingDropOff) {
+                ref
+                    .read(reservationNotifierProvider.notifier)
+                    .selectDropOffDate(selectedDay);
+              } else {
+                ref
+                    .read(reservationNotifierProvider.notifier)
+                    .selectFindingDate(selectedDay);
+              }
             },
             headerStyle: const HeaderStyle(
               formatButtonVisible: false,
@@ -136,15 +255,22 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
               selectedTextStyle: TextStyle(color: Colors.white),
             ),
           ),
-          const SizedBox(height: 36),
-          Text(AppLocalizations.of(context)!.am),
-          const SizedBox(height: 12),
-          buildSlotGrid(amSlots, state.dropOffSlot, state.findingSlot),
           const SizedBox(height: 24),
-          Text(AppLocalizations.of(context)!.pm),
+          Text(
+            AppLocalizations.of(context)!.am,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 12),
-          buildSlotGrid(pmSlots, state.dropOffSlot, state.findingSlot),
+          _buildSlotGrid(amSlots, state.dropOffSlot, state.findingSlot),
+          const SizedBox(height: 24),
+          Text(
+            AppLocalizations.of(context)!.pm,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+          _buildSlotGrid(pmSlots, state.dropOffSlot, state.findingSlot),
           const SizedBox(height: 48),
+          _buildSelectedSlotInfo(state),
         ],
       ),
     );
