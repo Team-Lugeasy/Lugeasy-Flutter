@@ -7,7 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'host_list_data_provider.g.dart';
 
 @riverpod
-class HostListNotifier extends _$HostListNotifier {
+class HostList extends _$HostList {
   @override
   Future<List<Host>> build() async {
     return await _fetchHosts(37.5665, 126.9780); // 초기 위치 (서울)
@@ -25,6 +25,7 @@ class HostListNotifier extends _$HostListNotifier {
     const jsonData = '''
     [
       {
+        "hostId": 1,
         "name": "Taerin Kim",
         "profile_image": "",
         "review_rate": 4.9,
@@ -35,6 +36,7 @@ class HostListNotifier extends _$HostListNotifier {
         "longitude": 127.0016985
       },
       {
+        "hostId": 2,
         "name": "Liver Lee",
         "profile_image": "",
         "review_rate": 4.8,
@@ -45,6 +47,7 @@ class HostListNotifier extends _$HostListNotifier {
         "longitude": 127.001
       },
       {
+        "hostId": 3,
         "name": "Jisu Yoo",
         "profile_image": "",
         "review_rate": 5.0,
