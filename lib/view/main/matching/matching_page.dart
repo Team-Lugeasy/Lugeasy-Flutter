@@ -1,78 +1,73 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lugeasy/provider/match_list_data_provider.dart';
+import 'package:lugeasy/provider/past_match_list_data_provider.dart';
+import 'package:lugeasy/services/model/match.dart';
+import 'package:lugeasy/util/log_util.dart';
 
-class MatchingPage extends StatelessWidget {
-  final List<MatchingItemData> requests = [
-    MatchingItemData(
-      timestamp: "Today PM 03:16",
-      message: "Reservation request sent to OOO.",
-      imageUrl: "",
-    ),
-    MatchingItemData(
-      timestamp: "Today AM 10:16",
-      message: "Reservation request sent to OOO.",
-      imageUrl: "",
-    ),
-  ];
+class MatchingPage extends ConsumerStatefulWidget {
+  const MatchingPage({super.key});
 
-  final List<MatchingItemData> confirmed = [
-    MatchingItemData(
-      timestamp: "3/14 AM 10:16",
-      message: "Reservation with OOO confirmed.",
-      imageUrl: "",
-    ),
-  ];
+  @override
+  ConsumerState<MatchingPage> createState() => _MatchingPageState();
+}
 
-  final List<MatchingItemData> pastMatching = [
-    MatchingItemData(
-      timestamp: "3/12 AM 10:16",
-      message: "Reservation with OOO confirmed.",
-      imageUrl: "",
-    ),
-    MatchingItemData(
-      timestamp: "2/28 AM 10:16",
-      message: "Reservation with OOO confirmed.",
-      imageUrl: "",
-    ),
-    MatchingItemData(
-      timestamp: "2/19 AM 10:16",
-      message: "Reservation with OOO confirmed.",
-      imageUrl: "",
-    ),
-    MatchingItemData(
-      timestamp: "1/8 AM 10:16",
-      message: "Reservation with OOO confirmed.",
-      imageUrl: "",
-    ),
-    MatchingItemData(
-      timestamp: "1/7 AM 10:16",
-      message: "Reservation with OOO confirmed.",
-      imageUrl: "",
-    ),
-  ];
+class _MatchingPageState extends ConsumerState<MatchingPage> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 10) {
+      logger.d("nextpage");
+      ref.read(pastMatchListProvider.notifier).nextPage();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final asyncMatchs = ref.watch(matchListProvider);
+    final asyncPastMatchs = ref.watch(pastMatchListProvider);
+
     return Scaffold(
       appBar: AppBar(title: Text("Matching")),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Section(title: "Requests", items: requests),
-            Section(title: "Confirmed", items: confirmed),
-            Section(title: "Past matching", items: pastMatching),
-            SizedBox(height: 8),
-            Text(
-              "See more",
-              style: TextStyle(
-                color: Colors.blue,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          ],
-        ),
+      body: asyncMatchs.when(
+        data: (list) {
+          return asyncPastMatchs.when(
+            data: (pastList) {
+              return SingleChildScrollView(
+                controller: _scrollController, // 컨트롤러 연결
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Section(title: "Requests", items: list.pendingList),
+                    Section(title: "Confirmed", items: list.completeList),
+                    Section(title: "Past matching", items: pastList),
+                    SizedBox(height: 8),
+                  ],
+                ),
+              );
+            },
+            loading: () => Center(child: CircularProgressIndicator()),
+            error: (e, st) => Center(child: Text('오류 발생: $e')),
+          );
+        },
+        loading: () => Center(child: CircularProgressIndicator()),
+        error: (e, st) => Center(child: Text('오류 발생: $e')),
       ),
     );
   }
@@ -80,7 +75,7 @@ class MatchingPage extends StatelessWidget {
 
 class Section extends StatelessWidget {
   final String title;
-  final List<MatchingItemData> items;
+  final List<Match> items;
 
   Section({required this.title, required this.items});
 
@@ -103,26 +98,64 @@ class Section extends StatelessWidget {
   }
 }
 
-class MatchingItemData {
-  final String timestamp;
-  final String message;
-  final String imageUrl;
-
-  MatchingItemData({
-    required this.timestamp,
-    required this.message,
-    required this.imageUrl,
-  });
-}
-
 // 개별 아이템
 class MatchingItem extends StatelessWidget {
-  final MatchingItemData data;
+  final Match data;
 
   MatchingItem({required this.data});
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text(AppLocalizations.of(context)!.matching));
+    return Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: EdgeInsets.all(12),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipOval(
+              child: Image.network(
+                data.profileImage,
+                width: 48,
+                height: 48,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: 48,
+                    height: 48,
+                    color: Colors.grey[300],
+                    child: Icon(Icons.person, size: 24, color: Colors.white),
+                  );
+                },
+              ),
+            ),
+            SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        data.timeStamp,
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    data.message,
+                    style: TextStyle(fontSize: 14),
+                    softWrap: true,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
