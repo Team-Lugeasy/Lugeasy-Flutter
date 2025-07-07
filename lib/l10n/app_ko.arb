@@ -1,0 +1,26 @@
+{
+  "@@locale": "ko",
+  "login": "로그인",
+  "logout": "로그아웃",
+  "welcome": "로그인 해주세요",
+  "google_login": "Google로 로그인하기",
+  "apple_login": "Apple로 로그인하기",
+  "guest_login": "나중에 하기",
+
+  "matching": "매칭 내역",
+  "map": "지도",
+  "mypage": "마이페이지",
+
+  "search": "호스트를 찾아보세요",
+
+  "reservation_button": "예약 정보 확인",
+  "drop_off": "짐 맡기기",
+  "finding": "짐 찾기",
+  "drop_off_description": "날짜와 시간을 선택해주세요",
+
+  "reservation": "예약",
+  "review": "리뷰",
+
+  "am" : "오전",
+  "pm" : "오후"
+}

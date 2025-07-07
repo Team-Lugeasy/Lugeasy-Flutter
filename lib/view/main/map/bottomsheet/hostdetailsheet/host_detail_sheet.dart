@@ -3,6 +3,7 @@ import 'package:lugeasy/services/model/host.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/reservation_section.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/review/host_review_list.dart';
 import 'host_user_info.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HostDetailSheet extends StatefulWidget {
   // 닫기 버튼 동작 (외부에서 시트 닫기)
@@ -85,7 +86,7 @@ class _HostDetailSheetState extends State<HostDetailSheet> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           child: Text(
-                            "Reservation",
+                            AppLocalizations.of(context)!.reservation,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
@@ -104,7 +105,7 @@ class _HostDetailSheetState extends State<HostDetailSheet> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           child: Text(
-                            "Review",
+                            AppLocalizations.of(context)!.review,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
@@ -154,10 +155,10 @@ class _HostDetailSheetState extends State<HostDetailSheet> {
                 const ReservationSection(),
                 const SizedBox(height: 12),
               ] else ...[
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Review",
+                    AppLocalizations.of(context)!.review,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),

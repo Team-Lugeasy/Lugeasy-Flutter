@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lugeasy/common/constants.dart';
 import 'package:lugeasy/services/model/host.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HostListTile extends StatelessWidget {
   final Host host;
@@ -59,7 +60,7 @@ class HostListTile extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'Review ${host.reviewCount}',
+                          '${AppLocalizations.of(context)!.review}  ${host.reviewCount}',
                           style: const TextStyle(fontSize: 16),
                         ),
                       ],

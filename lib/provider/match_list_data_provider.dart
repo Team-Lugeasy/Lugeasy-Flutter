@@ -25,17 +25,17 @@ class MatchList extends _$MatchList {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() => _fetchMatchList());
   }
-
   Future<MatchListResult> _fetchMatchList() async {
+
     final results = await Future.wait([
       _fetchCompleteReservation(),
       _fetchPendingReservation(),
     ]);
-
     return MatchListResult(
       completeList: results[0],
       pendingList: results[1],
     );
+
   }
 
   /// 예약요청 list api 통신

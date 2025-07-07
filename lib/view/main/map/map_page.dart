@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lugeasy/provider/host_list_data_provider.dart';
 import 'package:lugeasy/services/model/host.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MapPage extends ConsumerStatefulWidget {
   final ValueNotifier<bool> isDetailVisible;
@@ -115,14 +116,6 @@ class _MapPageState extends ConsumerState<MapPage> {
           },
         ),
 
-        // 바텀 시트
-        Positioned.fill(
-          child: HostBottomSheet(
-            key: _bottomSheetKey,
-            onClose: _deactivateSheet,
-          ),
-        ),
-
         Positioned(
             top: 50,
             left: 16,
@@ -152,7 +145,7 @@ class _MapPageState extends ConsumerState<MapPage> {
                           Expanded(
                             child: TextField(
                               decoration: InputDecoration(
-                                hintText: 'Search for host',
+                                hintText: AppLocalizations.of(context)!.search,
                                 border: InputBorder.none,
                               ),
                             ),
@@ -193,7 +186,14 @@ class _MapPageState extends ConsumerState<MapPage> {
                   ),
                 ),
               ],
-            ))
+            )),
+        // 바텀 시트
+        Positioned.fill(
+          child: HostBottomSheet(
+            key: _bottomSheetKey,
+            onClose: _deactivateSheet,
+          ),
+        ),
       ],
     );
 

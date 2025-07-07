@@ -3,29 +3,46 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'reservation_state_provider.g.dart';
 
 class ReservationState {
-  final DateTime? selectedDate;
+  final DateTime? dropOffDate;
+  final DateTime? findingDate;
   final TimeSlot? dropOffSlot;
   final TimeSlot? findingSlot;
 
   ReservationState({
-    this.selectedDate,
+    this.dropOffDate,
+    this.findingDate,
     this.dropOffSlot,
     this.findingSlot,
   });
 
   ReservationState copyWith({
-    DateTime? selectedDate,
+    DateTime? dropOffDate,
+    DateTime? findingDate,
     TimeSlot? dropOffSlot,
     TimeSlot? findingSlot,
+    bool clearFinding = false,
   }) {
+    if (clearFinding) {
+      return ReservationState(
+        dropOffDate: dropOffDate ?? this.dropOffDate,
+        dropOffSlot: dropOffSlot ?? this.dropOffSlot,
+        findingDate: null,
+        findingSlot: null,
+      );
+    }
     return ReservationState(
-      selectedDate: selectedDate ?? this.selectedDate,
-      dropOffSlot: dropOffSlot,
-      findingSlot: findingSlot,
+      dropOffDate: dropOffDate ?? this.dropOffDate,
+      findingDate: findingDate ?? this.findingDate,
+      dropOffSlot: dropOffSlot ?? this.dropOffSlot,
+      findingSlot: findingSlot ?? this.findingSlot,
     );
   }
 
-  bool get isComplete => dropOffSlot != null && findingSlot != null;
+  bool get isComplete =>
+      dropOffDate != null &&
+      findingDate != null &&
+      dropOffSlot != null &&
+      findingSlot != null;
 }
 
 @riverpod
@@ -33,39 +50,74 @@ class ReservationNotifier extends _$ReservationNotifier {
   @override
   ReservationState build() => ReservationState();
 
-  void selectDate(DateTime date) {
-    state = ReservationState(selectedDate: date);
+  void selectDropOffDate(DateTime date) {
+    state = state.copyWith(dropOffDate: date);
+  }
+
+  void selectFindingDate(DateTime date) {
+    if (state.dropOffDate != null && date.isBefore(state.dropOffDate!)) {
+      // Finding 날짜가 Drop-off 날짜보다 앞설 수 없음
+      return;
+    }
+    state = state.copyWith(findingDate: date);
+  }
+
+  bool isSameDay(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
   void selectSlot(TimeSlot slot) {
-    final drop = state.dropOffSlot;
-    final find = state.findingSlot;
-
-    if (drop != null && find == slot) {
-      // 2번째 슬롯을 다시 누르면 해제
-      state = state.copyWith(findingSlot: null);
-    } else if (drop != null && find != null) {
-      // 이미 두 개 다 선택된 경우 → 초기화 후 첫 슬롯으로
-      state = state.copyWith(dropOffSlot: slot, findingSlot: null);
-    } else if (drop == slot) {
-      // 첫 슬롯을 다시 누르면 해제
-      state = state.copyWith(dropOffSlot: null);
-    } else if (drop != null && find == null) {
-      // 첫 슬롯 선택된 후 → 두 번째 슬롯 선택
-      if (slot.index > drop.index) {
-        state = state.copyWith(findingSlot: slot);
-      } else if (slot != drop) {
-        // drop보다 작거나 같지만 동일하지 않을 경우는 drop만 바꿈
-        state = state.copyWith(dropOffSlot: slot);
-      }
-      // slot == drop은 위에서 처리됨
-    } else {
-      // 아무 것도 없는 경우 → drop만 선택
+    // Drop-off가 선택되지 않은 경우
+    if (state.dropOffSlot == null) {
       state = state.copyWith(dropOffSlot: slot);
+      return;
     }
+
+    // Finding이 선택되지 않은 경우
+    if (state.findingSlot == null) {
+      // 같은 날짜인 경우
+      if (state.dropOffDate != null &&
+          state.findingDate != null &&
+          isSameDay(state.dropOffDate!, state.findingDate!)) {
+        if (slot.index > state.dropOffSlot!.index) {
+          // Drop-off 이후 시간이면 Finding으로 설정
+          state = state.copyWith(findingSlot: slot);
+        } else {
+          // Drop-off 이전 시간이면 Drop-off를 변경하고 Finding 초기화
+          state = state.copyWith(
+            dropOffSlot: slot,
+            clearFinding: true,
+          );
+        }
+      } else if (state.findingDate == null || state.dropOffDate == null) {
+        // 날짜가 설정되지 않은 경우 Finding으로 설정
+        state = state.copyWith(findingSlot: slot);
+      } else {
+        // 다른 날짜인 경우
+        if (state.findingDate!.isAfter(state.dropOffDate!)) {
+          // Finding 날짜가 Drop-off 이후면 Finding으로 설정
+          state = state.copyWith(findingSlot: slot);
+        } else {
+          // Finding 날짜가 Drop-off 이전이면 Drop-off를 변경하고 Finding 초기화
+          state = state.copyWith(
+            dropOffSlot: slot,
+            clearFinding: true,
+          );
+        }
+      }
+      return;
+    }
+
+    // 둘 다 선택된 경우, 새로운 Drop-off로 설정하고 Finding 초기화
+    state = state.copyWith(
+      dropOffSlot: slot,
+      clearFinding: true,
+    );
   }
 
   void reset() {
-    state = ReservationState(selectedDate: state.selectedDate);
+    state = ReservationState();
   }
 }

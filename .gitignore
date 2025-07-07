@@ -44,8 +44,20 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Xcode will place build artifacts here
+ios/build/
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Generated.xcconfig
+ios/Flutter/App.framework
+ios/Flutter/engine/
+ios/.dart_tool/
+ios/.package-lock.json
+
+# google-services.json and GoogleService-Info.plist
 /android/app/google-services.json
-/ios/GoogleService-Info.plist
+/ios/Runner/GoogleService-Info.plist
 
 # Environment file
 env/.env
