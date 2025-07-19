@@ -6,7 +6,7 @@ part of 'past_match_list_data_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$pastMatchListHash() => r'9b664cf7500e2b16c0da42807b6931f70d28e55d';
+String _$pastMatchListHash() => r'42ad790b8dd1c652c69500cfab829d21c306c480';
 
 /// See also [PastMatchList].
 @ProviderFor(PastMatchList)

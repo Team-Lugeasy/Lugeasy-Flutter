@@ -6,7 +6,7 @@ part of 'host_list_data_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$hostListNotifierHash() => r'3b9588002fd6882a88d9b86607d4754941f7f54a';
+String _$hostListHash() => r'2f2ffa37d6931ad2447bf5403a324aff97892f85';
 
 /// See also [HostList].
 @ProviderFor(HostList)
@@ -14,9 +14,8 @@ final hostListProvider =
     AutoDisposeAsyncNotifierProvider<HostList, List<Host>>.internal(
   HostList.new,
   name: r'hostListProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$hostListNotifierHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$hostListHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

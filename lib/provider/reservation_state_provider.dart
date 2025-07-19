@@ -1,49 +1,7 @@
-import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/host_time_slot.dart';
+import 'package:lugeasy/services/model/reservation_state.dart';
+import 'package:lugeasy/services/model/host_time_slot.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'reservation_state_provider.g.dart';
-
-class ReservationState {
-  final DateTime? dropOffDate;
-  final DateTime? findingDate;
-  final TimeSlot? dropOffSlot;
-  final TimeSlot? findingSlot;
-
-  ReservationState({
-    this.dropOffDate,
-    this.findingDate,
-    this.dropOffSlot,
-    this.findingSlot,
-  });
-
-  ReservationState copyWith({
-    DateTime? dropOffDate,
-    DateTime? findingDate,
-    TimeSlot? dropOffSlot,
-    TimeSlot? findingSlot,
-    bool clearFinding = false,
-  }) {
-    if (clearFinding) {
-      return ReservationState(
-        dropOffDate: dropOffDate ?? this.dropOffDate,
-        dropOffSlot: dropOffSlot ?? this.dropOffSlot,
-        findingDate: null,
-        findingSlot: null,
-      );
-    }
-    return ReservationState(
-      dropOffDate: dropOffDate ?? this.dropOffDate,
-      findingDate: findingDate ?? this.findingDate,
-      dropOffSlot: dropOffSlot ?? this.dropOffSlot,
-      findingSlot: findingSlot ?? this.findingSlot,
-    );
-  }
-
-  bool get isComplete =>
-      dropOffDate != null &&
-      findingDate != null &&
-      dropOffSlot != null &&
-      findingSlot != null;
-}
 
 @riverpod
 class ReservationNotifier extends _$ReservationNotifier {

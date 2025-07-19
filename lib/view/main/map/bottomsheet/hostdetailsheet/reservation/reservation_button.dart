@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:lugeasy/provider/reservation_state_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/host_time_slot.dart';
+import 'package:lugeasy/services/model/host_time_slot.dart';
 
 class ReservationBottomBar extends ConsumerWidget {
   const ReservationBottomBar({super.key});

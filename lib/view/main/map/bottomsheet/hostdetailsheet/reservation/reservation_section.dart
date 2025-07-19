@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/host_time_slot.dart';
+import 'package:lugeasy/services/model/host_time_slot.dart';
+import 'package:lugeasy/services/model/reservation_state.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/host_time_slot_button.dart';
 import 'package:lugeasy/provider/reservation_state_provider.dart';
 import 'package:table_calendar/table_calendar.dart';

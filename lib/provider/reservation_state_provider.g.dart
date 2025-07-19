@@ -7,7 +7,7 @@ part of 'reservation_state_provider.dart';
 // **************************************************************************
 
 String _$reservationNotifierHash() =>
-    r'08e0dc5712a66fe76ab9fd79cf8f4e7dc4ed752d';
+    r'6b53f70ac9e293b08013768b2ea7775f0f325bcb';
 
 /// See also [ReservationNotifier].
 @ProviderFor(ReservationNotifier)
