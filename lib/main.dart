@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lugeasy/l10n/%08l10n.dart';
 import 'package:lugeasy/provider/locale_provider.dart';
 import 'package:lugeasy/util/log_util.dart';
 import 'package:lugeasy/view/login/login.dart';
@@ -63,8 +62,9 @@ class MyApp extends ConsumerWidget {
       data: (locale) {
         return MaterialApp(
           title: 'Flutter Demo',
-          locale: locale ?? const Locale('ko'),
-          supportedLocales: L10n.all,
+          supportedLocales: const [Locale("en"), Locale("ko")],
+          // locale: locale ?? const Locale('ko'),
+          // supportedLocales: I10n.all,
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,

@@ -14,8 +14,9 @@ final hostListProvider =
     AutoDisposeAsyncNotifierProvider<HostList, List<Host>>.internal(
   HostList.new,
   name: r'hostListProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$hostListHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$hostListNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

@@ -25,7 +25,7 @@ class HostList extends _$HostList {
     const jsonData = '''
     [
       {
-        "hostId": 1,
+        "host_id": 1,
         "name": "Taerin Kim",
         "profile_image": "",
         "review_rate": 4.9,
@@ -36,7 +36,7 @@ class HostList extends _$HostList {
         "longitude": 127.0016985
       },
       {
-        "hostId": 2,
+        "host_id": 2,
         "name": "Liver Lee",
         "profile_image": "",
         "review_rate": 4.8,
@@ -47,7 +47,7 @@ class HostList extends _$HostList {
         "longitude": 127.001
       },
       {
-        "hostId": 3,
+        "host_id": 3,
         "name": "Jisu Yoo",
         "profile_image": "",
         "review_rate": 5.0,
