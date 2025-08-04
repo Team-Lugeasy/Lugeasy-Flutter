@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/common/value_listenable_builder2.dart';
+import 'package:lugeasy/provider/host_provider.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/reservation_button.dart';
 import 'package:lugeasy/view/main/map/map_page.dart';
@@ -8,14 +10,14 @@ import 'package:lugeasy/view/main/matching/matching_page.dart';
 import 'package:lugeasy/view/main/mypage/my_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MainContainer extends StatefulWidget {
+class MainContainer extends ConsumerStatefulWidget {
   const MainContainer({super.key});
 
   @override
-  _MainContainerState createState() => _MainContainerState();
+  ConsumerState<MainContainer> createState() => _MainContainerState();
 }
 
-class _MainContainerState extends State<MainContainer> {
+class _MainContainerState extends ConsumerState<MainContainer> {
   int _selectedIndex = 0;
   final ValueNotifier<bool> _mapDetailVisible = ValueNotifier(false);
 
@@ -46,6 +48,7 @@ class _MainContainerState extends State<MainContainer> {
   @override
   Widget build(BuildContext context) {
     final isMap = _selectedIndex == 1;
+    final selectedHost = ref.watch(hostNotifierProvider);
 
     return Stack(
       children: [
@@ -90,14 +93,15 @@ class _MainContainerState extends State<MainContainer> {
           first: _mapDetailVisible,
           second: HostBottomSheetState.sheetHeightRatio,
           builder: (context, isDetail, ratio, _) {
-            final shouldShow = isMap && isDetail && ratio > 0.1;
+            final shouldShow =
+                isMap && isDetail && ratio > 0.1 && selectedHost != null;
 
             return shouldShow
-                ? const Positioned(
+                ? Positioned(
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    child: ReservationBottomBar(),
+                    child: ReservationBottomBar(host: selectedHost!),
                   )
                 : const SizedBox.shrink();
           },

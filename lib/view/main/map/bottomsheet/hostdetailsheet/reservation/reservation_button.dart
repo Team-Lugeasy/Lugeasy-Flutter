@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:lugeasy/provider/reservation_state_provider.dart';
+import 'package:lugeasy/provider/host_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lugeasy/services/model/host.dart';
 import 'package:lugeasy/services/model/host_time_slot.dart';
+import 'package:lugeasy/view/main/map/request_reservation_page.dart';
 
 class ReservationBottomBar extends ConsumerWidget {
-  const ReservationBottomBar({super.key});
+  final Host host; // host 정보를 받도록 수정
+
+  const ReservationBottomBar({super.key, required this.host});
 
   String _formatDateTime(DateTime date, TimeSlot slot) {
     final month = date.month.toString().padLeft(2, '0');
@@ -134,8 +139,15 @@ class ReservationBottomBar extends ConsumerWidget {
               child: ElevatedButton(
                 onPressed: state.isComplete
                     ? () {
-                        // TODO: Implement reservation logic
-                        debugPrint('Reservation button pressed');
+                        // host와 reservation 정보를 전역 상태에 저장
+                        ref.read(hostNotifierProvider.notifier).select(host);
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RequestReservationPage(),
+                          ),
+                        );
                       }
                     : null,
                 style: ElevatedButton.styleFrom(

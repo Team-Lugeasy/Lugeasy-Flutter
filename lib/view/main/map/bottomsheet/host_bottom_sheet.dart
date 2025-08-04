@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lugeasy/provider/host_provider.dart';
 import 'package:lugeasy/services/model/host.dart';
 import 'hostlistsheet/host_list_sheet.dart';
 import 'hostdetailsheet/host_detail_sheet.dart';
 import 'package:lugeasy/common/constants.dart';
 
-class HostBottomSheet extends StatefulWidget {
+class HostBottomSheet extends ConsumerStatefulWidget {
   final VoidCallback onClose;
 
   const HostBottomSheet({super.key, required this.onClose});
@@ -13,7 +15,7 @@ class HostBottomSheet extends StatefulWidget {
   HostBottomSheetState createState() => HostBottomSheetState();
 }
 
-class HostBottomSheetState extends State<HostBottomSheet> {
+class HostBottomSheetState extends ConsumerState<HostBottomSheet> {
   static final ValueNotifier<bool> isDetailVisible = ValueNotifier(false);
   static final ValueNotifier<double> sheetHeightRatio =
       ValueNotifier(kBottomSheetListRatio);
@@ -37,6 +39,8 @@ class HostBottomSheetState extends State<HostBottomSheet> {
 
   // 호스트 선택 → 상세 화면 전환
   void openDetail(Host host) {
+    // 호스트 선택 시 상태 업데이트
+    ref.read(hostNotifierProvider.notifier).select(host);
     setState(() {
       showDetail = true;
       selectedHost = host;
@@ -51,6 +55,8 @@ class HostBottomSheetState extends State<HostBottomSheet> {
 
   // 리스트로 돌아가기
   void _backToList() {
+    // 호스트 선택 해제
+    ref.read(hostNotifierProvider.notifier).clear();
     setState(() {
       showDetail = false;
       selectedHost = null;
