@@ -1,7 +1,6 @@
 // reservation_bottom_bar.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:lugeasy/providers/reservation/reservation_provider.dart';
 import 'package:lugeasy/providers/host/host_selection_provider.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';

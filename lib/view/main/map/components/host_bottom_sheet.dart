@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/providers/host/host_selection_provider.dart';
 import 'package:lugeasy/models/host.dart';
-import 'hostlistsheet/host_list_sheet.dart';
-import 'hostdetailsheet/host_detail_sheet.dart';
+import 'host_list_sheet.dart';
+import 'host_detail_sheet.dart';
 import 'package:lugeasy/common/constants.dart';
 
 class HostBottomSheet extends ConsumerStatefulWidget {

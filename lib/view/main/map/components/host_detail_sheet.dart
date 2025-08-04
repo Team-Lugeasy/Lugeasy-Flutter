@@ -1,11 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/models/host.dart';
-import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/reservation_section.dart';
-import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/review/host_review_list.dart';
+import 'package:lugeasy/view/main/map/components/reservation_section.dart';
+import 'package:lugeasy/view/main/map/components/host_review_list.dart';
 import 'package:lugeasy/providers/host/host_availability_provider.dart';
-import 'host_user_info.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
+import 'package:lugeasy/common/constants.dart';
+
+class HostUserInfo extends StatelessWidget {
+  final String name;
+  final String profileImage;
+  final String description;
+  final double reviewRate;
+  final int reviewCount;
+  final String address;
+
+  const HostUserInfo({
+    super.key,
+    required this.name,
+    required this.profileImage,
+    required this.description,
+    required this.reviewRate,
+    required this.reviewCount,
+    required this.address,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Center(
+          child: profileImage.isEmpty
+              ? defaultProfileIcon(iconSize: 52)
+              : CircleAvatar(
+                  radius: 60,
+                  backgroundImage: NetworkImage(profileImage),
+                ),
+        ),
+        SizedBox(height: 30),
+        Text(name, style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+        SizedBox(height: 4),
+        Text(description, style: TextStyle(color: Colors.black)),
+        SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("$reviewRate",
+                style: TextStyle(fontWeight: FontWeight.normal)),
+            SizedBox(width: 4),
+            Icon(Icons.star, size: 16, color: Colors.black),
+            SizedBox(width: 8),
+            Container(
+              width: 1,
+              height: 16,
+              color: const Color(0x4D000000), // 블랙 30%
+            ),
+            SizedBox(width: 8),
+            Text("Review ($reviewCount)",
+                style: TextStyle(color: Colors.black)),
+          ],
+        ),
+        SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.location_on, size: 16, color: Colors.black),
+            SizedBox(width: 4),
+            Text(address, style: TextStyle(color: Colors.black)),
+          ],
+        ),
+        SizedBox(height: 20),
+      ],
+    );
+  }
+}
 
 class HostDetailSheet extends ConsumerStatefulWidget {
   // 닫기 버튼 동작 (외부에서 시트 닫기)

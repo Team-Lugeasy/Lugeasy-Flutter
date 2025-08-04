@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/models/host_time_slot.dart';
-import 'package:lugeasy/models/reservation_state.dart';
-import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/host_time_slot_button.dart';
+import 'package:lugeasy/view/main/map/components/host_time_slot_button.dart';
 import 'package:lugeasy/providers/reservation/reservation_provider.dart';
 import 'package:lugeasy/providers/host/host_selection_provider.dart';
 import 'package:lugeasy/providers/host/host_availability_provider.dart';
@@ -31,8 +30,6 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
           .selectDropOffDate(_focusedDay);
     });
   }
-
-  final Set<TimeSlot> _availableTimeSlots = Set.from(TimeSlot.values);
 
   bool _isTimeSlotInPast(TimeSlot slot) {
     final now = DateTime.now();
@@ -312,7 +309,7 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
                       // Finding 모드에서 새로운 날짜 선택 시
                       if (currentState.dropOffSlot != null &&
                           currentState.findingSlot != null) {
-                        // 둘 다 선택된 상태에서 새로운 날짜 선택 시 - focusedDay를 선택한 날짜로 고정
+                        // 둘 다 선택된 상태에서 새로운 날짜 선택 시 focusedDay를 선택한 날짜로 고정
                         setState(() {
                           _focusedDay = selectedDay;
                         });
