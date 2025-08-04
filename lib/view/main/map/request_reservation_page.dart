@@ -6,6 +6,7 @@ import 'package:lugeasy/view/main/map/request_completed_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lugeasy/common/widgets/common_button.dart';
 import 'package:lugeasy/common/widgets/reservation_time_display.dart';
+import 'package:lugeasy/common/constants.dart';
 import 'package:intl/intl.dart';
 
 class RequestReservationPage extends ConsumerWidget {
@@ -63,8 +64,13 @@ class RequestReservationPage extends ConsumerWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const CircleAvatar(
-                            radius: 28), // TODO: host.profileImage
+                        host.profileImage.toString().isNotEmpty
+                            ? CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(host.profileImage),
+                                radius: 28,
+                              )
+                            : defaultProfileIcon(iconSize: 28),
                         const SizedBox(width: 16),
                         Expanded(
                           child: Column(
