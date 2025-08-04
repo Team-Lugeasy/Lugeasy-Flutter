@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lugeasy/common/widgets/common_button.dart';
+import 'package:lugeasy/view/main/main_container.dart';
 
 class RequestCompletedPage extends StatelessWidget {
   const RequestCompletedPage({super.key});
@@ -52,7 +53,12 @@ class RequestCompletedPage extends StatelessWidget {
             child: CommonButton(
               text: AppLocalizations.of(context)!.reservation_complete_button,
               onPressed: () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const MainContainer(),
+                  ),
+                  (route) => false,
+                );
               },
             ),
           ),

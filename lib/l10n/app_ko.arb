@@ -26,11 +26,11 @@
 
   "reservation_confirm_title" : "예약 정보를 확인해 주세요.",
   "reservation_confirm_description": "예약 요청이 완료된 후 예약 내용 변경은 불가합니다.",
-  "revervation_confirm_button": "예약 요청하기",
-  
+  "reservation_confirm_button": "예약 요청하기",
+
   "reservation_complete_title": "예약 요청이 완료되었어요!",
   "reservation_complete_subtitle": "매칭이 완료되면 알려드릴게요",
-  "revervation_complete_button": "확인"
+  "reservation_complete_button": "확인"
 
 
 }

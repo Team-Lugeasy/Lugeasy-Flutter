@@ -62,9 +62,8 @@ class MyApp extends ConsumerWidget {
       data: (locale) {
         return MaterialApp(
           title: 'Flutter Demo',
+          locale: locale,
           supportedLocales: const [Locale("en"), Locale("ko")],
-          // locale: locale ?? const Locale('ko'),
-          // supportedLocales: I10n.all,
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,

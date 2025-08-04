@@ -133,39 +133,6 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
     );
   }
 
-  Widget _buildSelectedSlotInfo(ReservationState state) {
-    final locale = AppLocalizations.of(context)!;
-
-    if (state.dropOffSlot == null) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 12.0),
-        child: Text(
-          AppLocalizations.of(context)!.drop_off_description,
-          style: const TextStyle(
-              fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),
-        ),
-      );
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '${AppLocalizations.of(context)!.drop_off}: ${state.dropOffSlot!.label}',
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        ),
-        if (state.findingSlot != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Text(
-              '${locale.finding}: ${state.findingSlot!.label}',
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-            ),
-          ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(reservationNotifierProvider);
@@ -270,8 +237,7 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
           ),
           const SizedBox(height: 12),
           _buildSlotGrid(pmSlots, state.dropOffSlot, state.findingSlot),
-          const SizedBox(height: 48),
-          _buildSelectedSlotInfo(state),
+          const SizedBox(height: 120),
         ],
       ),
     );
