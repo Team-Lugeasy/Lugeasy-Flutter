@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lugeasy/provider/host_provider.dart';
-import 'package:lugeasy/provider/reservation_state_provider.dart';
+import 'package:lugeasy/providers/host/host_selection_provider.dart';
+import 'package:lugeasy/providers/reservation/reservation_provider.dart';
 import 'package:lugeasy/view/main/map/request_completed_page.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
 import 'package:lugeasy/common/widgets/common_button.dart';

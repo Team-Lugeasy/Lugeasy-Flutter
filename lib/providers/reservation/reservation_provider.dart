@@ -1,10 +1,11 @@
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:lugeasy/models/reservation_state.dart';
 import 'package:lugeasy/models/host_time_slot.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-part 'reservation_state_provider.g.dart';
+
+part 'reservation_provider.g.dart';
 
 @riverpod
-class ReservationNotifier extends _$ReservationNotifier {
+class ReservationProvider extends _$ReservationProvider {
   @override
   ReservationState build() => ReservationState();
 
@@ -79,3 +80,6 @@ class ReservationNotifier extends _$ReservationNotifier {
     state = ReservationState();
   }
 }
+
+// Provider 이름을 export (한 번만 사용)
+final reservationNotifierProvider = reservationProviderProvider;

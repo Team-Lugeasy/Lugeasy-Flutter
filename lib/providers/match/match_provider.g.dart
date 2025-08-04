@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'reservation_state_provider.dart';
+part of 'match_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$reservationNotifierHash() =>
-    r'6b53f70ac9e293b08013768b2ea7775f0f325bcb';
+String _$matchProviderHash() => r'e1551ad37565ef5123bd0e87b7afbcf7d03b268c';
 
-/// See also [ReservationNotifier].
-@ProviderFor(ReservationNotifier)
-final reservationNotifierProvider =
-    AutoDisposeNotifierProvider<ReservationNotifier, ReservationState>.internal(
-  ReservationNotifier.new,
-  name: r'reservationNotifierProvider',
+/// See also [MatchProvider].
+@ProviderFor(MatchProvider)
+final matchProviderProvider =
+    AutoDisposeAsyncNotifierProvider<MatchProvider, MatchListResult>.internal(
+  MatchProvider.new,
+  name: r'matchProviderProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$reservationNotifierHash,
+      : _$matchProviderHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$ReservationNotifier = AutoDisposeNotifier<ReservationState>;
+typedef _$MatchProvider = AutoDisposeAsyncNotifier<MatchListResult>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

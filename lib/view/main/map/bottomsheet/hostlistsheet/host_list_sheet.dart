@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lugeasy/provider/host_list_data_provider.dart';
+import 'package:lugeasy/providers/host/host_provider.dart';
 import 'package:lugeasy/models/host.dart';
 import 'listitem/host_list_tile.dart';
 

@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/models/host_time_slot.dart';
 import 'package:lugeasy/models/reservation_state.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/host_time_slot_button.dart';
-import 'package:lugeasy/provider/reservation_state_provider.dart';
-import 'package:lugeasy/provider/host_provider.dart';
-import 'package:lugeasy/provider/host_availability_provider.dart';
+import 'package:lugeasy/providers/reservation/reservation_provider.dart';
+import 'package:lugeasy/providers/host/host_selection_provider.dart';
+import 'package:lugeasy/providers/host/host_availability_provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
 
@@ -142,8 +142,9 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
 
             // 호스트 가용성 확인
             final bool isHostAvailable = host != null &&
-                ref.read(hostAvailabilityProvider.notifier).isSlotAvailable(
-                    host!.hostId, currentDate ?? _focusedDay, slot);
+                ref
+                    .read(hostAvailabilityNotifierProvider.notifier)
+                    .isSlotAvailable(currentDate ?? _focusedDay, slot);
 
             // 현재 시간보다 이전 시간 비활성화 (오늘 날짜인 경우에만)
             final bool isPastTime = currentDate != null &&
@@ -202,7 +203,7 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
   Widget build(BuildContext context) {
     final state = ref.watch(reservationNotifierProvider);
     final host = ref.watch(hostNotifierProvider);
-    final hostAvailability = ref.watch(hostAvailabilityProvider);
+    final hostAvailability = ref.watch(hostAvailabilityNotifierProvider);
     final amSlots = TimeSlot.values.where((slot) => slot.isAm).toList();
     final pmSlots = TimeSlot.values.where((slot) => !slot.isAm).toList();
 
@@ -211,11 +212,11 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
     }
 
     // 호스트 가용성 정보가 로드되지 않았다면 자동으로 가져오기
-    if (host != null && !hostAvailability.containsKey(host!.hostId)) {
+    if (host != null && hostAvailability.isLoading) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ref
-            .read(hostAvailabilityProvider.notifier)
-            .fetchHostAvailability(host!.hostId);
+            .read(hostAvailabilityNotifierProvider.notifier)
+            .loadHostAvailability(host!.hostId);
       });
     }
 
@@ -244,8 +245,7 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
     }
 
     // 호스트 가용성 정보가 로드 중인지 확인
-    final isLoading =
-        host != null && !hostAvailability.containsKey(host!.hostId);
+    final isLoading = hostAvailability.isLoading;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -287,8 +287,8 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
                     // 호스트가 있고 해당 날짜에 예약 가능한 시간이 있는 경우 활성화
                     return host != null &&
                         ref
-                            .read(hostAvailabilityProvider.notifier)
-                            .isDateAvailable(host!.hostId, day);
+                            .read(hostAvailabilityNotifierProvider.notifier)
+                            .isDateAvailable(day);
                   },
                   selectedDayPredicate: (day) {
                     // Drop-off와 Finding 날짜 모두 표시

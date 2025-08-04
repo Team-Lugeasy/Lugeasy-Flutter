@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/models/host.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/reservation_section.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/review/host_review_list.dart';
-import 'package:lugeasy/provider/host_availability_provider.dart';
+import 'package:lugeasy/providers/host/host_availability_provider.dart';
 import 'host_user_info.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
 
@@ -38,8 +38,8 @@ class _HostDetailSheetState extends ConsumerState<HostDetailSheet> {
     // 호스트 가용성 정보 가져오기
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref
-          .read(hostAvailabilityProvider.notifier)
-          .fetchHostAvailability(widget.host.hostId);
+          .read(hostAvailabilityNotifierProvider.notifier)
+          .loadHostAvailability(widget.host.hostId);
     });
   }
 

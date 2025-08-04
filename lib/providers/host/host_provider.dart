@@ -4,10 +4,10 @@ import 'dart:convert';
 import 'package:lugeasy/models/host.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'host_list_data_provider.g.dart';
+part 'host_provider.g.dart';
 
 @riverpod
-class HostList extends _$HostList {
+class HostProvider extends _$HostProvider {
   @override
   Future<List<Host>> build() async {
     return await _fetchHosts(37.5665, 126.9780); // 초기 위치 (서울)
@@ -164,3 +164,6 @@ class HostList extends _$HostList {
     return hosts;
   }
 }
+
+// Provider 이름을 export (한 번만 사용)
+final hostListProvider = hostProviderProvider;

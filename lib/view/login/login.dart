@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lugeasy/provider/locale_provider.dart';
+import 'package:lugeasy/providers/auth/locale_provider.dart';
 import 'package:lugeasy/services/base_response.dart';
 import 'package:lugeasy/services/intro_services.dart';
 import 'package:lugeasy/models/login_response.dart';

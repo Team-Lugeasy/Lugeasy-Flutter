@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:lugeasy/models/match.dart';
 
-part 'match_list_data_provider.g.dart';
+part 'match_provider.g.dart';
 
 class MatchListResult {
   final List<Match> pendingList;
@@ -15,7 +15,7 @@ class MatchListResult {
 }
 
 @riverpod
-class MatchList extends _$MatchList {
+class MatchProvider extends _$MatchProvider {
   @override
   Future<MatchListResult> build() async {
     return await _fetchMatchList();
@@ -25,8 +25,8 @@ class MatchList extends _$MatchList {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() => _fetchMatchList());
   }
-  Future<MatchListResult> _fetchMatchList() async {
 
+  Future<MatchListResult> _fetchMatchList() async {
     final results = await Future.wait([
       _fetchCompleteReservation(),
       _fetchPendingReservation(),
@@ -35,7 +35,6 @@ class MatchList extends _$MatchList {
       completeList: results[0],
       pendingList: results[1],
     );
-
   }
 
   /// 예약요청 list api 통신
@@ -88,3 +87,6 @@ class MatchList extends _$MatchList {
     return parsedJson.map((e) => Match.fromJson(e)).toList();
   }
 }
+
+// Provider 이름을 export (한 번만 사용)
+final matchListProvider = matchProviderProvider;

@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:lugeasy/models/match.dart';
 
-part 'past_match_list_data_provider.g.dart';
+part 'past_match_provider.g.dart';
 
 @riverpod
-class PastMatchList extends _$PastMatchList {
+class PastMatchProvider extends _$PastMatchProvider {
   int _currentPage = 0;
   bool _isLastPage = false;
   @override
@@ -146,3 +146,6 @@ class PastMatchList extends _$PastMatchList {
     return parsedJson.map((e) => Match.fromJson(e)).toList();
   }
 }
+
+// Provider 이름을 export (한 번만 사용)
+final pastMatchListProvider = pastMatchProviderProvider;

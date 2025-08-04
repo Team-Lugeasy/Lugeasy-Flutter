@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/common/value_listenable_builder2.dart';
-import 'package:lugeasy/provider/host_provider.dart';
+import 'package:lugeasy/providers/host/host_selection_provider.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/reservation_button.dart';
 import 'package:lugeasy/view/main/map/map_page.dart';

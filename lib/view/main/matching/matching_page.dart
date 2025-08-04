@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lugeasy/provider/match_list_data_provider.dart';
-import 'package:lugeasy/provider/past_match_list_data_provider.dart';
+import 'package:lugeasy/providers/match/match_provider.dart';
+import 'package:lugeasy/providers/match/past_match_provider.dart';
 import 'package:lugeasy/models/match.dart';
 import 'package:lugeasy/util/log_util.dart';
 
