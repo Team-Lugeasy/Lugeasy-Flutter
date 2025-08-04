@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lugeasy/services/model/review.dart';
+import 'package:lugeasy/models/review.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/review/listitem/host_review_tile.dart';
 
 class HostReviewList extends StatelessWidget {

@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/provider/locale_provider.dart';
 import 'package:lugeasy/services/base_response.dart';
 import 'package:lugeasy/services/intro_services.dart';
-import 'package:lugeasy/services/model/login_response.dart';
+import 'package:lugeasy/models/login_response.dart';
 import 'package:lugeasy/util/log_util.dart';
 import 'package:lugeasy/view/main/main_container.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';

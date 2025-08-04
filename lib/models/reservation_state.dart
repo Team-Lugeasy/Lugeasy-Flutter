@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:lugeasy/services/model/host_time_slot.dart';
+import 'package:lugeasy/models/host_time_slot.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 part 'reservation_state.g.dart';

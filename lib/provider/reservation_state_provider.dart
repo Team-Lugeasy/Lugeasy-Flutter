@@ -1,5 +1,5 @@
-import 'package:lugeasy/services/model/reservation_state.dart';
-import 'package:lugeasy/services/model/host_time_slot.dart';
+import 'package:lugeasy/models/reservation_state.dart';
+import 'package:lugeasy/models/host_time_slot.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'reservation_state_provider.g.dart';
 

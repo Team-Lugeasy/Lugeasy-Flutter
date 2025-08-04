@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:lugeasy/services/base_response.dart';
 import 'package:lugeasy/services/logging_interceptor.dart';
-import 'package:lugeasy/services/model/login_response.dart';
+import 'package:lugeasy/models/login_response.dart';
 import 'package:lugeasy/util/log_util.dart';
 
 class IntroServices {

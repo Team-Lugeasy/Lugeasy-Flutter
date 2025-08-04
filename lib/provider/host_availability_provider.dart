@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lugeasy/services/model/host_availability.dart';
-import 'package:lugeasy/services/model/host_time_slot.dart';
+import 'package:lugeasy/models/host_availability.dart';
+import 'package:lugeasy/models/host_time_slot.dart';
 
 final hostAvailabilityProvider =
     StateNotifierProvider<HostAvailabilityNotifier, Map<int, HostAvailability>>(

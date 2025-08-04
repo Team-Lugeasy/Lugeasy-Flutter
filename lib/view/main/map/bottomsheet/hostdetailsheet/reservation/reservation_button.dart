@@ -5,8 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:lugeasy/provider/reservation_state_provider.dart';
 import 'package:lugeasy/provider/host_provider.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
-import 'package:lugeasy/services/model/host.dart';
-import 'package:lugeasy/services/model/host_time_slot.dart';
+import 'package:lugeasy/models/host.dart';
+import 'package:lugeasy/models/host_time_slot.dart';
 import 'package:lugeasy/view/main/map/request_reservation_page.dart';
 
 class ReservationBottomBar extends ConsumerWidget {

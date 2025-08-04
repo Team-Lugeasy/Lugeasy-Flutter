@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
 import 'package:lugeasy/provider/reservation_state_provider.dart';
-import 'package:lugeasy/services/model/host_time_slot.dart';
+import 'package:lugeasy/models/host_time_slot.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ReservationTimeDisplay extends ConsumerWidget {

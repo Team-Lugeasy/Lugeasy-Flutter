@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/provider/host_provider.dart';
-import 'package:lugeasy/services/model/host.dart';
+import 'package:lugeasy/models/host.dart';
 import 'hostlistsheet/host_list_sheet.dart';
 import 'hostdetailsheet/host_detail_sheet.dart';
 import 'package:lugeasy/common/constants.dart';

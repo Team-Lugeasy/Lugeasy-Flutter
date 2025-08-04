@@ -1,7 +1,7 @@
 // host_list_data_provider.dart
 
 import 'dart:convert';
-import 'package:lugeasy/services/model/host.dart';
+import 'package:lugeasy/models/host.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'host_list_data_provider.g.dart';

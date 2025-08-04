@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:lugeasy/services/model/match.dart';
+import 'package:lugeasy/models/match.dart';
 
 part 'match_list_data_provider.g.dart';
 

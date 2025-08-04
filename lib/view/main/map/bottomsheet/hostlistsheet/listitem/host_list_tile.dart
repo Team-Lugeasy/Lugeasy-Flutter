@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lugeasy/common/constants.dart';
-import 'package:lugeasy/services/model/host.dart';
+import 'package:lugeasy/models/host.dart';
 
 import 'package:lugeasy/common/extensions/context_extension.dart';
 
