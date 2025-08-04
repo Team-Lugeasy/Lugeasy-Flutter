@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/services/model/host.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/reservation_section.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/review/host_review_list.dart';
+import 'package:lugeasy/provider/host_availability_provider.dart';
 import 'host_user_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class HostDetailSheet extends StatefulWidget {
+class HostDetailSheet extends ConsumerStatefulWidget {
   // 닫기 버튼 동작 (외부에서 시트 닫기)
   final VoidCallback onClose;
 
@@ -23,12 +25,23 @@ class HostDetailSheet extends StatefulWidget {
   });
 
   @override
-  State<HostDetailSheet> createState() => _HostDetailSheetState();
+  ConsumerState<HostDetailSheet> createState() => _HostDetailSheetState();
 }
 
-class _HostDetailSheetState extends State<HostDetailSheet> {
+class _HostDetailSheetState extends ConsumerState<HostDetailSheet> {
   // 탭 인덱스 (0: Reservation, 1: Review)
   int _tabIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // 호스트 가용성 정보 가져오기
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(hostAvailabilityProvider.notifier)
+          .fetchHostAvailability(widget.host.hostId);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
