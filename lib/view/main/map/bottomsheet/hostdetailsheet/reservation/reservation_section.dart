@@ -277,6 +277,7 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
             )
           else
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TableCalendar(
                   firstDay: DateTime.now(),
