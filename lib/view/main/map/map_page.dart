@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lugeasy/provider/host_list_data_provider.dart';
 import 'package:lugeasy/services/model/host.dart';
 import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lugeasy/common/extensions/context_extension.dart';
 
 class MapPage extends ConsumerStatefulWidget {
   final ValueNotifier<bool> isDetailVisible;
@@ -145,7 +145,7 @@ class _MapPageState extends ConsumerState<MapPage> {
                           Expanded(
                             child: TextField(
                               decoration: InputDecoration(
-                                hintText: AppLocalizations.of(context)!.search,
+                                hintText: context.l10n.search,
                                 border: InputBorder.none,
                               ),
                             ),

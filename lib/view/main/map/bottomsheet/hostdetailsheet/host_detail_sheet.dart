@@ -5,7 +5,7 @@ import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/re
 import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/review/host_review_list.dart';
 import 'package:lugeasy/provider/host_availability_provider.dart';
 import 'host_user_info.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lugeasy/common/extensions/context_extension.dart';
 
 class HostDetailSheet extends ConsumerStatefulWidget {
   // 닫기 버튼 동작 (외부에서 시트 닫기)
@@ -99,7 +99,7 @@ class _HostDetailSheetState extends ConsumerState<HostDetailSheet> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           child: Text(
-                            AppLocalizations.of(context)!.reservation,
+                            context.l10n.reservation,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
@@ -118,7 +118,7 @@ class _HostDetailSheetState extends ConsumerState<HostDetailSheet> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           child: Text(
-                            AppLocalizations.of(context)!.review,
+                            context.l10n.review,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
@@ -171,7 +171,7 @@ class _HostDetailSheetState extends ConsumerState<HostDetailSheet> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    AppLocalizations.of(context)!.review,
+                    context.l10n.review,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),

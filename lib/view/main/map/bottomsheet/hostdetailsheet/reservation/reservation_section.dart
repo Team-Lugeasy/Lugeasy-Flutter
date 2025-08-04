@@ -7,7 +7,7 @@ import 'package:lugeasy/provider/reservation_state_provider.dart';
 import 'package:lugeasy/provider/host_provider.dart';
 import 'package:lugeasy/provider/host_availability_provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lugeasy/common/extensions/context_extension.dart';
 
 class ReservationSection extends ConsumerStatefulWidget {
   const ReservationSection({super.key});
@@ -316,14 +316,14 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  AppLocalizations.of(context)!.am,
+                  context.l10n.am,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),
                 _buildSlotGrid(amSlots, state.dropOffSlot, state.findingSlot),
                 const SizedBox(height: 24),
                 Text(
-                  AppLocalizations.of(context)!.pm,
+                  context.l10n.pm,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),

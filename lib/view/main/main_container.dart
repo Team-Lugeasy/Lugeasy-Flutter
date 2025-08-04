@@ -8,7 +8,7 @@ import 'package:lugeasy/view/main/map/bottomsheet/hostdetailsheet/reservation/re
 import 'package:lugeasy/view/main/map/map_page.dart';
 import 'package:lugeasy/view/main/matching/matching_page.dart';
 import 'package:lugeasy/view/main/mypage/my_page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lugeasy/common/extensions/context_extension.dart';
 
 class MainContainer extends ConsumerStatefulWidget {
   const MainContainer({super.key});
@@ -68,7 +68,7 @@ class _MainContainerState extends ConsumerState<MainContainer> {
                       ? 'assets/icon_luggage_on.svg'
                       : 'assets/icon_luggage_off.svg',
                 ),
-                label: AppLocalizations.of(context)!.matching,
+                label: context.l10n.matching,
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -76,7 +76,7 @@ class _MainContainerState extends ConsumerState<MainContainer> {
                       ? 'assets/icon_map_on.svg'
                       : 'assets/icon_map_off.svg',
                 ),
-                label: AppLocalizations.of(context)!.map,
+                label: context.l10n.map,
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -84,7 +84,7 @@ class _MainContainerState extends ConsumerState<MainContainer> {
                       ? 'assets/icon_profile_on.svg'
                       : 'assets/icon_profile_off.svg',
                 ),
-                label: AppLocalizations.of(context)!.mypage,
+                label: context.l10n.mypage,
               ),
             ],
           ),

@@ -12,7 +12,7 @@ import 'package:lugeasy/util/log_util.dart';
 import 'package:lugeasy/view/main/main_container.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lugeasy/common/extensions/context_extension.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
@@ -23,7 +23,7 @@ class LoginPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.login), // 예: 다국어 "로그인"
+        title: Text(context.l10n.login), // 예: 다국어 "로그인"
         actions: [
           IconButton(
             icon: const Icon(Icons.language),
@@ -44,7 +44,7 @@ class LoginPage extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                AppLocalizations.of(context)!.welcome,
+                context.l10n.welcome,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 50),
@@ -52,12 +52,12 @@ class LoginPage extends ConsumerWidget {
                 // iOS
                 ElevatedButton(
                   onPressed: () => _appleLogin(context, ref),
-                  child: Text(AppLocalizations.of(context)!.apple_login),
+                  child: Text(context.l10n.apple_login),
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () => _googleLogin(context, ref),
-                  child: Text(AppLocalizations.of(context)!.google_login),
+                  child: Text(context.l10n.google_login),
                 ),
                 SizedBox(height: 30),
                 ElevatedButton(
@@ -69,13 +69,13 @@ class LoginPage extends ConsumerWidget {
                       ),
                     );
                   },
-                  child: Text(AppLocalizations.of(context)!.guest_login),
+                  child: Text(context.l10n.guest_login),
                 ),
               ] else if (Platform.isAndroid) ...[
                 // Android
                 ElevatedButton(
                   onPressed: () => _googleLogin(context, ref),
-                  child: Text(AppLocalizations.of(context)!.google_login),
+                  child: Text(context.l10n.google_login),
                 ),
                 SizedBox(height: 30),
                 ElevatedButton(
@@ -87,7 +87,7 @@ class LoginPage extends ConsumerWidget {
                       ),
                     );
                   },
-                  child: Text(AppLocalizations.of(context)!.guest_login),
+                  child: Text(context.l10n.guest_login),
                 ),
               ],
             ],

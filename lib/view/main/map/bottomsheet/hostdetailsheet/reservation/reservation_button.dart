@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:lugeasy/provider/reservation_state_provider.dart';
 import 'package:lugeasy/provider/host_provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lugeasy/common/extensions/context_extension.dart';
 import 'package:lugeasy/services/model/host.dart';
 import 'package:lugeasy/services/model/host_time_slot.dart';
 import 'package:lugeasy/view/main/map/request_reservation_page.dart';
@@ -115,18 +115,18 @@ class ReservationBottomBar extends ConsumerWidget {
         children: [
           _buildTimeRow(
             context,
-            AppLocalizations.of(context)!.drop_off,
+            context.l10n.drop_off,
             dropOffDate != null && dropOffSlot != null
                 ? _formatDateTime(dropOffDate, dropOffSlot)
-                : AppLocalizations.of(context)!.drop_off_description,
+                : context.l10n.drop_off_description,
             isGrey: dropOffSlot == null,
           ),
           _buildTimeRow(
             context,
-            AppLocalizations.of(context)!.finding,
+            context.l10n.finding,
             findingDate != null && findingSlot != null
                 ? _formatDateTime(findingDate, findingSlot)
-                : AppLocalizations.of(context)!.drop_off_description,
+                : context.l10n.drop_off_description,
             isGrey: findingSlot == null,
             isLastItem: true,
           ),
@@ -163,7 +163,7 @@ class ReservationBottomBar extends ConsumerWidget {
                   disabledForegroundColor: Colors.black,
                 ),
                 child: Text(
-                  AppLocalizations.of(context)!.reservation_button,
+                  context.l10n.reservation_button,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

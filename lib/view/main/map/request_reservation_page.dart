@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/provider/host_provider.dart';
 import 'package:lugeasy/provider/reservation_state_provider.dart';
 import 'package:lugeasy/view/main/map/request_completed_page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lugeasy/common/extensions/context_extension.dart';
 import 'package:lugeasy/common/widgets/common_button.dart';
 import 'package:lugeasy/common/widgets/reservation_time_display.dart';
 import 'package:lugeasy/common/constants.dart';
@@ -41,7 +41,7 @@ class RequestReservationPage extends ConsumerWidget {
                 children: [
                   const SizedBox(height: 8),
                   Text(
-                    AppLocalizations.of(context)!.reservation_confirm_title,
+                    context.l10n.reservation_confirm_title,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -111,8 +111,7 @@ class RequestReservationPage extends ConsumerWidget {
                   ReservationTimeDisplay(),
                   const Spacer(),
                   Text(
-                    AppLocalizations.of(context)!
-                        .reservation_confirm_description,
+                    context.l10n.reservation_confirm_description,
                     style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                 ],
@@ -123,7 +122,7 @@ class RequestReservationPage extends ConsumerWidget {
             padding: EdgeInsets.fromLTRB(
                 20, 12, 20, MediaQuery.of(context).padding.bottom + 16),
             child: CommonButton(
-              text: AppLocalizations.of(context)!.reservation_confirm_button,
+              text: context.l10n.reservation_confirm_button,
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
