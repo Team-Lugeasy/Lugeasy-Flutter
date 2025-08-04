@@ -34,6 +34,29 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
 
   final Set<TimeSlot> _availableTimeSlots = Set.from(TimeSlot.values);
 
+  bool _isTimeSlotInPast(TimeSlot slot) {
+    final now = DateTime.now();
+    final currentHour = now.hour;
+    final currentMinute = now.minute;
+
+    // 시간 슬롯의 시작 시간 계산
+    final slotStartHour =
+        slot.index + 1; // TimeSlot.t0001은 1시, TimeSlot.t0102는 2시...
+
+    // 현재 시간이 슬롯 시작 시간보다 늦으면 과거 시간
+    if (currentHour > slotStartHour) {
+      return true;
+    }
+
+    // 같은 시간대인 경우 분까지 비교
+    if (currentHour == slotStartHour) {
+      // 슬롯은 1시간 단위이므로 현재 분이 0보다 크면 해당 슬롯은 과거
+      return currentMinute > 0;
+    }
+
+    return false;
+  }
+
   void _handleTimeSlotTap(TimeSlot slot) {
     final state = ref.read(reservationNotifierProvider);
 
@@ -122,14 +145,20 @@ class _ReservationSectionState extends ConsumerState<ReservationSection> {
                 ref.read(hostAvailabilityProvider.notifier).isSlotAvailable(
                     host!.hostId, currentDate ?? _focusedDay, slot);
 
+            // 현재 시간보다 이전 시간 비활성화 (오늘 날짜인 경우에만)
+            final bool isPastTime = currentDate != null &&
+                isSameDay(currentDate, DateTime.now()) &&
+                _isTimeSlotInPast(slot);
+
             // Drop-off 모드일 때만 이전 시간 비활성화
             final bool isBeforeDropOff = _isSelectingDropOff &&
                 state.dropOffSlot != null &&
                 slot.index <= state.dropOffSlot!.index &&
                 slot != state.dropOffSlot;
 
-            final bool isDisabled =
-                !isHostAvailable || (!isDifferentDate && isBeforeDropOff);
+            final bool isDisabled = !isHostAvailable ||
+                isPastTime ||
+                (!isDifferentDate && isBeforeDropOff);
 
             TimeSlotState slotState;
 
