@@ -56,6 +56,105 @@ class HostList extends _$HostList {
         "description": "Kind host in center of Seoul",
         "latitude": 37.575,
         "longitude": 127.0008
+      },
+      {
+        "host_id": 4,
+        "name": "Minho Park",
+        "profile_image": "",
+        "review_rate": 4.7,
+        "review_count": 156,
+        "address": "123 Hongdae-ro, Mapo-gu, Seoul",
+        "description": "Convenient location near Hongik University",
+        "latitude": 37.556,
+        "longitude": 126.923
+      },
+      {
+        "host_id": 5,
+        "name": "Soojin Choi",
+        "profile_image": "",
+        "review_rate": 4.9,
+        "review_count": 203,
+        "address": "456 Itaewon-ro, Yongsan-gu, Seoul",
+        "description": "International district with great accessibility",
+        "latitude": 37.534,
+        "longitude": 126.994
+      },
+      {
+        "host_id": 6,
+        "name": "Junho Kim",
+        "profile_image": "",
+        "review_rate": 4.6,
+        "review_count": 89,
+        "address": "789 Myeongdong-gil, Jung-gu, Seoul",
+        "description": "Shopping district with tourist attractions",
+        "latitude": 37.563,
+        "longitude": 126.983
+      },
+      {
+        "host_id": 7,
+        "name": "Yuna Lee",
+        "profile_image": "",
+        "review_rate": 5.0,
+        "review_count": 178,
+        "address": "321 Dongdaemun-ro, Jung-gu, Seoul",
+        "description": "Fashion district with 24/7 shopping",
+        "latitude": 37.567,
+        "longitude": 127.009
+      },
+      {
+        "host_id": 8,
+        "name": "Seungwoo Han",
+        "profile_image": "",
+        "review_rate": 4.8,
+        "review_count": 134,
+        "address": "654 Sinchon-ro, Seodaemun-gu, Seoul",
+        "description": "University area with young atmosphere",
+        "latitude": 37.561,
+        "longitude": 126.936
+      },
+      {
+        "host_id": 9,
+        "name": "Hyeri Jung",
+        "profile_image": "",
+        "review_rate": 4.7,
+        "review_count": 95,
+        "address": "987 Apgujeong-ro, Gangnam-gu, Seoul",
+        "description": "Trendy area with luxury shopping",
+        "latitude": 37.526,
+        "longitude": 127.028
+      },
+      {
+        "host_id": 10,
+        "name": "Donghyun Yoon",
+        "profile_image": "",
+        "review_rate": 4.9,
+        "review_count": 167,
+        "address": "456 Garosu-gil, Gangnam-gu, Seoul",
+        "description": "Fashion street with boutique shops",
+        "latitude": 37.522,
+        "longitude": 127.023
+      },
+      {
+        "host_id": 11,
+        "name": "Seoyeon Kang",
+        "profile_image": "",
+        "review_rate": 4.8,
+        "review_count": 112,
+        "address": "789 Insadong-gil, Jongno-gu, Seoul",
+        "description": "Traditional culture area with hanbok experience",
+        "latitude": 37.573,
+        "longitude": 126.989
+      },
+      {
+        "host_id": 12,
+        "name": "Jiwon Bae",
+        "profile_image": "",
+        "review_rate": 4.6,
+        "review_count": 78,
+        "address": "123 Bukchon-ro, Jongno-gu, Seoul",
+        "description": "Traditional hanok village area",
+        "latitude": 37.581,
+        "longitude": 126.984
       }
     ]
     ''';
