@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lugeasy/providers/host/host_provider.dart';
 import 'package:lugeasy/models/host.dart';
 import 'package:lugeasy/view/main/map/components/host_bottom_sheet.dart';
+import 'package:lugeasy/view/main/map/search_page.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
 
 class MapPage extends ConsumerStatefulWidget {
@@ -124,33 +125,43 @@ class _MapPageState extends ConsumerState<MapPage> {
               children: [
                 // 검색바
                 Expanded(
-                  child: Material(
-                    elevation: 3,
-                    borderRadius: BorderRadius.circular(100),
-                    child: Container(
-                      height: 50,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icon_search.svg',
-                            width: 20,
-                            height: 20,
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                hintText: context.l10n.search,
-                                border: InputBorder.none,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SearchPage(),
+                        ),
+                      );
+                    },
+                    child: Material(
+                      elevation: 3,
+                      borderRadius: BorderRadius.circular(100),
+                      child: Container(
+                        height: 50,
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/icon_search.svg',
+                              width: 20,
+                              height: 20,
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                context.l10n.search,
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

@@ -30,7 +30,14 @@
 
   "reservation_complete_title": "예약 요청이 완료되었어요!",
   "reservation_complete_subtitle": "매칭이 완료되면 알려드릴게요",
-  "reservation_complete_button": "확인"
+  "reservation_complete_button": "확인",
 
-
+  "location": "위치",
+  "location_search": "위치 검색",
+  "drop_off_time": "짐 맡기는 시간",
+  "finding_time": "짐 찾는 시간",
+  "drop_off_date": "짐 맡기는 날짜",
+  "finding_date": "짐 찾는 날짜",
+  "search_button": "검색",
+  "location_placeholder": "짐을 보관할 장소를 찾아주세요."
 }

@@ -30,6 +30,14 @@
 
   "reservation_complete_title": "Reservation request completed!",
   "reservation_complete_subtitle": "You’ll be notified\nwhen matching is complete.",
-  "reservation_complete_button": "Confirm"
+  "reservation_complete_button": "Confirm",
 
+  "location": "Location",
+  "location_search": "Search location",
+  "drop_off_time": "Drop-off time",
+  "finding_time": "Finding time",
+  "drop_off_date": "Drop-off date",
+  "finding_date": "Finding date",
+  "search_button": "Search",
+  "location_placeholder": "Find a place to Drop-off your luggage."
 }
