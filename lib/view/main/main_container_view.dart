@@ -10,14 +10,14 @@ import 'package:lugeasy/view/main/matching/matching_page.dart';
 import 'package:lugeasy/view/main/mypage/my_page.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
 
-class MainContainer extends ConsumerStatefulWidget {
-  const MainContainer({super.key});
+class MainContainerView extends ConsumerStatefulWidget {
+  const MainContainerView({super.key});
 
   @override
-  ConsumerState<MainContainer> createState() => _MainContainerState();
+  ConsumerState<MainContainerView> createState() => _MainContainerState();
 }
 
-class _MainContainerState extends ConsumerState<MainContainer> {
+class _MainContainerState extends ConsumerState<MainContainerView> {
   int _selectedIndex = 0;
   final ValueNotifier<bool> _mapDetailVisible = ValueNotifier(false);
 

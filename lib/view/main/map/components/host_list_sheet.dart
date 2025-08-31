@@ -5,7 +5,6 @@ import 'package:lugeasy/models/host.dart';
 import 'package:lugeasy/common/constants.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
 import 'package:lugeasy/util/log_util.dart';
-import 'dart:async';
 
 class HostListTile extends StatelessWidget {
   final Host host;

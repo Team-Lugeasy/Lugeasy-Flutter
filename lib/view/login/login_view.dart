@@ -9,13 +9,18 @@ import 'package:lugeasy/services/base_response.dart';
 import 'package:lugeasy/services/intro_services.dart';
 import 'package:lugeasy/models/login_response.dart';
 import 'package:lugeasy/util/log_util.dart';
-import 'package:lugeasy/view/main/main_container.dart';
+import 'package:lugeasy/view/navigation_route.dart';
+import 'package:lugeasy/view/navigation_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
 
-class LoginPage extends ConsumerWidget {
-  const LoginPage({super.key});
+class LoginView extends ConsumerWidget {
+  const LoginView({super.key});
+
+  void navigateToMainContainer() {
+    NavigationService().navigateClear(NavigationRoute.mainContainer);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,12 +67,7 @@ class LoginPage extends ConsumerWidget {
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MainContainer(),
-                      ),
-                    );
+                    navigateToMainContainer();
                   },
                   child: Text(context.l10n.guest_login),
                 ),
@@ -80,12 +80,7 @@ class LoginPage extends ConsumerWidget {
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MainContainer(),
-                      ),
-                    );
+                    navigateToMainContainer();
                   },
                   child: Text(context.l10n.guest_login),
                 ),
@@ -168,10 +163,7 @@ class LoginPage extends ConsumerWidget {
 
       if (result is Success<LoginResponse>) {
         // 로그인 성공 시, 메인 화면으로 이동
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MainContainer()),
-        );
+        navigateToMainContainer();
       } else if (result is Error<LoginResponse>) {
         // 로그인 실패 시 메시지 출력
         logger.d("로그인 실패: ${result.message}");

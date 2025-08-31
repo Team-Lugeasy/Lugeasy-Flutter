@@ -32,7 +32,7 @@ class TimeSlotButton extends StatelessWidget {
         border = BorderSide(color: Colors.grey[300]!);
         break;
       case TimeSlotState.enabled:
-      bgColor = Colors.white;
+        bgColor = Colors.white;
         textColor = Colors.black;
         border = BorderSide(color: Colors.black);
     }

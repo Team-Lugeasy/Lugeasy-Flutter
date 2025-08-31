@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/common/widgets/common_button.dart';
-import 'package:lugeasy/view/main/map/components/host_time_slot_button.dart';
+import 'package:lugeasy/view/search/host_time_slot_button.dart';
 import 'package:lugeasy/models/host_time_slot.dart';
-import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
 
-class SearchPage extends ConsumerStatefulWidget {
-  const SearchPage({super.key});
+class SearchView extends ConsumerStatefulWidget {
+  const SearchView({super.key});
 
   @override
-  ConsumerState<SearchPage> createState() => _SearchPageState();
+  ConsumerState<SearchView> createState() => _SearchViewState();
 }
 
-class _SearchPageState extends ConsumerState<SearchPage> {
+class _SearchViewState extends ConsumerState<SearchView> {
   final TextEditingController _locationController = TextEditingController();
 
   DateTime? _dropOffDate;
