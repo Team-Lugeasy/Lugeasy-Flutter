@@ -1,6 +1,6 @@
 // host_selection_provider.dart
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:lugeasy/models/host.dart';
+import 'package:lugeasy/data/models/host.dart';
 
 part 'host_selection_provider.g.dart';
 

@@ -1,0 +1,112 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lugeasy/common/value_listenable_builder2.dart';
+import 'package:lugeasy/providers/host/host_selection_provider.dart';
+import 'package:lugeasy/view/main/map/components/host_bottom_sheet.dart';
+import 'package:lugeasy/view/main/map/components/reservation_button.dart';
+import 'package:lugeasy/view/main/map/map_page.dart';
+import 'package:lugeasy/view/main/matching/matching_page.dart';
+import 'package:lugeasy/view/main/mypage/my_page.dart';
+import 'package:lugeasy/common/extensions/context_extension.dart';
+
+class MainContainerView extends ConsumerStatefulWidget {
+  const MainContainerView({super.key});
+
+  @override
+  ConsumerState<MainContainerView> createState() => _MainContainerState();
+}
+
+class _MainContainerState extends ConsumerState<MainContainerView> {
+  int _selectedIndex = 0;
+  final ValueNotifier<bool> _mapDetailVisible = ValueNotifier(false);
+
+  @override
+  void dispose() {
+    _mapDetailVisible.dispose();
+    super.dispose();
+  }
+
+  final List<Widget> _pages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _pages.addAll([
+      MatchingPage(),
+      MapPage(isDetailVisible: _mapDetailVisible),
+      MyPage(),
+    ]);
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isMap = _selectedIndex == 1;
+    final selectedHost = ref.watch(hostNotifierProvider);
+
+    return Stack(
+      children: [
+        Scaffold(
+          body: _pages[_selectedIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            selectedItemColor: Colors.red, // 선택된 아이템 색상
+            unselectedItemColor: Colors.black, // 선택 안 된 아이템 색상
+            selectedLabelStyle: TextStyle(color: Colors.red),
+            unselectedLabelStyle: TextStyle(color: Colors.black),
+            items: [
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  _selectedIndex == 0
+                      ? 'assets/icon_luggage_on.svg'
+                      : 'assets/icon_luggage_off.svg',
+                ),
+                label: context.l10n.matching,
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  _selectedIndex == 1
+                      ? 'assets/icon_map_on.svg'
+                      : 'assets/icon_map_off.svg',
+                ),
+                label: context.l10n.map,
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  _selectedIndex == 2
+                      ? 'assets/icon_profile_on.svg'
+                      : 'assets/icon_profile_off.svg',
+                ),
+                label: context.l10n.mypage,
+              ),
+            ],
+          ),
+        ),
+        ValueListenableBuilder2<bool, double>(
+          first: _mapDetailVisible,
+          second: HostBottomSheetState.sheetHeightRatio,
+          builder: (context, isDetail, ratio, _) {
+            final shouldShow =
+                isMap && isDetail && ratio > 0.1 && selectedHost != null;
+
+            return shouldShow
+                ? Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: ReservationBottomBar(host: selectedHost!),
+                  )
+                : const SizedBox.shrink();
+          },
+        ),
+      ],
+    );
+  }
+}

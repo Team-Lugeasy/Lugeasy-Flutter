@@ -3,9 +3,10 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lugeasy/providers/host/host_provider.dart';
-import 'package:lugeasy/models/host.dart';
+import 'package:lugeasy/data/models/host.dart';
 import 'package:lugeasy/view/main/map/components/host_bottom_sheet.dart';
-import 'package:lugeasy/view/main/map/search_page.dart';
+import 'package:lugeasy/view/navigation_route.dart';
+import 'package:lugeasy/view/navigation_service.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
 
 class MapPage extends ConsumerStatefulWidget {
@@ -32,6 +33,10 @@ class _MapPageState extends ConsumerState<MapPage> {
 
   void _deactivateSheet() {
     _bottomSheetKey.currentState?.deactivateSheet();
+  }
+
+  void navigateToSearch() {
+    NavigationService().navigateWithSlide(NavigationRoute.search);
   }
 
   /// 마커찍기
@@ -127,11 +132,7 @@ class _MapPageState extends ConsumerState<MapPage> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const SearchPage(),
-                        ),
-                      );
+                      navigateToSearch();
                     },
                     child: Material(
                       elevation: 3,

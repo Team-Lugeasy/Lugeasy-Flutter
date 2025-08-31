@@ -4,9 +4,11 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/providers/auth/locale_provider.dart';
 import 'package:lugeasy/util/log_util.dart';
-import 'package:lugeasy/view/login/login.dart';
+import 'package:lugeasy/view/login/login_view.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:lugeasy/view/navigation_route.dart';
+import 'package:lugeasy/view/navigation_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -74,7 +76,9 @@ class MyApp extends ConsumerWidget {
             fontFamily: 'Pretendard',
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           ),
-          home: const LoginPage(),
+          home: const LoginView(),
+          routes: NavigationRoute.routes,
+          navigatorKey: NavigationService.navigatorKey,
         );
       },
       loading: () => const MaterialApp(
