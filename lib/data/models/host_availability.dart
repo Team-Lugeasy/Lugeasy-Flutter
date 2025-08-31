@@ -1,4 +1,4 @@
-import 'package:lugeasy/models/host_time_slot.dart';
+import 'package:lugeasy/data/models/host_time_slot.dart';
 
 class HostAvailability {
   final int hostId;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lugeasy/models/review.dart';
+import 'package:lugeasy/data/models/review.dart';
 import 'package:lugeasy/common/constants.dart';
 
 class HostReviewTile extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lugeasy/models/host.dart';
+import 'package:lugeasy/data/models/host.dart';
 import 'package:lugeasy/view/main/map/components/reservation_section.dart';
 import 'package:lugeasy/view/main/map/components/host_review_list.dart';
 import 'package:lugeasy/providers/host/host_availability_provider.dart';

@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 import 'dart:async';
-import 'package:lugeasy/models/host.dart';
+import 'package:lugeasy/data/models/host.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'host_provider.g.dart';

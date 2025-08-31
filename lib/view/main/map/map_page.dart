@@ -3,7 +3,7 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lugeasy/providers/host/host_provider.dart';
-import 'package:lugeasy/models/host.dart';
+import 'package:lugeasy/data/models/host.dart';
 import 'package:lugeasy/view/main/map/components/host_bottom_sheet.dart';
 import 'package:lugeasy/view/navigation_route.dart';
 import 'package:lugeasy/view/navigation_service.dart';

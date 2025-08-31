@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/providers/reservation/reservation_provider.dart';
 import 'package:lugeasy/providers/host/host_selection_provider.dart';
 import 'package:lugeasy/common/extensions/context_extension.dart';
-import 'package:lugeasy/models/host.dart';
-import 'package:lugeasy/models/host_time_slot.dart';
+import 'package:lugeasy/data/models/host.dart';
+import 'package:lugeasy/data/models/host_time_slot.dart';
 import 'package:lugeasy/view/main/map/request_reservation_page.dart';
 
 class ReservationBottomBar extends ConsumerWidget {

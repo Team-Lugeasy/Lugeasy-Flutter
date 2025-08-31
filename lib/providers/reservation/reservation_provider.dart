@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:lugeasy/models/reservation_state.dart';
-import 'package:lugeasy/models/host_time_slot.dart';
+import 'package:lugeasy/data/models/reservation_state.dart';
+import 'package:lugeasy/data/models/host_time_slot.dart';
 
 part 'reservation_provider.g.dart';
 
