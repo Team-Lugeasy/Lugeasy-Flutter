@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lugeasy/providers/auth/locale_provider.dart';
 import 'package:lugeasy/util/log_util.dart';
 import 'package:lugeasy/view/login/login_view.dart';
@@ -62,23 +63,28 @@ class MyApp extends ConsumerWidget {
 
     return localeAsync.when(
       data: (locale) {
-        return MaterialApp(
-          title: 'Flutter Demo',
-          locale: locale,
-          supportedLocales: const [Locale("en"), Locale("ko")],
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          theme: ThemeData(
-            fontFamily: 'Pretendard',
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          ),
-          home: const LoginView(),
-          routes: NavigationRoute.routes,
-          navigatorKey: NavigationService.navigatorKey,
+        return ScreenUtilInit(
+          designSize: const Size(412, 917),
+          builder: (context, child) {
+            return MaterialApp(
+              title: 'Flutter Demo',
+              locale: locale,
+              supportedLocales: const [Locale("en"), Locale("ko")],
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              theme: ThemeData(
+                fontFamily: 'Pretendard',
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              ),
+              home: const LoginView(),
+              routes: NavigationRoute.routes,
+              navigatorKey: NavigationService.navigatorKey,
+            );
+          },
         );
       },
       loading: () => const MaterialApp(

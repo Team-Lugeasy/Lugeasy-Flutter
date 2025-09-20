@@ -39,6 +39,10 @@ class _MapPageState extends ConsumerState<MapPage> {
     NavigationService().navigateWithSlide(NavigationRoute.search);
   }
 
+  void navigateToAlarm() {
+    NavigationService().navigateWithSlide(NavigationRoute.alarm);
+  }
+
   /// 마커찍기
   Future<void> _addHostMarkers(List<Host> hosts) async {
     for (final host in hosts) {
@@ -177,7 +181,7 @@ class _MapPageState extends ConsumerState<MapPage> {
                   child: InkWell(
                     customBorder: CircleBorder(),
                     onTap: () {
-                      // 아이콘 클릭 처리
+                      navigateToAlarm();
                     },
                     child: Container(
                       width: 48,
