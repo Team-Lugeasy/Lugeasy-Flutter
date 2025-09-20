@@ -4,7 +4,7 @@ import 'package:lugeasy/providers/host/host_selection_provider.dart';
 import 'package:lugeasy/data/models/host.dart';
 import 'host_list_sheet.dart';
 import 'host_detail_sheet.dart';
-import 'package:lugeasy/common/constants.dart';
+import 'package:lugeasy/core/constants.dart';
 
 class HostBottomSheet extends ConsumerStatefulWidget {
   final VoidCallback onClose;

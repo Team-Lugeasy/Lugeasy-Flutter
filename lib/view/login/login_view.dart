@@ -8,12 +8,12 @@ import 'package:lugeasy/providers/auth/locale_provider.dart';
 import 'package:lugeasy/data/models/root_response.dart';
 import 'package:lugeasy/data/datasources/remote/intro_services.dart';
 import 'package:lugeasy/data/models/login_response.dart';
-import 'package:lugeasy/util/log_util.dart';
+import 'package:lugeasy/core/util/log_util.dart';
 import 'package:lugeasy/view/navigation_route.dart';
 import 'package:lugeasy/view/navigation_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:lugeasy/common/extensions/context_extension.dart';
+import 'package:lugeasy/core/extensions/context_extension.dart';
 
 class LoginView extends ConsumerWidget {
   const LoginView({super.key});

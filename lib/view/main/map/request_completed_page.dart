@@ -1,7 +1,7 @@
 // request_completed_page.dart
 import 'package:flutter/material.dart';
-import 'package:lugeasy/common/extensions/context_extension.dart';
-import 'package:lugeasy/common/widgets/common_button.dart';
+import 'package:lugeasy/core/extensions/context_extension.dart';
+import 'package:lugeasy/widgets/common_button.dart';
 import 'package:lugeasy/view/main/main_container_view.dart';
 
 class RequestCompletedPage extends StatelessWidget {

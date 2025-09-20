@@ -6,7 +6,7 @@ import 'package:lugeasy/data/datasources/local/token_service.dart';
 import 'package:lugeasy/data/datasources/remote/intro_services.dart';
 import 'package:lugeasy/data/models/login_response.dart';
 import 'package:lugeasy/data/models/root_response.dart';
-import 'package:lugeasy/util/log_util.dart';
+import 'package:lugeasy/core/util/log_util.dart';
 
 class HttpInterceptor extends InterceptorContract {
   @override

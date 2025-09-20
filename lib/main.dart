@@ -4,7 +4,7 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lugeasy/providers/auth/locale_provider.dart';
-import 'package:lugeasy/util/log_util.dart';
+import 'package:lugeasy/core/util/log_util.dart';
 import 'package:lugeasy/view/login/login_view.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
