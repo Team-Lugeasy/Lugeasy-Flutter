@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lugeasy/common/widgets/common_button.dart';
-import 'package:lugeasy/view/search/host_time_slot_button.dart';
+import 'package:lugeasy/widgets/common_button.dart';
+import 'package:lugeasy/widgets/host_time_slot_button.dart';
 import 'package:lugeasy/data/models/host_time_slot.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:lugeasy/common/extensions/context_extension.dart';
+import 'package:lugeasy/core/extensions/context_extension.dart';
 
 class SearchView extends ConsumerStatefulWidget {
   const SearchView({super.key});

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lugeasy/common/value_listenable_builder2.dart';
+import 'package:lugeasy/core/value_listenable_builder2.dart';
 import 'package:lugeasy/providers/host/host_selection_provider.dart';
-import 'package:lugeasy/view/main/map/components/host_bottom_sheet.dart';
+import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
 import 'package:lugeasy/view/main/map/components/reservation_button.dart';
 import 'package:lugeasy/view/main/map/map_page.dart';
 import 'package:lugeasy/view/main/matching/matching_page.dart';
 import 'package:lugeasy/view/main/mypage/my_page.dart';
-import 'package:lugeasy/common/extensions/context_extension.dart';
+import 'package:lugeasy/core/extensions/context_extension.dart';
 
 class MainContainerView extends ConsumerStatefulWidget {
   const MainContainerView({super.key});

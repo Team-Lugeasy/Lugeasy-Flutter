@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lugeasy/common/constants.dart';
-import 'package:lugeasy/common/widgets/button.dart';
+import 'package:lugeasy/core/constants.dart';
+import 'package:lugeasy/widgets/button.dart';
 
 class AlarmView extends ConsumerStatefulWidget {
   const AlarmView({super.key});

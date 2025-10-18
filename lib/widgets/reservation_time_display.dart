@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lugeasy/common/extensions/context_extension.dart';
+import 'package:lugeasy/core/extensions/context_extension.dart';
 import 'package:lugeasy/providers/reservation/reservation_provider.dart';
 import 'package:lugeasy/data/models/host_time_slot.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
