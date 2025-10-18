@@ -159,7 +159,7 @@ class LoginView extends ConsumerWidget {
         logger.d("ID 토큰이 null입니다.");
         return;
       }
-      final result = await IntroServices().login(idToken, 'google');
+      final result = await IntroServices().login(idToken, 'GOOGLE');
 
       if (result is Success<LoginResponse>) {
         // 로그인 성공 시, 메인 화면으로 이동
