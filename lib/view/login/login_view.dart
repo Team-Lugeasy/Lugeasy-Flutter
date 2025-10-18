@@ -1,18 +1,12 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lugeasy/providers/auth/locale_provider.dart';
-import 'package:lugeasy/data/models/root_response.dart';
-import 'package:lugeasy/data/datasources/remote/intro_services.dart';
-import 'package:lugeasy/data/models/login_response.dart';
-import 'package:lugeasy/core/util/log_util.dart';
+import 'package:lugeasy/view/login/login_view_model.dart';
 import 'package:lugeasy/view/navigation_route.dart';
 import 'package:lugeasy/view/navigation_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lugeasy/core/extensions/context_extension.dart';
 
 class LoginView extends ConsumerWidget {
@@ -24,6 +18,21 @@ class LoginView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final viewModel = ref.read(loginViewModelProvider.notifier);
+
+    ref.listen<LoginState>(loginViewModelProvider, (previous, next) {
+      if (next is LoginFailure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Login Fail : ${next.message.toString()}")),
+        );
+      }
+
+      if (next is LoginSuccess) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("${next.message.toString()}")),
+        );
+      }
+    });
     final locale = ref.watch(localeNotifierProvider);
 
     return Scaffold(
@@ -61,7 +70,7 @@ class LoginView extends ConsumerWidget {
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
-                  onPressed: () => _googleLogin(context, ref),
+                  onPressed: () => viewModel.googleLogin(),
                   child: Text(context.l10n.google_login),
                 ),
                 SizedBox(height: 30),
@@ -74,7 +83,7 @@ class LoginView extends ConsumerWidget {
               ] else if (Platform.isAndroid) ...[
                 // Android
                 ElevatedButton(
-                  onPressed: () => _googleLogin(context, ref),
+                  onPressed: () => viewModel.googleLogin(),
                   child: Text(context.l10n.google_login),
                 ),
                 SizedBox(height: 30),
@@ -122,57 +131,6 @@ class LoginView extends ConsumerWidget {
 
       // TODO: 이후 실제 서버 요청
       // await ref.read(authProvider.notifier).loginWithApple(authorizationCode);
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Apple 로그인 실패: ${error.toString()}")),
-      );
-    }
-  }
-
-  Future<void> _googleLogin(BuildContext context, WidgetRef ref) async {
-    try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn(
-        scopes: [
-          'email',
-          'https://www.googleapis.com/auth/userinfo.profile',
-        ],
-        // 이 옵션이 serverAuthCode를 활성화함
-        serverClientId: dotenv.env['GOOGLE_SERVER_CLIENT_ID']!,
-      ).signIn();
-
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-
-      // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-
-      final token = await FirebaseAuth.instance.signInWithCredential(
-        credential,
-      );
-
-      final idToken = googleAuth?.idToken;
-      if (idToken == null) {
-        logger.d("ID 토큰이 null입니다.");
-        return;
-      }
-      final result = await IntroServices().login(idToken, 'GOOGLE');
-
-      if (result is Success<LoginResponse>) {
-        // 로그인 성공 시, 메인 화면으로 이동
-        navigateToMainContainer();
-      } else if (result is Error<LoginResponse>) {
-        // 로그인 실패 시 메시지 출력
-        logger.d("로그인 실패: ${result.message}");
-      }
-    } catch (error) {
-      logger.d(error.toString());
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Error: ${error.toString()}")));
-    }
+    } catch (error) {}
   }
 }
