@@ -58,15 +58,9 @@ flutter:
         - asset: assets/fonts/Pretendard-Bold.otf
   assets:
     - ./env/.env
-    - assets/icon/icon_luggage_off.svg
-    - assets/icon/icon_luggage_on.svg
-    - assets/icon/icon_map_on.svg
-    - assets/icon/icon_map_off.svg
-    - assets/icon/icon_profile_on.svg
-    - assets/icon/icon_profile_off.svg
-    - assets/icon/icon_marker.png
-    - assets/icon/icon_search.svg
-    - assets/icon/icon_notification_unread.svg
-    - assets/icon/icon_back.png
+    - assets/
+    - assets/icon/
+    - assets/image/
+    - assets/fonts/
   uses-material-design: true
   generate: true
