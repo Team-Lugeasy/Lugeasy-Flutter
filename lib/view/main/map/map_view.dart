@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lugeasy/core/util/color_style.dart';
+import 'package:lugeasy/core/util/text_style.dart';
 import 'package:lugeasy/providers/host/host_provider.dart';
 import 'package:lugeasy/data/models/host.dart';
-import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
+import 'package:lugeasy/view/main/map/host_bottom_sheet.dart';
 import 'package:lugeasy/view/navigation_route.dart';
 import 'package:lugeasy/view/navigation_service.dart';
-import 'package:lugeasy/core/extensions/context_extension.dart';
+import 'package:lugeasy/widgets/button.dart';
 
-class MapPage extends ConsumerStatefulWidget {
+class MapView extends ConsumerStatefulWidget {
   final ValueNotifier<bool> isDetailVisible;
 
-  const MapPage({super.key, required this.isDetailVisible});
+  const MapView({super.key, required this.isDetailVisible});
 
   @override
-  ConsumerState<MapPage> createState() => _MapPageState();
+  ConsumerState<MapView> createState() => _MapViewState();
 }
 
-class _MapPageState extends ConsumerState<MapPage> {
+class _MapViewState extends ConsumerState<MapView> {
   final GlobalKey<HostBottomSheetState> _bottomSheetKey = GlobalKey();
   late NaverMapController _mapController;
   NLatLng? _lastCameraPosition;
@@ -47,7 +49,8 @@ class _MapPageState extends ConsumerState<MapPage> {
   Future<void> _addHostMarkers(List<Host> hosts) async {
     for (final host in hosts) {
       final marker = NMarker(
-          id: host.name, // 고유 ID
+          id: host.name,
+          icon: NOverlayImage.fromAssetImage('assets/icon/icon_marker.png'),
           position: NLatLng(host.latitude, host.longitude),
           caption: NOverlayCaption(text: host.name));
 
@@ -127,79 +130,63 @@ class _MapPageState extends ConsumerState<MapPage> {
         ),
 
         Positioned(
-            top: 50,
-            left: 16,
-            right: 16,
+            top: 68.h,
+            left: 16.w,
+            right: 16.w,
             child: Row(
               children: [
-                // 검색바
                 Expanded(
-                  child: GestureDetector(
+                  child: Button(
                     onTap: () {
                       navigateToSearch();
                     },
-                    child: Material(
-                      elevation: 3,
-                      borderRadius: BorderRadius.circular(100),
-                      child: Container(
-                        height: 50,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icon_search.svg',
-                              width: 20,
-                              height: 20,
+                    child: Container(
+                      width: 312.w,
+                      height: 56.h,
+                      padding: EdgeInsets.only(left: 18.w),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(100.h),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4.r,
+                            offset: Offset(0, 4.h),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/icon/icon_search.png',
+                            width: 28.w,
+                            height: 28.h,
+                            fit: BoxFit.contain,
+                          ),
+                          SizedBox(width: 14.w),
+                          Text(
+                            "호스트를 찾아보세요",
+                            style: LugeasyTextStyles.body1.copyWith(
+                              color: LugeasyColorStyles.gray500,
                             ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                context.l10n.search,
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
-
-                SizedBox(width: 12),
-
-                /// 알람 버튼
-                Material(
-                  elevation: 3,
-                  shape: CircleBorder(),
-                  child: InkWell(
-                    customBorder: CircleBorder(),
-                    onTap: () {
-                      navigateToAlarm();
-                    },
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: SizedBox(
-                        width: 12,
-                        height: 12,
-                        child: SvgPicture.asset(
-                          'assets/icon_notification_unread.svg',
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
-                    ),
+                SizedBox(width: 12.w),
+                Button(
+                  child: Image.asset(
+                    "assets/icon/icon_notification.png",
+                    width: 56.w,
+                    height: 56.h,
+                    fit: BoxFit.contain,
                   ),
+                  onTap: () {
+                    navigateToAlarm();
+                  },
                 ),
               ],
             )),
@@ -212,50 +199,5 @@ class _MapPageState extends ConsumerState<MapPage> {
         ),
       ],
     );
-
-    // GestureDetector(
-    //   behavior: HitTestBehavior.translucent,
-    //   onTapDown: (details) {
-    //     final renderBox = context.findRenderObject() as RenderBox;
-    //     final localPosition = renderBox.globalToLocal(details.globalPosition);
-    //     final screenHeight = MediaQuery.of(context).size.height;
-    //     final sheetHeight =
-    //         screenHeight * HostBottomSheetState.sheetHeightRatio.value;
-
-    //     if (localPosition.dy < screenHeight - sheetHeight) {
-    //       _deactivateSheet();
-    //     }
-    //   },
-    //   child: Stack(
-    //     children: [
-    //       NaverMap(
-    //         options: NaverMapViewOptions(
-    //           initialCameraPosition: NCameraPosition(
-    //             target: NLatLng(37.5666, 126.979),
-    //             zoom: 10,
-    //             bearing: 0,
-    //             tilt: 0,
-    //           ),
-    //           mapType: NMapType.basic,
-    //           activeLayerGroups: [NLayerGroup.building, NLayerGroup.transit],
-    //         ),
-    //         onMapReady: (myMapController) {
-    //           debugPrint("네이버 맵 로딩됨!");
-    //         },
-    //         onMapTapped: (point, latLng) {
-    //           debugPrint("${latLng.latitude}、${latLng.longitude}");
-    //         },
-    //       ),
-
-    //       // 바텀 시트
-    //       Positioned.fill(
-    //         child: HostBottomSheet(
-    //           key: _bottomSheetKey,
-    //           onClose: _deactivateSheet,
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }

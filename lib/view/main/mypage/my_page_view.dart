@@ -3,14 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lugeasy/core/constants.dart';
 
-class MyPage extends ConsumerStatefulWidget {
-  const MyPage({super.key});
+class MyPageView extends ConsumerStatefulWidget {
+  const MyPageView({super.key});
 
   @override
-  ConsumerState<MyPage> createState() => _MyPageState();
+  ConsumerState<MyPageView> createState() => _MyPageViewState();
 }
 
-class _MyPageState extends ConsumerState<MyPage> {
+class _MyPageViewState extends ConsumerState<MyPageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
