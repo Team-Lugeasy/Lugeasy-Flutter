@@ -5,14 +5,14 @@ import 'package:lugeasy/providers/match/past_match_provider.dart';
 import 'package:lugeasy/data/models/match.dart';
 import 'package:lugeasy/core/util/log_util.dart';
 
-class MatchingPage extends ConsumerStatefulWidget {
-  const MatchingPage({super.key});
+class MatchingView extends ConsumerStatefulWidget {
+  const MatchingView({super.key});
 
   @override
-  ConsumerState<MatchingPage> createState() => _MatchingPageState();
+  ConsumerState<MatchingView> createState() => _MatchingViewState();
 }
 
-class _MatchingPageState extends ConsumerState<MatchingPage> {
+class _MatchingViewState extends ConsumerState<MatchingView> {
   late final ScrollController _scrollController;
 
   @override

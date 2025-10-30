@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lugeasy/core/util/log_util.dart';
@@ -79,7 +78,9 @@ class LoginViewModel extends _$LoginViewModel {
       if (result is Success<LoginResponse>) {
         state = LoginSuccess("로그인 성공");
         NavigationService().navigateClear(NavigationRoute.mainContainer);
-      } else if (result is Error<LoginResponse>) {}
+      } else if (result is Error<LoginResponse>) {
+        state = LoginFailure("로그인 실패: ${result.message}");
+      }
     }).catchError((error) {
       state = LoginFailure(error.toString());
     });

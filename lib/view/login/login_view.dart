@@ -2,10 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lugeasy/core/util/color_style.dart';
+import 'package:lugeasy/core/util/text_style.dart';
 import 'package:lugeasy/providers/auth/locale_provider.dart';
 import 'package:lugeasy/view/login/login_view_model.dart';
 import 'package:lugeasy/view/navigation_route.dart';
 import 'package:lugeasy/view/navigation_service.dart';
+import 'package:lugeasy/view/popup/custom_toast.dart';
+import 'package:lugeasy/widgets/button.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:lugeasy/core/extensions/context_extension.dart';
 
@@ -22,85 +27,107 @@ class LoginView extends ConsumerWidget {
 
     ref.listen<LoginState>(loginViewModelProvider, (previous, next) {
       if (next is LoginFailure) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Login Fail : ${next.message.toString()}")),
-        );
+        CustomToast.showError(context, next.message.toString());
       }
 
       if (next is LoginSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("${next.message.toString()}")),
-        );
+        CustomToast.showSuccess(context, next.message.toString());
       }
     });
+
     final locale = ref.watch(localeNotifierProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.login), // 예: 다국어 "로그인"
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.language),
-            onPressed: () {
-              // 현재 로케일이 한국어면 영어로, 영어면 한국어로 변경
-              final newLocale = locale.value?.languageCode == 'ko'
-                  ? const Locale('en')
-                  : const Locale('ko');
-              ref.read(localeNotifierProvider.notifier).updateLocale(newLocale);
-            },
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                context.l10n.welcome,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        backgroundColor: LugeasyColorStyles.blue500,
+        body: Center(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            SizedBox(
+              height: 60.h,
+            ),
+            Button(
+              alignment: Alignment.topRight,
+              padding: EdgeInsets.only(right: 20.w),
+              child: Icon(Icons.language),
+              onTap: () {
+                // 현재 로케일이 한국어면 영어로, 영어면 한국어로 변경
+                final newLocale = locale.value?.languageCode == 'ko'
+                    ? const Locale('en')
+                    : const Locale('ko');
+                ref
+                    .read(localeNotifierProvider.notifier)
+                    .updateLocale(newLocale);
+              },
+            ),
+            SizedBox(
+              height: 240.h,
+            ),
+            Image.asset(
+              'assets/icon/icon_marker.png',
+              width: 118.w,
+              height: 118.h,
+            ),
+            SizedBox(height: 178.h),
+            if (Platform.isIOS) ...[
+              // iOS
+              Button(
+                  child: Image.asset(
+                    "assets/image/image_google_login.png",
+                    width: 372.w,
+                    height: 60.h,
+                    fit: BoxFit.contain,
+                  ),
+                  onTap: () => viewModel.googleLogin()),
+              SizedBox(height: 20.h),
+              Button(
+                child: Image.asset(
+                  "assets/image/image_apple_login.png",
+                  width: 372.w,
+                  height: 60.h,
+                  fit: BoxFit.contain,
+                ),
+                onTap: () => _appleLogin(context, ref),
               ),
-              SizedBox(height: 50),
-              if (Platform.isIOS) ...[
-                // iOS
-                ElevatedButton(
-                  onPressed: () => _appleLogin(context, ref),
-                  child: Text(context.l10n.apple_login),
+              SizedBox(height: 60.h),
+              Button(
+                onTap: () {
+                  navigateToMainContainer();
+                },
+                child: Text(
+                  context.l10n.guest_login,
+                  style: LugeasyTextStyles.body5.copyWith(
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.white),
                 ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () => viewModel.googleLogin(),
-                  child: Text(context.l10n.google_login),
+              ),
+            ] else if (Platform.isAndroid) ...[
+              // Android
+              Button(
+                  child: Image.asset(
+                    "assets/image/image_google_login.png",
+                    width: 372.w,
+                    height: 60.h,
+                    fit: BoxFit.contain,
+                  ),
+                  onTap: () => viewModel.googleLogin()),
+              SizedBox(height: 60.h),
+              Button(
+                onTap: () {
+                  navigateToMainContainer();
+                },
+                child: Text(
+                  context.l10n.guest_login,
+                  style: LugeasyTextStyles.body5.copyWith(
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.white),
                 ),
-                SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    navigateToMainContainer();
-                  },
-                  child: Text(context.l10n.guest_login),
-                ),
-              ] else if (Platform.isAndroid) ...[
-                // Android
-                ElevatedButton(
-                  onPressed: () => viewModel.googleLogin(),
-                  child: Text(context.l10n.google_login),
-                ),
-                SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    navigateToMainContainer();
-                  },
-                  child: Text(context.l10n.guest_login),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ),
-    );
+              ),
+            ]
+          ]),
+        ));
   }
 
+  // 지수야 해줘
   Future<void> _appleLogin(BuildContext context, WidgetRef ref) async {
     try {
       final credential = await SignInWithApple.getAppleIDCredential(

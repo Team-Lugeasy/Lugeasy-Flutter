@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lugeasy/core/util/color_style.dart';
 import 'package:lugeasy/core/value_listenable_builder2.dart';
 import 'package:lugeasy/providers/host/host_selection_provider.dart';
-import 'package:lugeasy/view/main/map/bottomsheet/host_bottom_sheet.dart';
+import 'package:lugeasy/view/main/map/host_bottom_sheet.dart';
 import 'package:lugeasy/view/main/map/components/reservation_button.dart';
-import 'package:lugeasy/view/main/map/map_page.dart';
-import 'package:lugeasy/view/main/matching/matching_page.dart';
-import 'package:lugeasy/view/main/mypage/my_page.dart';
-import 'package:lugeasy/core/extensions/context_extension.dart';
+import 'package:lugeasy/view/main/map/map_view.dart';
+import 'package:lugeasy/view/main/matching/matching_view.dart';
+import 'package:lugeasy/view/main/mypage/my_page_view.dart';
 
 class MainContainerView extends ConsumerStatefulWidget {
   const MainContainerView({super.key});
@@ -18,7 +18,7 @@ class MainContainerView extends ConsumerStatefulWidget {
 }
 
 class _MainContainerState extends ConsumerState<MainContainerView> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   final ValueNotifier<bool> _mapDetailVisible = ValueNotifier(false);
 
   @override
@@ -33,9 +33,9 @@ class _MainContainerState extends ConsumerState<MainContainerView> {
   void initState() {
     super.initState();
     _pages.addAll([
-      MatchingPage(),
-      MapPage(isDetailVisible: _mapDetailVisible),
-      MyPage(),
+      MatchingView(),
+      MapView(isDetailVisible: _mapDetailVisible),
+      MyPageView(),
     ]);
   }
 
@@ -52,41 +52,57 @@ class _MainContainerState extends ConsumerState<MainContainerView> {
 
     return Stack(
       children: [
-        Scaffold(
-          body: _pages[_selectedIndex],
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _selectedIndex,
-            onTap: _onItemTapped,
-            selectedItemColor: Colors.red, // 선택된 아이템 색상
-            unselectedItemColor: Colors.black, // 선택 안 된 아이템 색상
-            selectedLabelStyle: TextStyle(color: Colors.red),
-            unselectedLabelStyle: TextStyle(color: Colors.black),
-            items: [
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  _selectedIndex == 0
-                      ? 'assets/icon_luggage_on.svg'
-                      : 'assets/icon_luggage_off.svg',
+        Theme(
+          data: Theme.of(context).copyWith(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+          ),
+          child: Scaffold(
+            body: _pages[_selectedIndex],
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: _selectedIndex,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              onTap: _onItemTapped,
+              selectedItemColor: LugeasyColorStyles.blue500,
+              unselectedItemColor: LugeasyColorStyles.lightGray600,
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.white,
+              elevation: 0,
+              enableFeedback: false,
+              items: [
+                BottomNavigationBarItem(
+                  icon: Image.asset(
+                    _selectedIndex == 0
+                        ? 'assets/icon/icon_luggage_on.png'
+                        : 'assets/icon/icon_luggage_off.png',
+                    width: 42.w,
+                    height: 42.h,
+                  ),
+                  label: '',
                 ),
-                label: context.l10n.matching,
-              ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  _selectedIndex == 1
-                      ? 'assets/icon_map_on.svg'
-                      : 'assets/icon_map_off.svg',
+                BottomNavigationBarItem(
+                  icon: Image.asset(
+                    _selectedIndex == 1
+                        ? 'assets/icon/icon_map_on.png'
+                        : 'assets/icon/icon_map_off.png',
+                    width: 42.w,
+                    height: 42.h,
+                  ),
+                  label: '',
                 ),
-                label: context.l10n.map,
-              ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  _selectedIndex == 2
-                      ? 'assets/icon_profile_on.svg'
-                      : 'assets/icon_profile_off.svg',
+                BottomNavigationBarItem(
+                  icon: Image.asset(
+                    _selectedIndex == 2
+                        ? 'assets/icon/icon_profile_off.png'
+                        : 'assets/icon/icon_profile_off.png',
+                    width: 42.w,
+                    height: 42.h,
+                  ),
+                  label: '',
                 ),
-                label: context.l10n.mypage,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         ValueListenableBuilder2<bool, double>(
@@ -101,7 +117,7 @@ class _MainContainerState extends ConsumerState<MainContainerView> {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    child: ReservationBottomBar(host: selectedHost!),
+                    child: ReservationBottomBar(host: selectedHost),
                   )
                 : const SizedBox.shrink();
           },
