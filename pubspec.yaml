@@ -44,26 +44,29 @@ dev_dependencies:
 
 flutter:
   fonts:
-    - family: Pretendard
+    - family: PretendardRegular
       fonts:
         - asset: assets/fonts/Pretendard-Regular.otf
+    - family: PretendardMedium
+      fonts:
         - asset: assets/fonts/Pretendard-Medium.otf
-          weight: 500
+    - family: PretendardSemiBold
+      fonts:
         - asset: assets/fonts/Pretendard-SemiBold.otf
-          weight: 600
+    - family: PretendardBold
+      fonts:
         - asset: assets/fonts/Pretendard-Bold.otf
-          weight: 700
   assets:
     - ./env/.env
-    - assets/icon_luggage_off.svg
-    - assets/icon_luggage_on.svg
-    - assets/icon_map_on.svg
-    - assets/icon_map_off.svg
-    - assets/icon_profile_on.svg
-    - assets/icon_profile_off.svg
-    - assets/icon_marker.png
-    - assets/icon_search.svg
-    - assets/icon_notification_unread.svg
-    - assets/icon_back.png
+    - assets/icon/icon_luggage_off.svg
+    - assets/icon/icon_luggage_on.svg
+    - assets/icon/icon_map_on.svg
+    - assets/icon/icon_map_off.svg
+    - assets/icon/icon_profile_on.svg
+    - assets/icon/icon_profile_off.svg
+    - assets/icon/icon_marker.png
+    - assets/icon/icon_search.svg
+    - assets/icon/icon_notification_unread.svg
+    - assets/icon/icon_back.png
   uses-material-design: true
   generate: true

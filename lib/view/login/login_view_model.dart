@@ -75,12 +75,17 @@ class LoginViewModel extends _$LoginViewModel {
   }
 
   Future<void> login(String token, String type) async {
+    logger.d("ID 토큰: $token");
     await IntroServices().login(token, type).then((result) {
       if (result is Success<LoginResponse>) {
         state = LoginSuccess("로그인 성공");
+        logger.d("로그인 성공: ${result.data}");
         NavigationService().navigateClear(NavigationRoute.mainContainer);
-      } else if (result is Error<LoginResponse>) {}
+      } else if (result is Error<LoginResponse>) {
+        logger.d("로그인 실패: ${result.message}");
+      }
     }).catchError((error) {
+      logger.d("로그인 예외 발생: ${error.toString()}");
       state = LoginFailure(error.toString());
     });
   }

@@ -22,7 +22,7 @@ class IntroServices {
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
         },
-        body: json.encode({'encrypted_user_identifier': token}),
+        body: json.encode({'encrypted_user_identifier': "kyungsugoja"}),
       );
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
