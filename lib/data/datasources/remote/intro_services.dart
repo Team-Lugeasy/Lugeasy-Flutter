@@ -1,73 +1,51 @@
-import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http_interceptor/http/intercepted_client.dart';
-import 'package:lugeasy/data/datasources/http_interceptor.dart';
+import 'package:lugeasy/data/datasources/base_api_service.dart';
 import 'package:lugeasy/data/datasources/local/token_service.dart';
-import 'package:lugeasy/data/models/root_response.dart';
+import 'package:lugeasy/data/common/api_result.dart';
 import 'package:lugeasy/data/models/login_response.dart';
 
-class IntroServices {
-  final String baseDomain = dotenv.env['BASE_URL'] ?? '';
+class IntroServices extends BaseApiService {
   static const String basePath = '/auths';
-  final client = InterceptedClient.build(interceptors: [HttpInterceptor()]);
 
-  Future<RootResponse<LoginResponse>> login(String token, String type) async {
-    final url = Uri.https(baseDomain, '$basePath/sign-in', {
-      'socialType': type,
-    });
+  Future<ApiResult<LoginResponse>> login(String token, String type) async {
+    final response = await post<LoginResponse>(
+      path: '$basePath/sign-in',
+      queryParameters: {
+        'socialType': type,
+      },
+      body: {
+        'encrypted_user_identifier': 'kyungsugoja',
+      },
+      fromJson: (json) => LoginResponse.fromJson(json),
+    );
 
-    try {
-      final response = await client.post(
-        url,
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-        body: json.encode({'encrypted_user_identifier': "kyungsugoja"}),
+    // 성공 시 토큰 저장
+    if (response is Success<LoginResponse>) {
+      await TokenService.saveTokens(
+        accessToken: response.data.accessToken,
+        refreshToken: response.data.refreshToken,
       );
-
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        final data = json.decode(response.body);
-        final loginData = LoginResponse.fromJson(data['result']);
-
-        await TokenService.saveTokens(
-          accessToken: loginData.accessToken,
-          refreshToken: loginData.refreshToken,
-        );
-        return Success(loginData);
-      } else {
-        return Error('로그인 실패', code: response.statusCode);
-      }
-    } catch (e) {
-      return Error('예외 발생: ${e.toString()}');
     }
+
+    return response;
   }
 
-  Future<RootResponse<LoginResponse>> refresh(String refreshToken) async {
-    final url = Uri.https(baseDomain, '$basePath/refresh/accessToken');
+  Future<ApiResult<LoginResponse>> refresh(String refreshToken) async {
+    final response = await post<LoginResponse>(
+      path: '$basePath/refresh/accessToken',
+      body: {
+        'refreshToken': refreshToken,
+      },
+      fromJson: (json) => LoginResponse.fromJson(json),
+    );
 
-    try {
-      final response = await client.post(
-        url,
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-        body: json.encode({'refreshToken': refreshToken}),
+    // 성공 시 토큰 저장
+    if (response is Success<LoginResponse>) {
+      await TokenService.saveTokens(
+        accessToken: response.data.accessToken,
+        refreshToken: response.data.refreshToken,
       );
-
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        final data = json.decode(response.body);
-        final loginData = LoginResponse.fromJson(data);
-
-        await TokenService.saveTokens(
-          accessToken: loginData.accessToken,
-          refreshToken: loginData.refreshToken,
-        );
-        return Success(loginData);
-      } else {
-        return Error('토큰 리프레시 실패', code: response.statusCode);
-      }
-    } catch (e) {
-      return Error('예외 발생: ${e.toString()}');
     }
+
+    return response;
   }
 }

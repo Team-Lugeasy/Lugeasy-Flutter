@@ -2,8 +2,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lugeasy/core/util/log_util.dart';
 import 'package:lugeasy/data/datasources/remote/intro_services.dart';
+import 'package:lugeasy/data/common/api_result.dart';
 import 'package:lugeasy/data/models/login_response.dart';
-import 'package:lugeasy/data/models/root_response.dart';
 import 'package:lugeasy/view/navigation_route.dart';
 import 'package:lugeasy/view/navigation_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -74,15 +74,19 @@ class LoginViewModel extends _$LoginViewModel {
   }
 
   Future<void> login(String token, String type) async {
-    await IntroServices().login(token, type).then((result) {
-      if (result is Success<LoginResponse>) {
-        state = LoginSuccess("로그인 성공");
+    state = const LoginLoading();
+
+    final result = await IntroServices().login(token, type);
+
+    switch (result) {
+      case Success<LoginResponse>():
+        logger.d(result.data);
+        state = const LoginSuccess("로그인 성공");
         NavigationService().navigateClear(NavigationRoute.mainContainer);
-      } else if (result is Error<LoginResponse>) {
-        state = LoginFailure("로그인 실패: ${result.message}");
-      }
-    }).catchError((error) {
-      state = LoginFailure(error.toString());
-    });
+
+      case Error(:final message, :final code):
+        logger.e("로그인 실패 - code: $code, message: $message");
+        state = LoginFailure(message);
+    }
   }
 }
