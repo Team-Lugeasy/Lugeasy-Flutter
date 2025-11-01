@@ -13,7 +13,7 @@ class BaseApiService {
   Future<ApiResult<T>> get<T>({
     required String path,
     Map<String, dynamic>? queryParameters,
-    required T Function(Map<String, dynamic>) fromJson,
+    required T Function(dynamic) fromJson,
     Map<String, String>? headers,
   }) async {
     return _handleRequest<T>(
@@ -29,7 +29,7 @@ class BaseApiService {
     required String path,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? body,
-    required T Function(Map<String, dynamic>) fromJson,
+    required T Function(dynamic) fromJson,
     Map<String, String>? headers,
   }) async {
     return _handleRequest<T>(
@@ -46,7 +46,7 @@ class BaseApiService {
     required String path,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? body,
-    required T Function(Map<String, dynamic>) fromJson,
+    required T Function(dynamic) fromJson,
     Map<String, String>? headers,
   }) async {
     return _handleRequest<T>(
@@ -62,7 +62,7 @@ class BaseApiService {
   Future<ApiResult<T>> delete<T>({
     required String path,
     Map<String, dynamic>? queryParameters,
-    required T Function(Map<String, dynamic>) fromJson,
+    required T Function(dynamic) fromJson,
     Map<String, String>? headers,
   }) async {
     return _handleRequest<T>(
@@ -76,15 +76,15 @@ class BaseApiService {
 
   Future<ApiResult<T>> _handleRequest<T>(
     Future<http.Response> Function() request,
-    T Function(Map<String, dynamic>) fromJson,
+    T Function(dynamic) fromJson,
   ) async {
     try {
       final response = await request();
       final responseBody = json.decode(utf8.decode(response.bodyBytes));
 
-      final apiResponse = ApiResponse<Map<String, dynamic>>.fromJson(
+      final apiResponse = ApiResponse<dynamic>.fromJson(
         responseBody,
-        (json) => json as Map<String, dynamic>,
+        (json) => json,
       );
 
       if (response.statusCode >= 200 && response.statusCode < 300) {

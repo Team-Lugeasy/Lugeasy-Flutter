@@ -3,7 +3,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lugeasy/core/util/log_util.dart';
 import 'package:lugeasy/data/datasources/remote/intro_services.dart';
 import 'package:lugeasy/data/common/api_result.dart';
-import 'package:lugeasy/data/models/login_response.dart';
 import 'package:lugeasy/view/navigation_route.dart';
 import 'package:lugeasy/view/navigation_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -79,7 +78,7 @@ class LoginViewModel extends _$LoginViewModel {
     final result = await IntroServices().login(token, type);
 
     switch (result) {
-      case Success<LoginResponse>():
+      case Success():
         logger.d(result.data);
         state = const LoginSuccess("로그인 성공");
         NavigationService().navigateClear(NavigationRoute.mainContainer);

@@ -118,6 +118,7 @@ class LoginView extends ConsumerWidget {
                 child: Text(
                   context.l10n.guest_login,
                   style: LugeasyTextStyles.body5.copyWith(
+                      color: Colors.white,
                       decoration: TextDecoration.underline,
                       decorationColor: Colors.white),
                 ),
