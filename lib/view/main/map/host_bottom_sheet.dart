@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lugeasy/data/models/host_model.dart';
 import 'package:lugeasy/providers/host/host_selection_provider.dart';
-import 'package:lugeasy/data/models/host.dart';
 import 'bottomsheet/host_list_sheet.dart';
 import 'bottomsheet/host_detail_sheet.dart';
 import 'package:lugeasy/core/constants.dart';
@@ -22,7 +22,7 @@ class HostBottomSheetState extends ConsumerState<HostBottomSheet> {
 
   double _sheetHeightRatio = kBottomSheetListRatio; // 초기 상태
   bool showDetail = false;
-  Host? selectedHost;
+  HostModel? selectedHost;
 
   void _updateSheetRatio(double newRatio) {
     _sheetHeightRatio =
@@ -38,7 +38,7 @@ class HostBottomSheetState extends ConsumerState<HostBottomSheet> {
   }
 
   // 호스트 선택 → 상세 화면 전환
-  void openDetail(Host host) {
+  void openDetail(HostModel host) {
     // 호스트 선택 시 상태 업데이트
     ref.read(hostNotifierProvider.notifier).select(host);
     setState(() {

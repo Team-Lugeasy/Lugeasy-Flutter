@@ -63,10 +63,9 @@ class RequestReservationPage extends ConsumerWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        host.profileImage.toString().isNotEmpty
+                        host.profileImg.toString().isNotEmpty
                             ? CircleAvatar(
-                                backgroundImage:
-                                    NetworkImage(host.profileImage),
+                                backgroundImage: NetworkImage(host.profileImg),
                                 radius: 28,
                               )
                             : defaultProfileIcon(iconSize: 28),

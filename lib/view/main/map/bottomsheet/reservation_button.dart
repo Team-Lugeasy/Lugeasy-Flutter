@@ -1,15 +1,15 @@
 // reservation_bottom_bar.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lugeasy/data/models/host_model.dart';
 import 'package:lugeasy/providers/reservation/reservation_provider.dart';
 import 'package:lugeasy/providers/host/host_selection_provider.dart';
 import 'package:lugeasy/core/extensions/context_extension.dart';
-import 'package:lugeasy/data/models/host.dart';
 import 'package:lugeasy/data/models/host_time_slot.dart';
 import 'package:lugeasy/view/main/map/request_reservation_page.dart';
 
 class ReservationBottomBar extends ConsumerWidget {
-  final Host host; // host 정보를 받도록 수정
+  final HostModel host; // host 정보를 받도록 수정
 
   const ReservationBottomBar({super.key, required this.host});
 

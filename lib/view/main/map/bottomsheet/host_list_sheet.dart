@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lugeasy/data/models/host_model.dart';
 import 'package:lugeasy/providers/host/host_provider.dart';
-import 'package:lugeasy/data/models/host.dart';
 import 'package:lugeasy/core/constants.dart';
 import 'package:lugeasy/core/extensions/context_extension.dart';
 import 'package:lugeasy/core/util/log_util.dart';
 
 class HostListTile extends StatelessWidget {
-  final Host host;
+  final HostModel host;
   final VoidCallback onTap;
 
   const HostListTile({
@@ -18,7 +18,7 @@ class HostListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasImage = host.profileImage.toString().isNotEmpty;
+    final hasImage = host.profileImg.toString().isNotEmpty;
 
     return GestureDetector(
       onTap: onTap,
@@ -30,7 +30,7 @@ class HostListTile extends StatelessWidget {
             const SizedBox(width: 30), // 왼쪽 여백 15 + 15
             hasImage
                 ? CircleAvatar(
-                    backgroundImage: NetworkImage(host.profileImage),
+                    backgroundImage: NetworkImage(host.profileImg),
                     radius: 52,
                   )
                 : defaultProfileIcon(iconSize: 52),
@@ -89,7 +89,7 @@ class HostListTile extends StatelessWidget {
 
 class HostListSheet extends ConsumerStatefulWidget {
   // 호스트 클릭 시 호출되는 콜백
-  final void Function(Host) onHostTap;
+  final void Function(HostModel) onHostTap;
 
   HostListSheet({super.key, required this.onHostTap});
 

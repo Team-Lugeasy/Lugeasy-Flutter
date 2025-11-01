@@ -6,12 +6,12 @@ part of 'host_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$hostProviderHash() => r'1a5179020271cc4a1eb95f08da1df850194d3c19';
+String _$hostProviderHash() => r'4e77ed9d050346e383fbe6aec70693ff88950b43';
 
 /// See also [HostProvider].
 @ProviderFor(HostProvider)
 final hostProviderProvider =
-    AutoDisposeAsyncNotifierProvider<HostProvider, List<Host>>.internal(
+    AutoDisposeAsyncNotifierProvider<HostProvider, List<HostModel>>.internal(
   HostProvider.new,
   name: r'hostProviderProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final hostProviderProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$HostProvider = AutoDisposeAsyncNotifier<List<Host>>;
+typedef _$HostProvider = AutoDisposeAsyncNotifier<List<HostModel>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

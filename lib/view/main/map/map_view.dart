@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lugeasy/core/util/color_style.dart';
 import 'package:lugeasy/core/util/text_style.dart';
+import 'package:lugeasy/data/models/host_model.dart';
 import 'package:lugeasy/providers/host/host_provider.dart';
-import 'package:lugeasy/data/models/host.dart';
 import 'package:lugeasy/view/main/map/host_bottom_sheet.dart';
 import 'package:lugeasy/view/navigation_route.dart';
 import 'package:lugeasy/view/navigation_service.dart';
@@ -46,7 +46,7 @@ class _MapViewState extends ConsumerState<MapView> {
   }
 
   /// 마커찍기
-  Future<void> _addHostMarkers(List<Host> hosts) async {
+  Future<void> _addHostMarkers(List<HostModel> hosts) async {
     for (final host in hosts) {
       final marker = NMarker(
           id: host.name,
@@ -62,7 +62,7 @@ class _MapViewState extends ConsumerState<MapView> {
     }
   }
 
-  Future<void> _onMarkerTap(Host host) async {
+  Future<void> _onMarkerTap(HostModel host) async {
     debugPrint("Clicked host: ${host.name}");
 
     final double latitudeOffset = 0.0015;

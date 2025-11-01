@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 import 'dart:async';
-import 'package:lugeasy/data/models/host.dart';
+import 'package:lugeasy/data/models/host_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'host_provider.g.dart';
@@ -14,7 +14,7 @@ class HostProvider extends _$HostProvider {
   Completer<void>? _nextPageCompleter;
 
   @override
-  Future<List<Host>> build() async {
+  Future<List<HostModel>> build() async {
     return await _fetchHosts(page: _currentPage);
   }
 
@@ -72,7 +72,7 @@ class HostProvider extends _$HostProvider {
   }
 
   /// 실제 API 호출 또는 더미 데이터 로딩
-  Future<List<Host>> _fetchHosts({required int page}) async {
+  Future<List<HostModel>> _fetchHosts({required int page}) async {
     // TODO: 나중에 latitude/longitude 기반 필터링 추가
     final jsonData = page == 0
         ? '''
@@ -226,7 +226,7 @@ class HostProvider extends _$HostProvider {
         ''';
 
     final List<dynamic> parsedJson = json.decode(jsonData);
-    final hosts = parsedJson.map((e) => Host.fromJson(e)).toList();
+    final hosts = parsedJson.map((e) => HostModel.fromJson(e)).toList();
     return hosts;
   }
 }

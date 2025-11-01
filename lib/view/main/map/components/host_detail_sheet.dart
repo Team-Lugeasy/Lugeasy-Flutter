@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lugeasy/data/models/host.dart';
+import 'package:lugeasy/data/models/host_model.dart';
 import 'package:lugeasy/view/main/map/components/reservation_section.dart';
 import 'package:lugeasy/view/main/map/components/host_review_list.dart';
 import 'package:lugeasy/providers/host/host_availability_provider.dart';
@@ -9,7 +9,7 @@ import 'package:lugeasy/core/constants.dart';
 
 class HostUserInfo extends StatelessWidget {
   final String name;
-  final String profileImage;
+  final String profileImg;
   final String description;
   final double reviewRate;
   final int reviewCount;
@@ -18,7 +18,7 @@ class HostUserInfo extends StatelessWidget {
   const HostUserInfo({
     super.key,
     required this.name,
-    required this.profileImage,
+    required this.profileImg,
     required this.description,
     required this.reviewRate,
     required this.reviewCount,
@@ -31,11 +31,11 @@ class HostUserInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Center(
-          child: profileImage.isEmpty
+          child: profileImg.isEmpty
               ? defaultProfileIcon(iconSize: 52)
               : CircleAvatar(
                   radius: 60,
-                  backgroundImage: NetworkImage(profileImage),
+                  backgroundImage: NetworkImage(profileImg),
                 ),
         ),
         SizedBox(height: 30),
@@ -84,7 +84,7 @@ class HostDetailSheet extends ConsumerStatefulWidget {
   final VoidCallback onBack;
 
   // 선택된 호스트 정보
-  final Host host;
+  final HostModel host;
 
   const HostDetailSheet({
     super.key,
@@ -144,7 +144,7 @@ class _HostDetailSheetState extends ConsumerState<HostDetailSheet> {
             reviewRate: widget.host.reviewRate,
             reviewCount: widget.host.reviewCount,
             address: widget.host.address,
-            profileImage: widget.host.profileImage,
+            profileImg: widget.host.profileImg,
           ),
           const SizedBox(height: 24),
 
