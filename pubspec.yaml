@@ -32,6 +32,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   shared_preferences: ^2.5.3
+  daum_postcode_search: ^1.0.0
+  webview_flutter: ^4.8.0
+  flutter_inappwebview: ^6.1.5
 
 dev_dependencies:
   flutter_test:
